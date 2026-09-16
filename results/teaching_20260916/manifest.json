@@ -74,9 +74,19 @@
       "checkpoint_path": "results/teaching_20260916/training/02_stage/checkpoints/final.zip",
       "training_summary_path": "results/teaching_20260916/training/02_stage/training_summary.json",
       "checkpoint_sha256": "3b606feb9e2c439ae438882bfd2663c123fdf7bb7fce3a9927faedd23cdb92e7"
+    },
+    {
+      "id": "03_stage",
+      "label": "Etapa 3: 45 min adicionales",
+      "elapsed_training_seconds": 2700.457,
+      "training_timesteps": 570580,
+      "evaluation_path": "results/teaching_20260916/stages/03_stage/evaluation.json",
+      "checkpoint_path": "results/teaching_20260916/training/03_stage/checkpoints/final.zip",
+      "training_summary_path": "results/teaching_20260916/training/03_stage/training_summary.json",
+      "checkpoint_sha256": "799dc963a8f030b901dc9eb701d6e6f51a02c3b5038cbe3ba403f0c2132c0ed3"
     }
   ],
-  "elapsed_training_seconds": 1800.096,
+  "elapsed_training_seconds": 2700.457,
   "completion_reason": null,
   "interpretation": "Contin\u00faa un modelo previo; cambia tasa de aprendizaje y l\u00edmite KL juntos. No permite atribuir una diferencia a un solo par\u00e1metro. Cinco semillas de acciones son una muestra peque\u00f1a del mismo nivel.",
   "source_hashes": {
@@ -90,7 +100,7 @@
   },
   "preparation_note": "Publication helper strengthened after baseline evaluation; learning and evaluation sources unchanged. Final source hashes recorded before any training.",
   "active_stage": null,
-  "active_training_dir": "results/teaching_20260916/training/02_stage",
-  "latest_checkpoint": "results/teaching_20260916/training/02_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "3b606feb9e2c439ae438882bfd2663c123fdf7bb7fce3a9927faedd23cdb92e7"
+  "active_training_dir": "results/teaching_20260916/training/03_stage",
+  "latest_checkpoint": "results/teaching_20260916/training/03_stage/checkpoints/final.zip",
+  "latest_checkpoint_sha256": "799dc963a8f030b901dc9eb701d6e6f51a02c3b5038cbe3ba403f0c2132c0ed3"
 }
