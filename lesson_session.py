@@ -104,11 +104,11 @@ def session(args,root,run):
         paths=[rel(run),'docs/aula']
         try:
             branch=subprocess.check_output(['git','branch','--show-current'],cwd=root,text=True).strip()
-            if branch!='main': raise RuntimeError('La publicación automática requiere la rama main; no se cambian ramas.')
+            if branch!='main': raise RuntimeError('Automatic publication requires the main branch; branches are not changed.')
             subprocess.run(['git','add','--',*paths],cwd=root,check=True,capture_output=True,text=True,timeout=30)
             staged=subprocess.run(['git','diff','--cached','--name-only'],cwd=root,check=True,capture_output=True,text=True,timeout=30).stdout.splitlines()
             if any(not(name.startswith(rel(run)+'/') or name.startswith('docs/aula/')) for name in staged):
-                raise RuntimeError('Hay otros cambios preparados en Git; se conservan sin incluirlos en el commit automático.')
+                raise RuntimeError('Other changes are staged in Git; they are preserved without being included in the automatic commit.')
             if staged:
                 subprocess.run(['git','diff','--cached','--check'],cwd=root,check=True,capture_output=True,text=True,timeout=30)
                 subprocess.run(['git','commit','-m',f'Update classroom session {manifest["session_id"]}: {len(manifest["stages"])} stages ({manifest["status"]})'],cwd=root,check=True,capture_output=True,text=True,timeout=60)
@@ -116,7 +116,7 @@ def session(args,root,run):
             save(run/'logs/publication.json',{'status':'published','at':utc().isoformat(),'commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()})
         except (subprocess.SubprocessError,RuntimeError) as error:
             save(run/'logs/publication.json',{'status':'pending','at':utc().isoformat(),'error':str(error)})
-            print('Publicación pendiente:',error,flush=True)
+            print('Publication pending:',error,flush=True)
     def evaluate(model, stage_path, seeds=None, videos=None, budget=None):
         stage_path.parent.mkdir(parents=True,exist_ok=True)
         seeds=args.eval_seeds if seeds is None else seeds
@@ -125,14 +125,14 @@ def session(args,root,run):
         command(cmd,stage_path.name+'.log',min((budget or args.eval_seconds)+25,240))
         evaluation=json.loads((stage_path/'evaluation.json').read_text())
         if evaluation['status']!='complete':
-            raise RuntimeError('La evaluación quedó incompleta; no se presenta como una etapa comparable.')
+            raise RuntimeError('The evaluation is incomplete; it is not presented as a comparable stage.')
         return evaluation
     if args.start_prepared:
         manifest=json.loads(manifest_path.read_text())
         if manifest['status']!='prepared': raise RuntimeError('Only a prepared session can be started; choose a new directory to continue a finished session.')
         for name, digest in manifest['source_hashes'].items():
             if hashlib.sha256((root/name).read_bytes()).hexdigest()!=digest:
-                raise RuntimeError(f'El código cambió desde la preparación: {name}')
+                raise RuntimeError(f'The code changed after preparation: {name}')
         # The prepared experiment is immutable: do not silently change its settings.
         for key in ['max_seconds','chunk_seconds','max_chunks','eval_seconds','eval_max_decisions','eval_seeds','video_seeds']:
             setattr(args,key,manifest['session_args'][key])
@@ -155,12 +155,12 @@ def session(args,root,run):
             'configuration':{'reward_scale':0.01,'learning_rate':0.0001,'target_kl':0.02,'ent_coef':0.01,'training_seed':123,'eval_seeds':args.eval_seeds,'chunk_seconds':args.chunk_seconds,'device':'cpu','threads':1,'n_envs':4},
             'session_args':{key:getattr(args,key) for key in ['max_seconds','chunk_seconds','max_chunks','eval_seconds','eval_max_decisions','eval_seeds','video_seeds']},
             'stages':[],'elapsed_training_seconds':0,'completion_reason':None,
-            'interpretation':'Continúa un modelo previo; cambia tasa de aprendizaje y límite KL juntos. No permite atribuir una diferencia a un solo parámetro. Cinco semillas de acciones son una muestra pequeña del mismo nivel.',
+            'interpretation':'This continues a previous model and changes the learning rate and KL limit together. Differences cannot be attributed to a single parameter. Five action seeds are a small sample on the same level.',
             'source_hashes':{p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in ['train.py','mario_env.py','lesson_eval.py','lesson_report.py','lesson_session.py','publish_lesson_models.py','requirements-lock.txt']}}
         save(manifest_path,manifest)
         baseline=run/'stages/00_baseline'
         evaluate(model,baseline)
-        manifest['stages'].append({'id':'00_baseline','label':f'Inicio: modelo con {initial_steps:,} decisiones previas','elapsed_training_seconds':0,'training_timesteps':initial_steps,'evaluation_path':rel(baseline/'evaluation.json'),'checkpoint_path':rel(model),'training_summary_path':None})
+        manifest['stages'].append({'id':'00_baseline','label':f'Start: model with {initial_steps:,} prior decisions','elapsed_training_seconds':0,'training_timesteps':initial_steps,'evaluation_path':rel(baseline/'evaluation.json'),'checkpoint_path':rel(model),'training_summary_path':None})
         manifest['status']='prepared'; save(manifest_path,manifest); render()
         if args.prepare_only:
             print(json.dumps({'status':'prepared','manifest':rel(manifest_path)},ensure_ascii=False),flush=True)
@@ -183,7 +183,7 @@ def session(args,root,run):
             training=run/'training'/stage_id
             for name,digest in manifest['source_hashes'].items():
                 if hashlib.sha256((root/name).read_bytes()).hexdigest()!=digest:
-                    raise RuntimeError(f'El código cambió durante la sesión: {name}')
+                    raise RuntimeError(f'The code changed during the session: {name}')
             manifest['active_stage']=stage_id; manifest['active_training_dir']=rel(training)
             save(manifest_path,manifest)
             stop=command([py,'train.py','--run-dir',rel(training),'--resume',rel(model),'--reward-scale','0.01','--learning-rate','0.0001','--target-kl','0.02','--ent-coef','0.01','--device','cpu','--threads','1','--n-envs','4','--seed','123','--max-seconds',str(budget),'--deadline-utc',(deadline-timedelta(seconds=reserve)).isoformat(),'--archive-seconds','0'],stage_id+'_training.log',min(budget+60,remaining-30),True)
@@ -191,7 +191,7 @@ def session(args,root,run):
             if stop=='stop_requested' and summary['optimizer_steps_this_run']==0:
                 reason='stop_requested'; break
             if summary['status'] not in ['completed','interrupted'] or not summary['all_parameters_finite'] or summary['optimizer_steps_this_run']<=0:
-                raise RuntimeError('El tramo no produjo actualizaciones finitas verificables.')
+                raise RuntimeError('The training segment did not produce verifiable finite updates.')
             model=training/'checkpoints/final.zip'
             manifest['elapsed_training_seconds']+=summary['elapsed_seconds']
             manifest['latest_checkpoint']=rel(model)
@@ -201,7 +201,7 @@ def session(args,root,run):
             stage=run/'stages'/stage_id
             evaluate(model,stage,budget=max(1,min(args.eval_seconds,(deadline-utc()).total_seconds()-30)))
             shutil.copy2(training/'logs/progress.csv',training/'learning_metrics.csv')
-            manifest['stages'].append({'id':stage_id,'label':f'Etapa {index}: {manifest["elapsed_training_seconds"]/60:.0f} min adicionales','elapsed_training_seconds':manifest['elapsed_training_seconds'],'training_timesteps':summary['timesteps'],'evaluation_path':rel(stage/'evaluation.json'),'checkpoint_path':rel(model),'training_summary_path':rel(training/'training_summary.json'),'checkpoint_sha256':hashlib.sha256(model.read_bytes()).hexdigest()})
+            manifest['stages'].append({'id':stage_id,'label':f'Stage {index}: {manifest["elapsed_training_seconds"]/60:.0f} additional min','elapsed_training_seconds':manifest['elapsed_training_seconds'],'training_timesteps':summary['timesteps'],'evaluation_path':rel(stage/'evaluation.json'),'checkpoint_path':rel(model),'training_summary_path':rel(training/'training_summary.json'),'checkpoint_sha256':hashlib.sha256(model.read_bytes()).hexdigest()})
             manifest['latest_checkpoint']=rel(model); manifest['active_stage']=None
             manifest.pop('pending_stage',None)
             save(manifest_path,manifest); render(); publish()

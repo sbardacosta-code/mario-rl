@@ -33,5 +33,5 @@
   "production_source_hashes_match": true,
   "markdown_links_resolve": true,
   "chart_visually_inspected": true,
-  "note": "El ensayo de integraci\u00f3n usa l\u00edmites peque\u00f1os y sus puntuaciones no se presentan como resultados de la sesi\u00f3n docente. La subida de modelos se verifica contra tama\u00f1o y SHA-256 remotos al publicar."
+  "note": "The integration trial uses small limits, and its scores are not presented as results from the classroom session. Model uploads are verified against the remote size and SHA-256 when published."
 }

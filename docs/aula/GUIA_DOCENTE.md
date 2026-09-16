@@ -1,93 +1,93 @@
-# Mario aprende: guía para una clase de 35 a 45 minutos
+# Mario learns: a guide for a 35–45-minute class
 
-Abrir el [panel del aula](README.md). Contiene las etapas guardadas, sus métricas y muestras de juego. La clase puede darse con los resultados ya grabados: no hace falta esperar a que termine un entrenamiento en vivo.
+Open the [classroom dashboard](README.md). It contains the saved stages, their metrics, and gameplay samples. You can teach the class using the recorded results, without waiting for a live training run to finish.
 
-**Objetivo:** al terminar, el grupo debe poder describir qué recibe el agente, qué puede hacer, qué señal intenta optimizar y qué evidencia permite decir que juega mejor. Una partida vistosa por sí sola no alcanza.
+**Learning objective:** by the end of the class, students should be able to describe what the agent receives, which actions it can take, which signal it tries to optimize, and what evidence would justify saying it plays better. One impressive gameplay clip is not enough.
 
-## Antes de la clase
+## Before class
 
-1. Comprobar que la cuenta del profesor puede abrir el repositorio y los GIF. Mientras el repositorio sea privado, el enlace requiere acceso autorizado.
-2. Abrir el panel, esta guía y dos etapas separadas en el tiempo. Usar la misma semilla en ambas para la primera comparación.
-3. Cargar las animaciones antes de proyectar. Para trabajar sin conexión, descargar o clonar el repositorio con sus archivos y abrir los GIF con un visor local. Los enlaces relativos y las imágenes también funcionan en un visor Markdown local.
-4. Revisar el estado de la sesión: un reporte que dice «en curso» contiene únicamente lo ya evaluado. Una etapa pendiente o incompleta no es un resultado cero.
-5. Leer los límites del experimento: World 1-1, una semilla de entrenamiento y varias pruebas del mismo nivel. Descargar el código del repositorio no incluye los pesos `.zip`. Si el panel enlaza una versión de modelos publicada, se descargan por separado desde ese enlace; si no, permanecen locales.
+1. Check that the instructor's account can open the repository and the GIFs. If the repository is private, the link requires authorized access.
+2. Open the dashboard, this guide, and two stages from different points in training. Use the same seed in both stages for the first comparison.
+3. Load the animations before projecting them. To work offline, download or clone the repository with its files and open the GIFs in a local viewer. Relative links and images also work in a local Markdown viewer.
+4. Check the session status: a report marked “in progress” contains only the evaluations completed so far. A pending or incomplete stage is not a zero result.
+5. Read the experiment's limitations: World 1-1, one training seed, and several trials on the same level. Downloading the repository's code does not include the `.zip` model weights. If the dashboard links to a published model release, download the weights separately from that link; otherwise, they remain local.
 
-## 0–5 minutos: formular una predicción
+## 0–5 minutes: make a prediction
 
-Mostrar el comienzo de la etapa inicial sin adelantar las cifras finales. Preguntar: «¿Qué esperás que mejore primero: caminar, saltar a tiempo o terminar el nivel? ¿Cómo lo medirías?» Anotar dos predicciones comprobables.
+Show the beginning of the initial stage without revealing the final figures. Ask: “What do you expect to improve first: walking, jumping at the right time, or finishing the level? How would you measure it?” Write down two testable predictions.
 
-La etapa inicial de una sesión puede ser un modelo entrenado anteriormente. Consultar su etiqueta y sus decisiones acumuladas antes de llamarla «sin entrenar». El experimento histórico sí conserva la red inicial sin entrenamiento, que ya avanzaba por casualidad al muestrear acciones.
+A session's initial stage may use a previously trained model. Check its label and accumulated decisions before calling it “untrained.” The historical experiment does preserve the initial untrained network, which already made progress by chance when sampling actions.
 
-## 5–12 minutos: explicar el ciclo de aprendizaje
+## 5–12 minutes: explain the learning loop
 
-| Concepto | En este proyecto | Pregunta para el grupo |
+| Concept | In this project | Question for the class |
 | --- | --- | --- |
-| Observación | Cuatro imágenes consecutivas, grises, de 84 × 84 píxeles | ¿Por qué una sola imagen puede no mostrar hacia dónde se mueve Mario? |
-| Acción | Esperar, derecha, derecha + salto, derecha + correr, derecha + correr + salto | ¿Qué estrategias quedan fuera si no puede ir a la izquierda? |
-| Recompensa | Señal numérica del entorno; se suma durante los fotogramas de una acción | ¿Es la misma cosa que tocar la bandera? |
-| Política | Una red transforma las imágenes en probabilidades de esas acciones | ¿Puede elegir acciones distintas ante una situación parecida? |
-| Episodio | Un intento hasta que termina o alcanza el límite de decisiones | ¿Un límite de tiempo equivale a morir? |
-| Actualización | PPO usa experiencias recientes para ajustar los pesos | ¿Mirar una grabación modifica al modelo? |
+| Observation | Four consecutive grayscale images, each 84 × 84 pixels | Why might one image fail to show which way Mario is moving? |
+| Action | Wait, right, right + jump, right + run, right + run + jump | Which strategies are unavailable if the agent cannot move left? |
+| Reward | A numerical signal from the environment, summed across the frames of an action | Is this the same as touching the flag? |
+| Policy | A network converts the images into probabilities for these actions | Can it choose different actions in similar situations? |
+| Episode | One attempt until it ends or reaches the decision limit | Is reaching a time limit the same as dying? |
+| Update | PPO uses recent experience to adjust the weights | Does watching a recording change the model? |
 
-Una decisión mantiene los botones durante hasta cuatro fotogramas del emulador. Por eso una decisión, un fotograma y una actualización de la red son unidades distintas. En este proyecto, la red recibe imágenes; las coordenadas que aparecen en los reportes se usan para medir y explicar el resultado.
+One decision holds the buttons for up to four emulator frames. A decision, a frame, and a network update are therefore different units. In this project, the network receives images; the coordinates in the reports are used to measure and explain the result.
 
-El ciclo es **observar → elegir una acción → recibir una nueva observación y recompensa → reunir experiencias → ajustar los pesos → repetir**. PPO alterna interacción con el entorno y optimización usando pequeños lotes de experiencias. La política no recibe una explicación humana del error ni entiende Mario como una persona. [Artículo original de PPO](https://arxiv.org/abs/1707.06347).
+The loop is **observe → choose an action → receive a new observation and reward → gather experience → adjust the weights → repeat**. PPO alternates interaction with the environment and optimization using small batches of experience. The policy does not receive a human explanation of its mistakes or understand Mario as a person would. [Original PPO paper](https://arxiv.org/abs/1707.06347).
 
-## 12–22 minutos: observar las etapas y los errores
+## 12–22 minutes: observe the stages and mistakes
 
-Comparar el clip inicial y el tramo final de una misma semilla en dos etapas. El tramo final muestra qué sucede cerca del cierre del intento; si el intento fue breve, ambos clips pueden solaparse. Los clips son extractos y sus rótulos identifican etapa y decisiones; el CSV conserva el recorrido medido.
+Compare the opening and ending clips for the same seed across two stages. The ending clip shows what happens near the end of the attempt; if the attempt was short, the two clips may overlap. The clips are excerpts, and their labels identify the stage and decisions; the CSV preserves the measured trajectory.
 
-Usar una ficha por observación:
+Use one row for each observation:
 
-| Etapa y semilla | Evidencia observable | Hipótesis | Qué habría que comprobar |
+| Stage and seed | Observable evidence | Hypothesis | What to check |
 | --- | --- | --- | --- |
-| Completar al mirar el clip | «Repite el salto y deja de aumentar su posición» | «Tal vez la acción se volvió demasiado repetitiva» | Frecuencia de acciones en el CSV y otras semillas |
-| Completar al mirar otra etapa | «En esta prueba supera la posición donde antes terminaba» | «Podría haber mejorado el momento del salto» | Repetir con más intentos y revisar los otros clips |
+| Fill in while watching the clip | “It repeats the jump and stops increasing its position.” | “Perhaps the action became too repetitive.” | Action frequencies in the CSV and other seeds |
+| Fill in while watching another stage | “In this trial, it passes the position where the earlier attempt ended.” | “Its jump timing may have improved.” | Repeat with more attempts and review the other clips |
 
-Separar las frases «terminó cerca de x = …» y «murió por este enemigo». La primera puede salir de las mediciones. La segunda necesita inspeccionar el video y puede seguir siendo incierta: un número de posición no identifica una causa. «Se trancó» significa aquí una racha prolongada sin aumentar su máximo avance, según el umbral del protocolo; no significa que el sistema detecte automáticamente una pared.
+Distinguish “the attempt ended near x = …” from “this enemy killed it.” The first statement can come from the measurements. The second requires inspecting the video and may remain uncertain: a position value does not identify a cause. Here, “stalled” means a prolonged stretch without increasing the furthest position reached, according to the protocol's threshold; it does not mean the system automatically detects a wall.
 
-Preguntar: «¿Mejoró en todas las semillas o solamente en una? ¿Qué error aparece menos? ¿Apareció otro?». Si no mejora, conservar ese resultado: es una oportunidad para explicar que entrenar ajusta parámetros, pero no garantiza aprender una conducta útil dentro del tiempo disponible.
+Ask: “Did it improve on every seed or only one? Which mistake appears less often? Did another mistake appear?” If performance does not improve, keep that result: it is an opportunity to explain that training adjusts parameters but does not guarantee useful behavior within the available time.
 
-## 22–30 minutos: leer el gráfico como un experimento
+## 22–30 minutes: read the chart as experimental evidence
 
-La posición máxima es la coordenada horizontal más lejana del nivel; no es un porcentaje de nivel completado ni una distancia desde cero. Usar la media junto con la mediana y el rango: un intento excepcional puede subir la media. La bandera se cuenta por separado.
+The maximum position is the furthest horizontal coordinate reached in the level; it is not a percentage of the level completed or a distance measured from zero. Use the mean alongside the median and range: an exceptional attempt can raise the mean. Reaching the flag is counted separately.
 
-Las semillas de evaluación fijan el muestreo de acciones en el mismo nivel; no generan cinco mundos nuevos. Durante estas evaluaciones, la política conserva sus pesos. En modo estocástico elige según sus probabilidades; en modo determinista elige la acción preferida. Para una comparación, mantener el mismo modo y protocolo. Evaluar periódicamente en un entorno separado y repetir los intentos ayuda a distinguir aprendizaje de variabilidad, aunque pocas pruebas siguen dando evidencia limitada. [Guía de evaluación de Stable Baselines3](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html#how-to-evaluate-an-rl-algorithm).
+Evaluation seeds control action sampling on the same level; they do not generate five new worlds. During these evaluations, the policy keeps its weights fixed. In stochastic mode, it samples actions according to their probabilities; in deterministic mode, it chooses the preferred action. Keep the same mode and protocol when comparing results. Periodic evaluation in a separate environment and repeated attempts help distinguish learning from variability, although a small number of trials still provides limited evidence. [Stable Baselines3 evaluation guide](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html#how-to-evaluate-an-rl-algorithm).
 
-La curva puede subir y bajar. Mostrar todas las etapas evita contar una historia formada solamente por los mejores momentos. Si se señala una etapa para la demostración porque obtuvo el mayor avance, decir que fue seleccionada con esos resultados: no es una prueba independiente de superioridad.
+The curve can rise and fall. Showing every stage avoids telling a story made up only of the best moments. If you highlight a stage for demonstration because it achieved the greatest progress, explain that it was selected using those results: this is not independent evidence of superiority.
 
-Los parámetros de esta sesión son una configuración para probar, no «los mejores» de manera universal. Una tasa de aprendizaje menor reduce la magnitud de los ajustes; el umbral KL permite detener antes una actualización si la política cambia demasiado según esa medida. El coeficiente de entropía favorece conservar diversidad de acciones. Ninguno garantiza completar el nivel. Si se cambian varios a la vez, la comparación describe el conjunto y no identifica qué cambio causó el resultado.
+This session's parameters are a configuration to test, not universally “the best.” A lower learning rate reduces the size of the adjustments; the KL threshold allows an update to stop early if the policy changes too much according to that measure. The entropy coefficient encourages the policy to retain a variety of actions. None guarantees level completion. If several parameters change at once, the comparison describes their combined effect and does not identify which change caused the result.
 
-## 30–35 minutos: el primer fracaso también enseña
+## 30–35 minutes: the first failure is also instructive
 
-Los experimentos históricos están en el [README del proyecto](../../README.md). Con tres pruebas y un presupuesto de aprendizaje equivalente, el modelo con recompensa nativa alcanzó una posición media de **296**, y el modelo con recompensa multiplicada por **0,01** llegó a **434**. La red inicial sin entrenar alcanzó aproximadamente **1.585**. Los tres obtuvieron **0 de 3 niveles completos**.
+The historical experiments are in the [project README](../../README.md). Across three trials with an equivalent learning budget, the model using native rewards reached a mean position of **296**, while the model using rewards multiplied by **0.01** reached **434**. The initial untrained network reached approximately **1,585**. All three completed **0 of 3 levels**.
 
-El cambio de escala mejoró ese piloto frente a la configuración original, pero siguió por debajo de la red inicial. No demostró que Mario hubiera aprendido a terminar el nivel. Los datos de esa comparación están en [ab_comparison.json](../../results/reward_scaled/ab_comparison.json).
+Reward scaling improved that pilot relative to the original configuration, but its performance remained below the initial network's. It did not demonstrate that Mario had learned to finish the level. The comparison data is in [ab_comparison.json](../../results/reward_scaled/ab_comparison.json).
 
-Multiplicar la recompensa por 0,01 cambia las magnitudes usadas al aprender. Para leer los resultados, este proyecto conserva la recompensa nativa en sus evaluaciones. El escalado no añade un profesor que le indique cuándo saltar. Las recompensas de entrenamiento con distintas escalas y las pérdidas de valor resultantes no son puntuaciones de calidad directamente comparables.
+Multiplying rewards by 0.01 changes the magnitudes used during learning. To make the results interpretable, this project retains native rewards in its evaluations. Scaling does not add a teacher who tells the agent when to jump. Training rewards at different scales and the resulting value losses are not directly comparable quality scores.
 
-## 35–45 minutos: actividad y discusión opcionales
+## 35–45 minutes: optional activity and discussion
 
-En grupos, elegir dos etapas previamente definidas y completar una observación por semilla. Pedir una conclusión de dos frases: una sobre la evidencia y otra sobre lo que todavía no puede asegurarse.
+In groups, choose two predefined stages and record one observation per seed. Ask for a two-sentence conclusion: one sentence about the evidence and one about what cannot yet be established.
 
-Preguntas de cierre:
+Closing questions:
 
-- ¿Qué justificaría decir «aprendió a pasar este obstáculo» y qué exigiríamos para decir «juega bien»?
-- ¿Qué cambiarías en el próximo experimento y qué mantendrías fijo para poder interpretarlo?
-- ¿Alcanzar mayor recompensa siempre significa llegar más lejos o terminar el nivel?
-- ¿Qué pasaría al probar otro nivel? ¿Tenemos evidencia de que lo resolvería?
-- Si una configuración cambia varios parámetros a la vez y mejora, ¿podemos saber cuál fue responsable?
+- What would justify saying “it learned to get past this obstacle,” and what would we require before saying “it plays well”?
+- What would you change in the next experiment, and what would you keep fixed so you could interpret the result?
+- Does receiving a higher reward always mean traveling farther or finishing the level?
+- What would happen on another level? Do we have evidence that the agent could complete it?
+- If a configuration changes several parameters at once and improves, can we tell which one was responsible?
 
-Una buena respuesta cita pruebas concretas, reconoce las regresiones y evita atribuir intención, comprensión o recuerdos humanos a los pesos de la red.
+A good answer cites specific trials, acknowledges regressions, and avoids attributing human intention, understanding, or memories to the network's weights.
 
-## Cómo continuar sin perder la historia
+## How to continue without losing the history
 
-Guardar una carpeta nueva por sesión y conservar sus checkpoints y evaluaciones. Actualizar el panel mediante `lesson_report.py` y subir los archivos del reporte a GitHub mantiene el mismo enlace del aula. Cada sesión conserva además su informe dentro de su carpeta de resultados, de modo que las siguientes no sobrescriben su evidencia.
+Save each session in a new folder and preserve its checkpoints and evaluations. Updating the dashboard with `lesson_report.py` and uploading the report files to GitHub keeps the classroom link unchanged. Each session also retains its own report in its results folder, so later sessions do not overwrite its evidence.
 
-El entrenamiento puede reanudarse desde un checkpoint. Eso conserva los pesos y el estado del optimizador, pero no reconstruye exactamente el estado del emulador, un lote incompleto ni toda la secuencia aleatoria anterior. Mantener el presupuesto y la configuración en el manifiesto permite explicar qué se comparó realmente.
+Training can resume from a checkpoint. This preserves the weights and optimizer state but does not exactly reconstruct the emulator state, an incomplete batch, or the entire previous random sequence. Keeping the budget and configuration in the manifest makes it possible to explain what was actually compared.
 
-## Referencias para preparar la explicación
+## References for preparing the lesson
 
-- [Entorno gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros): juego y API utilizados.
-- [Artículo de PPO](https://arxiv.org/abs/1707.06347): algoritmo de aprendizaje.
-- [Consejos de Stable Baselines3](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html): evaluación y límites prácticos.
+- [gym-super-mario-bros environment](https://github.com/Kautenja/gym-super-mario-bros): the game and API used.
+- [PPO paper](https://arxiv.org/abs/1707.06347): the learning algorithm.
+- [Stable Baselines3 tips](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html): evaluation and practical limitations.

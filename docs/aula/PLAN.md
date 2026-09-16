@@ -1,48 +1,48 @@
-# Mario aprende: plan del proyecto docente
+# Mario learns: teaching project plan
 
-Objetivo: que el alumnado pueda observar y medir cómo cambia una política que aprende a jugar World 1-1. No se presupone que terminará el nivel ni que cada etapa mejorará.
+Objective: enable students to observe and measure how a policy changes as it learns to play World 1-1. The project does not assume that the agent will finish the level or that every stage will improve.
 
-## Sesión de hasta tres horas
+## A session of up to three hours
 
-- Punto de partida: el modelo del ensayo con recompensa ×0,01, con 102.400 decisiones previas. La etapa inicial se evalúa antes de entrenar más.
-- Continuación en bloques de unos 15minutos, conservando un checkpoint por bloque y el registro de todas las etapas.
-- Cinco ensayos fijos por etapa: 101,202,303,404,505. Para 101,202,303 se guardan clips de las primeras 150 y últimas 75 decisiones, último fotograma y traza completa. Los clips pueden coincidir en episodios cortos.
-- Auditoría final separada: 10semillas nuevas 1001–1010, aplicadas al modelo final elegido por presupuesto. No se selecciona retrospectivamente el mejor resultado para presentarlo como el final.
-- El proceso reserva tiempo para las evaluaciones y el cierre; no dedica las tres horas enteras al entrenamiento. El límite absoluto queda en el manifiesto. Si una subida queda pendiente, se completa después sin entrenar más.
+- Starting point: the model from the reward ×0.01 pilot, with 102,400 prior decisions. The initial stage is evaluated before further training.
+- Continue in blocks of approximately 15 minutes, preserving one checkpoint per block and a record of every stage.
+- Five fixed trials per stage: 101, 202, 303, 404, 505. For 101, 202, and 303, save clips of the first 150 and last 75 decisions, the final frame, and the full trace. Clips may overlap in short episodes.
+- Separate final audit: 10 new seeds, 1001–1010, applied to the final model selected by the budget. The best result is not selected retrospectively and presented as the final model.
+- The process reserves time for evaluations and closing the session; it does not spend the entire three hours training. The absolute deadline is recorded in the manifest. If an upload remains pending, finish it afterward without further training.
 
-## Configuración candidata
+## Candidate configuration
 
-| Parámetro | Valor | Motivo |
+| Parameter | Value | Reason |
 | --- | ---: | --- |
-| Algoritmo | PPO con CNN | Mantener el método y las observaciones ya probadas |
-| Recompensa para aprender | Nativa ×0,01 | El ensayo anterior mostró más estabilidad inicial |
-| Tasa de aprendizaje |0,0001| Probar ajustes menores que 0,00025 |
-| Límite KL |0,02| Detener una actualización si cambia excesivamente la política |
-| Coeficiente de entropía |0,01| Mantener el incentivo de exploración |
-| Entornos / CPU threads |4 /1| Configuración medida en esta Mac |
-| Pasos por entorno / batch / epochs |256 /256 /4| Mantener el resto de PPO |
-| Observación / repetición de acción |4 imágenes84×84 /4 frames| Conservar la representación existente |
+| Algorithm | PPO with a CNN | Keep the method and observations already tested |
+| Learning reward | Native ×0.01 | The previous pilot showed greater early stability |
+| Learning rate | 0.0001 | Test smaller adjustments than with 0.00025 |
+| KL limit | 0.02 | Stop an update if the policy changes excessively |
+| Entropy coefficient | 0.01 | Maintain the incentive to explore |
+| Environments / CPU threads | 4 / 1 | Configuration measured on this Mac |
+| Steps per environment / batch size / epochs | 256 / 256 / 4 | Keep the rest of the PPO configuration |
+| Observation / action repeat | 4 images at 84 × 84 / 4 frames | Preserve the existing representation |
 
-Son parámetros candidatos, no un óptimo demostrado. Se cambian tasa de aprendizaje y límite KL juntos y se continúa un checkpoint previo: esta sesión no permite aislar el efecto de cada cambio. Un experimento causal posterior deberá variar un parámetro por vez y repetir semillas de entrenamiento.
+These are candidate parameters, not a demonstrated optimum. The learning rate and KL limit change together, and training continues from an existing checkpoint: this session cannot isolate the effect of each change. A later causal experiment should vary one parameter at a time and repeat training seeds.
 
-## Qué se muestra en clase
+## What students see in class
 
-La [galería](README.md) presenta la media, mediana, rango de distancia y niveles completos por etapa. También muestra dónde terminó cada intento y períodos de 120decisiones sin superar el máximo previo. Eso mide falta de progreso: no demuestra que Mario esté inmóvil ni identifica por sí mismo un enemigo o un pozo.
+The [gallery](README.md) presents the mean, median, distance range, and completed levels for each stage. It also shows where each attempt ended and periods of 120 decisions without exceeding the previous maximum position. This measures a lack of progress: it does not prove that Mario is motionless or identify an enemy or a pit by itself.
 
-La [guía docente](GUIA_DOCENTE.md) propone una clase de 35–45minutos: predecir acciones, comparar clips, distinguir recompensa y éxito, formular hipótesis y comprobarlas. Se conservan los retrocesos y las fallas como parte del material.
+The [teaching guide](GUIA_DOCENTE.md) proposes a 35–45-minute class: predict actions, compare clips, distinguish reward from success, formulate hypotheses, and test them. Regressions and failures are preserved as part of the material.
 
-## Persistencia y continuación
+## Saving results and continuing
 
-El enlace del repositorio y el de docs/aula permanecen estables. Cada sesión tiene una carpeta propia, con manifiesto, parámetros, métricas, clips y trazas. Las etapas anteriores no se sobrescriben. El panel principal apunta a la sesión más reciente y los informes por sesión permanecen archivados.
+The repository link and the link to docs/aula remain stable. Each session has its own folder containing a manifest, parameters, metrics, clips, and traces. Earlier stages are not overwritten. The main dashboard points to the latest session, and individual session reports remain archived.
 
-Los checkpoints se guardan localmente y, al completar una sesión publicada, se respaldan como archivos de una GitHub Release. Su enlace aparece en la galería solo cuando termina la subida. Se conserva el acceso configurado en el repositorio; un repositorio privado requiere colaboradores autorizados.
+Checkpoints are saved locally and, when a published session is complete, backed up as GitHub Release assets. Their link appears in the gallery only after the upload finishes. The repository's access settings remain in effect; a private repository requires authorized collaborators.
 
-Al continuar desde un checkpoint se recuperan pesos y optimizador. Cada bloque reinicia el emulador y su semilla; no reproduce exactamente el estado anterior del simulador ni su generador aleatorio. La escala de recompensas debe mantenerse explícitamente en 0,01.
+Resuming from a checkpoint restores the weights and optimizer. Each block resets the emulator and its seed; it does not exactly reproduce the simulator's previous state or its random generator state. The reward scale must explicitly remain at 0.01.
 
-El programa genera resultados sin depender de una ventana del juego. La galería se actualiza al cerrar cada etapa, no frame a frame. Para interrumpir con guardado, crear un archivo `STOP` en la carpeta de la sesión. Mantener la Mac encendida y la app abierta permite que el entrenamiento local y su seguimiento continúen.
+The program generates results without relying on a game window. The gallery updates when each stage closes, not frame by frame. To stop and save, create a `STOP` file in the session folder. Keeping the Mac awake and the app open allows local training and monitoring to continue.
 
-## Referencias
+## References
 
-- [PPO y significado de sus parámetros](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)
-- [Evaluación, variabilidad y buenas prácticas de RL](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html)
-- [Entorno Super Mario Bros.](https://github.com/Kautenja/gym-super-mario-bros)
+- [PPO and its parameters](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)
+- [Evaluation, variability, and good RL practices](https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html)
+- [Super Mario Bros. environment](https://github.com/Kautenja/gym-super-mario-bros)

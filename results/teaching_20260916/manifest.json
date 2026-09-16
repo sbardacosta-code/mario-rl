@@ -48,7 +48,7 @@
   "stages": [
     {
       "id": "00_baseline",
-      "label": "Inicio: modelo con 102,400 decisiones previas",
+      "label": "Start: model with 102,400 prior decisions",
       "elapsed_training_seconds": 0,
       "training_timesteps": 102400,
       "evaluation_path": "results/teaching_20260916/stages/00_baseline/evaluation.json",
@@ -57,7 +57,7 @@
     },
     {
       "id": "01_stage",
-      "label": "Etapa 1: 15 min adicionales",
+      "label": "Stage 1: 15 additional min",
       "elapsed_training_seconds": 900.045,
       "training_timesteps": 262500,
       "evaluation_path": "results/teaching_20260916/stages/01_stage/evaluation.json",
@@ -67,7 +67,7 @@
     },
     {
       "id": "02_stage",
-      "label": "Etapa 2: 30 min adicionales",
+      "label": "Stage 2: 30 additional min",
       "elapsed_training_seconds": 1800.096,
       "training_timesteps": 414928,
       "evaluation_path": "results/teaching_20260916/stages/02_stage/evaluation.json",
@@ -77,7 +77,7 @@
     },
     {
       "id": "03_stage",
-      "label": "Etapa 3: 45 min adicionales",
+      "label": "Stage 3: 45 additional min",
       "elapsed_training_seconds": 2700.457,
       "training_timesteps": 570580,
       "evaluation_path": "results/teaching_20260916/stages/03_stage/evaluation.json",
@@ -87,7 +87,7 @@
     },
     {
       "id": "04_stage",
-      "label": "Etapa 4: 60 min adicionales",
+      "label": "Stage 4: 60 additional min",
       "elapsed_training_seconds": 3600.506,
       "training_timesteps": 731768,
       "evaluation_path": "results/teaching_20260916/stages/04_stage/evaluation.json",
@@ -97,7 +97,7 @@
     },
     {
       "id": "05_stage",
-      "label": "Etapa 5: 75 min adicionales",
+      "label": "Stage 5: 75 additional min",
       "elapsed_training_seconds": 4500.553,
       "training_timesteps": 897056,
       "evaluation_path": "results/teaching_20260916/stages/05_stage/evaluation.json",
@@ -107,7 +107,7 @@
     },
     {
       "id": "06_stage",
-      "label": "Etapa 6: 90 min adicionales",
+      "label": "Stage 6: 90 additional min",
       "elapsed_training_seconds": 5401.134,
       "training_timesteps": 1060900,
       "evaluation_path": "results/teaching_20260916/stages/06_stage/evaluation.json",
@@ -117,7 +117,7 @@
     },
     {
       "id": "07_stage",
-      "label": "Etapa 7: 105 min adicionales",
+      "label": "Stage 7: 105 additional min",
       "elapsed_training_seconds": 6301.182,
       "training_timesteps": 1226324,
       "evaluation_path": "results/teaching_20260916/stages/07_stage/evaluation.json",
@@ -127,7 +127,7 @@
     },
     {
       "id": "08_stage",
-      "label": "Etapa 8: 120 min adicionales",
+      "label": "Stage 8: 120 additional min",
       "elapsed_training_seconds": 7201.2339999999995,
       "training_timesteps": 1387392,
       "evaluation_path": "results/teaching_20260916/stages/08_stage/evaluation.json",
@@ -137,7 +137,7 @@
     },
     {
       "id": "09_stage",
-      "label": "Etapa 9: 135 min adicionales",
+      "label": "Stage 9: 135 additional min",
       "elapsed_training_seconds": 8101.286999999999,
       "training_timesteps": 1547240,
       "evaluation_path": "results/teaching_20260916/stages/09_stage/evaluation.json",
@@ -147,7 +147,7 @@
     },
     {
       "id": "10_stage",
-      "label": "Etapa 10: 150 min adicionales",
+      "label": "Stage 10: 150 additional min",
       "elapsed_training_seconds": 9001.372,
       "training_timesteps": 1708772,
       "evaluation_path": "results/teaching_20260916/stages/10_stage/evaluation.json",
@@ -157,7 +157,7 @@
     },
     {
       "id": "11_stage",
-      "label": "Etapa 11: 163 min adicionales",
+      "label": "Stage 11: 163 additional min",
       "elapsed_training_seconds": 9766.391,
       "training_timesteps": 1846520,
       "evaluation_path": "results/teaching_20260916/stages/11_stage/evaluation.json",
@@ -168,7 +168,7 @@
   ],
   "elapsed_training_seconds": 9766.391,
   "completion_reason": "session_time_budget_reached",
-  "interpretation": "Contin\u00faa un modelo previo; cambia tasa de aprendizaje y l\u00edmite KL juntos. No permite atribuir una diferencia a un solo par\u00e1metro. Cinco semillas de acciones son una muestra peque\u00f1a del mismo nivel.",
+  "interpretation": "This continues a previous model and changes the learning rate and KL limit together. Differences cannot be attributed to a single parameter. Five action seeds are a small sample on the same level.",
   "source_hashes": {
     "train.py": "0525569810abc72c4938339eee35903935ab9b5270d70515eba4e7f7e7eb7201",
     "mario_env.py": "4084a125ceeb56ab518a77a2ffdbdd3f6732e54a501e4bd0c1f0eb235ad08968",

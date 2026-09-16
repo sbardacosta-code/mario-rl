@@ -2,22 +2,22 @@
 
 Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
-## Proyecto para el aula
+## Classroom project
 
-[**Abrir la galería de aprendizaje de Mario**](docs/aula/README.md) · [Guía para el profe](docs/aula/GUIA_DOCENTE.md) · [Plan de entrenamiento y enseñanza](docs/aula/PLAN.md)
+[**Open the Mario learning gallery**](docs/aula/README.md) · [Teaching guide](docs/aula/GUIA_DOCENTE.md) · [Training and teaching plan](docs/aula/PLAN.md)
 
-El laboratorio conserva muestras de cada etapa, métricas comparables y trazas de acciones para discutir cómo aprende una política, dónde falla y cuándo retrocede. El enlace del aula permanece estable al publicar nuevas sesiones. El acceso depende de los permisos del repositorio.
+The lab preserves samples from every stage, comparable metrics, and action traces to discuss how a policy learns, where it fails, and when it regresses. The classroom link remains stable as new sessions are published. Access depends on the repository's permissions.
 
-La sesión docente usa bloques de aproximadamente 15 minutos y cinco evaluaciones fijas por etapa. Sus parámetros son una configuración candidata, no un óptimo demostrado. Al finalizar se evalúa el modelo con diez semillas nuevas y se respaldan los checkpoints de la sesión en GitHub Releases cuando la publicación está habilitada.
+The teaching session uses blocks of approximately 15 minutes and five fixed evaluations per stage. Its parameters are a candidate configuration, not a demonstrated optimum. At the end, the model is evaluated with ten new seeds, and the session's checkpoints are backed up to GitHub Releases when publishing is enabled.
 
-Para preparar y ejecutar una nueva sesión local (hasta tres horas, reservando tiempo para evaluar y guardar):
+To prepare and run a new local session (up to three hours, with time reserved for evaluation and saving):
 
 ```sh
 .venv/bin/python lesson_session.py --run-dir results/mi_clase --initial-model results/reward_scaled/checkpoints/final.zip --prepare-only
 .venv/bin/python lesson_session.py --run-dir results/mi_clase --start-prepared --publish
 ```
 
-El primer comando requiere un checkpoint local existente. Se conserva una carpeta distinta por sesión; no se sobrescriben resultados anteriores. `--publish` confirma y sube únicamente los resultados de esa sesión y los documentos del aula a `main`. Para detenerla con guardado, crear un archivo `STOP` en su carpeta de resultados.
+The first command requires an existing local checkpoint. Each session has its own folder; previous results are not overwritten. `--publish` commits and pushes only that session's results and the classroom documents to `main`. To stop and save, create a `STOP` file in the session's results folder.
 
 ## Reward scaling pilot
 

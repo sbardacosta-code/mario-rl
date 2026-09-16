@@ -35,7 +35,7 @@ def main():
     if existing.returncode:
         if '404' not in existing.stderr: raise RuntimeError(existing.stderr)
         notes=run/'logs/release_notes.md';notes.parent.mkdir(exist_ok=True)
-        notes.write_text(f'Modelos de la sesión docente de Mario. Cada archivo corresponde a una etapa registrada en el manifiesto.\n\nGuía y galería: https://github.com/{repo}/tree/main/docs/aula\n\nLos resultados pueden avanzar o retroceder; los clips y las métricas incluyen todas las etapas.\n')
+        notes.write_text(f'Models from the Mario classroom session. Each file corresponds to a stage recorded in the manifest.\n\nGuide and gallery: https://github.com/{repo}/tree/main/docs/aula\n\nResults may improve or regress; clips and metrics include every stage.\n')
         call(['gh','release','create',tag,'--target','main','--title',f'Mario: {tag}','--notes-file',str(notes)])
         existing=call(['gh','api',endpoint])
     release=json.loads(existing.stdout)

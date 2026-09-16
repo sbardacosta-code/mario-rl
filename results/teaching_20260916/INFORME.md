@@ -1,360 +1,360 @@
-# Mario aprende: laboratorio para el aula
+# Mario Learns: A Classroom Lab
 
-Compará cómo cambia una política de aprendizaje por refuerzo entre etapas guardadas. El panel reúne mediciones, errores observables y clips del mismo nivel; los resultados pueden mejorar o empeorar.
+Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Sesión:** `teaching_20260916` · **Estado:** finalizada · **Actualizado:** 2026-09-16 10:04 UTC.
+**Session:** `teaching_20260916` · **Status:** completed · **Updated:** 2026-09-16 14:57 UTC.
 
-[Guía docente: clase de 35–45 minutos](../../docs/aula/GUIA_DOCENTE.md) · [Datos y configuración de esta sesión](manifest.json) · [Proyecto y experimentos anteriores](../../README.md)
+[Teacher guide: a 35–45 minute lesson](../../docs/aula/GUIA_DOCENTE.md) · [Session data and configuration](manifest.json) · [Project and previous experiments](../../README.md)
 
-Este panel mantiene la misma ruta `docs/aula/README.md` cuando se publican nuevas sesiones. Los reportes anteriores quedan en sus carpetas de resultados. GitHub muestra la última versión subida; no transmite el entrenamiento local en vivo. El acceso depende de los permisos del repositorio.
+This dashboard keeps the same path, `docs/aula/README.md`, when new sessions are published. Previous reports remain in their results folders. GitHub shows the most recently uploaded version; it does not stream local training live. Access depends on repository permissions.
 
-## Para mostrar en clase
+## Using this in class
 
-1. Mirá la primera etapa y anotá una predicción.
-2. Compará la misma semilla en otra etapa: primero el comienzo, después el tramo final.
-3. Contrastá la impresión visual con las cinco pruebas, la posición máxima y la bandera.
-4. Describí un error observable y una hipótesis; buscá evidencia para distinguirlas.
+1. Watch the first stage and write down a prediction.
+2. Compare the same seed at another stage: first the beginning, then the ending.
+3. Check your visual impression against all five trials, the maximum position, and whether the flag was reached.
+4. Describe an observable error and a hypothesis; look for evidence that distinguishes observation from explanation.
 
-## Qué pasó hasta ahora
+## What has happened so far
 
-Entre la primera y la última etapa comparable, la posición máxima media **subió: 649,6 → 3.161,0 píxeles**. La última etapa alcanzó la bandera en **5 de 5 pruebas**. Es una descripción de estas pruebas del mismo nivel; no demuestra desempeño general ni mejora estable.
+Between the first and last comparable stages, the mean maximum position **increased: 649.6 → 3,161.0 pixels**. The last stage reached the flag in **5 of 5 trials**. This describes these trials on the same level; it does not establish general performance or consistent improvement.
 
-![Gráfico de evolución de todas las etapas comparables](progress.png)
+![Progress chart for all comparable stages](progress.png)
 
-El eje horizontal mide entrenamiento **adicional de esta sesión**. Las decisiones de la tabla son acumuladas y pueden incluir entrenamiento previo. La banda muestra el mínimo y máximo de las pruebas; no es un intervalo de confianza. La posición x es una coordenada del nivel, no un porcentaje completado.
+The horizontal axis measures **additional training during this session**. The decisions in the table are cumulative and may include earlier training. The band shows the minimum and maximum across trials; it is not a confidence interval. The x position is a coordinate within the level, not a completion percentage.
 
-| Etapa | Minutos adicionales | Decisiones acumuladas | Media x | Mediana x | Mín.–máx. x | Bandera |
+| Stage | Additional minutes | Cumulative decisions | Mean x | Median x | Min.–max. x | Flag |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Inicio: modelo con 102,400 decisiones previas | 0,0 | 102.400 | 649,6 | 688,0 | 300–1.127 | 0/5 |
-| Etapa 1: 15 min adicionales | 15,0 | 262.500 | 893,4 | 686,0 | 310–1.663 | 0/5 |
-| Etapa 2: 30 min adicionales | 30,0 | 414.928 | 1.372,2 | 1.149,0 | 1.126–2.021 | 0/5 |
-| Etapa 3: 45 min adicionales | 45,0 | 570.580 | 996,6 | 1.129,0 | 314–1.429 | 0/5 |
-| Etapa 4: 60 min adicionales | 60,0 | 731.768 | 1.558,4 | 1.527,0 | 1.128–2.028 | 0/5 |
-| Etapa 5: 75 min adicionales | 75,0 | 897.056 | 1.034,2 | 699,0 | 314–1.801 | 0/5 |
-| Etapa 6: 90 min adicionales | 90,0 | 1.060.900 | 1.663,8 | 1.526,0 | 680–3.161 | 1/5 |
-| Etapa 7: 105 min adicionales | 105,0 | 1.226.324 | 2.210,6 | 2.473,0 | 1.129–3.161 | 1/5 |
-| Etapa 8: 120 min adicionales | 120,0 | 1.387.392 | 2.806,4 | 2.762,0 | 2.473–3.161 | 2/5 |
-| Etapa 9: 135 min adicionales | 135,0 | 1.547.240 | 3.081,2 | 3.161,0 | 2.762–3.161 | 4/5 |
-| Etapa 10: 150 min adicionales | 150,0 | 1.708.772 | 3.161,0 | 3.161,0 | 3.161–3.161 | 5/5 |
-| Etapa 11: 163 min adicionales | 162,8 | 1.846.520 | 3.161,0 | 3.161,0 | 3.161–3.161 | 5/5 |
+| Start: model with 102,400 prior decisions | 0.0 | 102,400 | 649.6 | 688.0 | 300–1,127 | 0/5 |
+| Stage 1: 15 additional min | 15.0 | 262,500 | 893.4 | 686.0 | 310–1,663 | 0/5 |
+| Stage 2: 30 additional min | 30.0 | 414,928 | 1,372.2 | 1,149.0 | 1,126–2,021 | 0/5 |
+| Stage 3: 45 additional min | 45.0 | 570,580 | 996.6 | 1,129.0 | 314–1,429 | 0/5 |
+| Stage 4: 60 additional min | 60.0 | 731,768 | 1,558.4 | 1,527.0 | 1,128–2,028 | 0/5 |
+| Stage 5: 75 additional min | 75.0 | 897,056 | 1,034.2 | 699.0 | 314–1,801 | 0/5 |
+| Stage 6: 90 additional min | 90.0 | 1,060,900 | 1,663.8 | 1,526.0 | 680–3,161 | 1/5 |
+| Stage 7: 105 additional min | 105.0 | 1,226,324 | 2,210.6 | 2,473.0 | 1,129–3,161 | 1/5 |
+| Stage 8: 120 additional min | 120.0 | 1,387,392 | 2,806.4 | 2,762.0 | 2,473–3,161 | 2/5 |
+| Stage 9: 135 additional min | 135.0 | 1,547,240 | 3,081.2 | 3,161.0 | 2,762–3,161 | 4/5 |
+| Stage 10: 150 additional min | 150.0 | 1,708,772 | 3,161.0 | 3,161.0 | 3,161–3,161 | 5/5 |
+| Stage 11: 163 additional min | 162.8 | 1,846,520 | 3,161.0 | 3,161.0 | 3,161–3,161 | 5/5 |
 
-| Etapa | Recompensa nativa media | Rachas sin progreso | Pruebas con alguna racha |
+| Stage | Mean native reward | Runs without progress | Trials with a run |
 | --- | ---: | ---: | ---: |
-| Inicio: modelo con 102,400 decisiones previas | 575,8 | 0 | 0/5 |
-| Etapa 1: 15 min adicionales | 812,0 | 0 | 0/5 |
-| Etapa 2: 30 min adicionales | 1.290,4 | 0 | 0/5 |
-| Etapa 3: 45 min adicionales | 916,0 | 0 | 0/5 |
-| Etapa 4: 60 min adicionales | 1.469,2 | 0 | 0/5 |
-| Etapa 5: 75 min adicionales | 956,8 | 0 | 0/5 |
-| Etapa 6: 90 min adicionales | 1.583,0 | 0 | 0/5 |
-| Etapa 7: 105 min adicionales | 2.109,6 | 1 | 1/5 |
-| Etapa 8: 120 min adicionales | 2.714,6 | 0 | 0/5 |
-| Etapa 9: 135 min adicionales | 2.999,6 | 0 | 0/5 |
-| Etapa 10: 150 min adicionales | 3.086,6 | 0 | 0/5 |
-| Etapa 11: 163 min adicionales | 3.088,0 | 0 | 0/5 |
+| Start: model with 102,400 prior decisions | 575.8 | 0 | 0/5 |
+| Stage 1: 15 additional min | 812.0 | 0 | 0/5 |
+| Stage 2: 30 additional min | 1,290.4 | 0 | 0/5 |
+| Stage 3: 45 additional min | 916.0 | 0 | 0/5 |
+| Stage 4: 60 additional min | 1,469.2 | 0 | 0/5 |
+| Stage 5: 75 additional min | 956.8 | 0 | 0/5 |
+| Stage 6: 90 additional min | 1,583.0 | 0 | 0/5 |
+| Stage 7: 105 additional min | 2,109.6 | 1 | 1/5 |
+| Stage 8: 120 additional min | 2,714.6 | 0 | 0/5 |
+| Stage 9: 135 additional min | 2,999.6 | 0 | 0/5 |
+| Stage 10: 150 additional min | 3,086.6 | 0 | 0/5 |
+| Stage 11: 163 additional min | 3,088.0 | 0 | 0/5 |
 
-## Cómo se midió
+## How performance was measured
 
-Semillas previstas: **101, 202, 303, 404, 505**. El muestreo se reinicia para cada prueba; las semillas cambian las acciones muestreadas en World 1-1, no el diseño del nivel. La evaluación usa pesos congelados y recompensa nativa. La configuración de aprendizaje registrada es:
+Planned seeds: **101, 202, 303, 404, 505**. Sampling is reset for each trial; the seeds change the sampled actions in World 1-1, not the level layout. Evaluation uses frozen weights and native reward. The recorded training configuration is:
 
-| Parámetro | Valor |
+| Parameter | Value |
 | --- | --- |
-| Multiplicador de recompensa al entrenar | `0.01` |
-| Tasa de aprendizaje | `0.0001` |
-| Umbral KL objetivo | `0.02` |
-| Coeficiente de entropía | `0.01` |
-| Semilla de entrenamiento | `123` |
-| Segundos previstos por etapa | `900` |
+| Training reward multiplier | `0.01` |
+| Learning rate | `0.0001` |
+| Target KL threshold | `0.02` |
+| Entropy coefficient | `0.01` |
+| Training seed | `123` |
+| Planned seconds per stage | `900` |
 
-Modo de evaluación: **estocástico (acciones muestreadas)**. Límite por intento: **3.000 decisiones**. Una racha se registra al pasar **120 decisiones sin aumentar el máximo x previo**, según el protocolo. Puede incluir saltos o movimiento dentro de una zona ya recorrida; no detecta automáticamente paredes ni la causa de una muerte.
+Evaluation mode: **stochastic (sampled actions)**. Limit per attempt: **3,000 decisions**. A run without progress is recorded after **120 decisions without increasing the previous maximum x**, as defined by the protocol. This can include jumps or movement within an area already traversed; it does not automatically detect walls or the cause of a death.
 
-Se muestran todas las etapas registradas, incluidas las regresiones. Los promedios excluyen evaluaciones incompletas o con protocolo distinto. Un intento parcial, si existe, queda documentado en su JSON. Si se eligió una etapa para demostrarla, esa selección se etiqueta y no sustituye la última etapa.
+All recorded stages are shown, including regressions. Averages exclude evaluations that are incomplete or use a different protocol. Any partial attempt is documented in its JSON file. If a stage was selected for demonstration, that selection is labeled and does not replace the latest stage.
 
-Los clips son extractos del comienzo y del final de cada prueba grabada; pueden solaparse en episodios cortos. No todas las semillas necesitan tener video: cada fila conserva su traza y las métricas. Las duraciones y los límites de captura exactos están en `evaluation.json`.
+Clips are excerpts from the beginning and ending of each recorded trial; they may overlap in short episodes. Not every seed needs to have video: each row retains its trace and metrics. Exact durations and capture boundaries are recorded in `evaluation.json`.
 
-## Etapas y evidencia
+## Stages and evidence
 
-### Inicio: modelo con 102,400 decisiones previas
+### Start: model with 102,400 prior decisions
 
-Etapa `00_baseline` · 0,0 minutos adicionales · 102.400 decisiones acumuladas.
+Stage `00_baseline` · 0.0 additional minutes · 102,400 cumulative decisions.
 
-[Evaluación completa en JSON](stages/00_baseline/evaluation.json)
+[Full evaluation JSON](stages/00_baseline/evaluation.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 300 | 300 | 236,0 | fin sin bandera; causa no identificada | 0 | 1 | [comienzo](stages/00_baseline/seed-101/beginning.gif) · [tramo final](stages/00_baseline/seed-101/ending.gif) · [traza CSV](stages/00_baseline/seed-101/trace.csv) · [último fotograma](stages/00_baseline/seed-101/last-frame.png) |
-| 202 | 688 | 688 | 620,0 | fin sin bandera; causa no identificada | 0 | 10 | [comienzo](stages/00_baseline/seed-202/beginning.gif) · [tramo final](stages/00_baseline/seed-202/ending.gif) · [traza CSV](stages/00_baseline/seed-202/trace.csv) · [último fotograma](stages/00_baseline/seed-202/last-frame.png) |
-| 303 | 314 | 314 | 251,0 | fin sin bandera; causa no identificada | 0 | 1 | [comienzo](stages/00_baseline/seed-303/beginning.gif) · [tramo final](stages/00_baseline/seed-303/ending.gif) · [traza CSV](stages/00_baseline/seed-303/trace.csv) · [último fotograma](stages/00_baseline/seed-303/last-frame.png) |
-| 404 | 819 | 819 | 730,0 | fin sin bandera; causa no identificada | 0 | 78 | [traza CSV](stages/00_baseline/seed-404/trace.csv) |
-| 505 | 1.127 | 1.127 | 1.042,0 | fin sin bandera; causa no identificada | 0 | 31 | [traza CSV](stages/00_baseline/seed-505/trace.csv) |
+| 101 | 300 | 300 | 236.0 | ended without reaching the flag; cause unknown | 0 | 1 | [beginning](stages/00_baseline/seed-101/beginning.gif) · [ending](stages/00_baseline/seed-101/ending.gif) · [CSV trace](stages/00_baseline/seed-101/trace.csv) · [last frame](stages/00_baseline/seed-101/last-frame.png) |
+| 202 | 688 | 688 | 620.0 | ended without reaching the flag; cause unknown | 0 | 10 | [beginning](stages/00_baseline/seed-202/beginning.gif) · [ending](stages/00_baseline/seed-202/ending.gif) · [CSV trace](stages/00_baseline/seed-202/trace.csv) · [last frame](stages/00_baseline/seed-202/last-frame.png) |
+| 303 | 314 | 314 | 251.0 | ended without reaching the flag; cause unknown | 0 | 1 | [beginning](stages/00_baseline/seed-303/beginning.gif) · [ending](stages/00_baseline/seed-303/ending.gif) · [CSV trace](stages/00_baseline/seed-303/trace.csv) · [last frame](stages/00_baseline/seed-303/last-frame.png) |
+| 404 | 819 | 819 | 730.0 | ended without reaching the flag; cause unknown | 0 | 78 | [CSV trace](stages/00_baseline/seed-404/trace.csv) |
+| 505 | 1,127 | 1,127 | 1,042.0 | ended without reaching the flag; cause unknown | 0 | 31 | [CSV trace](stages/00_baseline/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–36 | Tramo final, semilla 101, decisiones 1–36 |
+| Beginning, seed 101, decisions 1–36 | Ending, seed 101, decisions 1–36 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–36](stages/00_baseline/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 1–36](stages/00_baseline/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–36](stages/00_baseline/seed-101/beginning.gif) | ![Ending, seed 101, decisions 1–36](stages/00_baseline/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 1: 15 min adicionales
+### Stage 1: 15 additional min
 
-Etapa `01_stage` · 15,0 minutos adicionales · 262.500 decisiones acumuladas.
+Stage `01_stage` · 15.0 additional minutes · 262,500 cumulative decisions.
 
-[Evaluación completa en JSON](stages/01_stage/evaluation.json) · [Resumen del entrenamiento](training/01_stage/training_summary.json)
+[Full evaluation JSON](stages/01_stage/evaluation.json) · [Training summary](training/01_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 682 | 682 | 606,0 | fin sin bandera; causa no identificada | 0 | 22 | [comienzo](stages/01_stage/seed-101/beginning.gif) · [tramo final](stages/01_stage/seed-101/ending.gif) · [traza CSV](stages/01_stage/seed-101/trace.csv) · [último fotograma](stages/01_stage/seed-101/last-frame.png) |
-| 202 | 310 | 310 | 254,0 | fin sin bandera; causa no identificada | 0 | 1 | [comienzo](stages/01_stage/seed-202/beginning.gif) · [tramo final](stages/01_stage/seed-202/ending.gif) · [traza CSV](stages/01_stage/seed-202/trace.csv) · [último fotograma](stages/01_stage/seed-202/last-frame.png) |
-| 303 | 1.663 | 1.663 | 1.556,0 | fin sin bandera; causa no identificada | 0 | 49 | [comienzo](stages/01_stage/seed-303/beginning.gif) · [tramo final](stages/01_stage/seed-303/ending.gif) · [traza CSV](stages/01_stage/seed-303/trace.csv) · [último fotograma](stages/01_stage/seed-303/last-frame.png) |
-| 404 | 686 | 686 | 613,0 | fin sin bandera; causa no identificada | 0 | 16 | [traza CSV](stages/01_stage/seed-404/trace.csv) |
-| 505 | 1.126 | 1.126 | 1.031,0 | fin sin bandera; causa no identificada | 0 | 40 | [traza CSV](stages/01_stage/seed-505/trace.csv) |
+| 101 | 682 | 682 | 606.0 | ended without reaching the flag; cause unknown | 0 | 22 | [beginning](stages/01_stage/seed-101/beginning.gif) · [ending](stages/01_stage/seed-101/ending.gif) · [CSV trace](stages/01_stage/seed-101/trace.csv) · [last frame](stages/01_stage/seed-101/last-frame.png) |
+| 202 | 310 | 310 | 254.0 | ended without reaching the flag; cause unknown | 0 | 1 | [beginning](stages/01_stage/seed-202/beginning.gif) · [ending](stages/01_stage/seed-202/ending.gif) · [CSV trace](stages/01_stage/seed-202/trace.csv) · [last frame](stages/01_stage/seed-202/last-frame.png) |
+| 303 | 1,663 | 1,663 | 1,556.0 | ended without reaching the flag; cause unknown | 0 | 49 | [beginning](stages/01_stage/seed-303/beginning.gif) · [ending](stages/01_stage/seed-303/ending.gif) · [CSV trace](stages/01_stage/seed-303/trace.csv) · [last frame](stages/01_stage/seed-303/last-frame.png) |
+| 404 | 686 | 686 | 613.0 | ended without reaching the flag; cause unknown | 0 | 16 | [CSV trace](stages/01_stage/seed-404/trace.csv) |
+| 505 | 1,126 | 1,126 | 1,031.0 | ended without reaching the flag; cause unknown | 0 | 40 | [CSV trace](stages/01_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–93 | Tramo final, semilla 101, decisiones 19–93 |
+| Beginning, seed 101, decisions 1–93 | Ending, seed 101, decisions 19–93 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–93](stages/01_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 19–93](stages/01_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–93](stages/01_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 19–93](stages/01_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 2: 30 min adicionales
+### Stage 2: 30 additional min
 
-Etapa `02_stage` · 30,0 minutos adicionales · 414.928 decisiones acumuladas.
+Stage `02_stage` · 30.0 additional minutes · 414,928 cumulative decisions.
 
-[Evaluación completa en JSON](stages/02_stage/evaluation.json) · [Resumen del entrenamiento](training/02_stage/training_summary.json)
+[Full evaluation JSON](stages/02_stage/evaluation.json) · [Training summary](training/02_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 1.126 | 1.126 | 1.051,0 | fin sin bandera; causa no identificada | 0 | 5 | [comienzo](stages/02_stage/seed-101/beginning.gif) · [tramo final](stages/02_stage/seed-101/ending.gif) · [traza CSV](stages/02_stage/seed-101/trace.csv) · [último fotograma](stages/02_stage/seed-101/last-frame.png) |
-| 202 | 1.149 | 1.149 | 1.065,0 | fin sin bandera; causa no identificada | 0 | 13 | [comienzo](stages/02_stage/seed-202/beginning.gif) · [tramo final](stages/02_stage/seed-202/ending.gif) · [traza CSV](stages/02_stage/seed-202/trace.csv) · [último fotograma](stages/02_stage/seed-202/last-frame.png) |
-| 303 | 1.129 | 1.129 | 1.051,0 | fin sin bandera; causa no identificada | 0 | 16 | [comienzo](stages/02_stage/seed-303/beginning.gif) · [tramo final](stages/02_stage/seed-303/ending.gif) · [traza CSV](stages/02_stage/seed-303/trace.csv) · [último fotograma](stages/02_stage/seed-303/last-frame.png) |
-| 404 | 2.021 | 2.021 | 1.943,0 | fin sin bandera; causa no identificada | 0 | 5 | [traza CSV](stages/02_stage/seed-404/trace.csv) |
-| 505 | 1.436 | 1.436 | 1.342,0 | fin sin bandera; causa no identificada | 0 | 20 | [traza CSV](stages/02_stage/seed-505/trace.csv) |
+| 101 | 1,126 | 1,126 | 1,051.0 | ended without reaching the flag; cause unknown | 0 | 5 | [beginning](stages/02_stage/seed-101/beginning.gif) · [ending](stages/02_stage/seed-101/ending.gif) · [CSV trace](stages/02_stage/seed-101/trace.csv) · [last frame](stages/02_stage/seed-101/last-frame.png) |
+| 202 | 1,149 | 1,149 | 1,065.0 | ended without reaching the flag; cause unknown | 0 | 13 | [beginning](stages/02_stage/seed-202/beginning.gif) · [ending](stages/02_stage/seed-202/ending.gif) · [CSV trace](stages/02_stage/seed-202/trace.csv) · [last frame](stages/02_stage/seed-202/last-frame.png) |
+| 303 | 1,129 | 1,129 | 1,051.0 | ended without reaching the flag; cause unknown | 0 | 16 | [beginning](stages/02_stage/seed-303/beginning.gif) · [ending](stages/02_stage/seed-303/ending.gif) · [CSV trace](stages/02_stage/seed-303/trace.csv) · [last frame](stages/02_stage/seed-303/last-frame.png) |
+| 404 | 2,021 | 2,021 | 1,943.0 | ended without reaching the flag; cause unknown | 0 | 5 | [CSV trace](stages/02_stage/seed-404/trace.csv) |
+| 505 | 1,436 | 1,436 | 1,342.0 | ended without reaching the flag; cause unknown | 0 | 20 | [CSV trace](stages/02_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–148 | Tramo final, semilla 101, decisiones 74–148 |
+| Beginning, seed 101, decisions 1–148 | Ending, seed 101, decisions 74–148 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–148](stages/02_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 74–148](stages/02_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–148](stages/02_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 74–148](stages/02_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 3: 45 min adicionales
+### Stage 3: 45 additional min
 
-Etapa `03_stage` · 45,0 minutos adicionales · 570.580 decisiones acumuladas.
+Stage `03_stage` · 45.0 additional minutes · 570,580 cumulative decisions.
 
-[Evaluación completa en JSON](stages/03_stage/evaluation.json) · [Resumen del entrenamiento](training/03_stage/training_summary.json)
+[Full evaluation JSON](stages/03_stage/evaluation.json) · [Training summary](training/03_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 702 | 702 | 628,0 | fin sin bandera; causa no identificada | 0 | 4 | [comienzo](stages/03_stage/seed-101/beginning.gif) · [tramo final](stages/03_stage/seed-101/ending.gif) · [traza CSV](stages/03_stage/seed-101/trace.csv) · [último fotograma](stages/03_stage/seed-101/last-frame.png) |
-| 202 | 1.129 | 1.129 | 1.041,0 | fin sin bandera; causa no identificada | 0 | 31 | [comienzo](stages/03_stage/seed-202/beginning.gif) · [tramo final](stages/03_stage/seed-202/ending.gif) · [traza CSV](stages/03_stage/seed-202/trace.csv) · [último fotograma](stages/03_stage/seed-202/last-frame.png) |
-| 303 | 1.429 | 1.429 | 1.339,0 | fin sin bandera; causa no identificada | 0 | 17 | [comienzo](stages/03_stage/seed-303/beginning.gif) · [tramo final](stages/03_stage/seed-303/ending.gif) · [traza CSV](stages/03_stage/seed-303/trace.csv) · [último fotograma](stages/03_stage/seed-303/last-frame.png) |
-| 404 | 1.409 | 1.409 | 1.322,0 | fin sin bandera; causa no identificada | 0 | 18 | [traza CSV](stages/03_stage/seed-404/trace.csv) |
-| 505 | 314 | 314 | 250,0 | fin sin bandera; causa no identificada | 0 | 1 | [traza CSV](stages/03_stage/seed-505/trace.csv) |
+| 101 | 702 | 702 | 628.0 | ended without reaching the flag; cause unknown | 0 | 4 | [beginning](stages/03_stage/seed-101/beginning.gif) · [ending](stages/03_stage/seed-101/ending.gif) · [CSV trace](stages/03_stage/seed-101/trace.csv) · [last frame](stages/03_stage/seed-101/last-frame.png) |
+| 202 | 1,129 | 1,129 | 1,041.0 | ended without reaching the flag; cause unknown | 0 | 31 | [beginning](stages/03_stage/seed-202/beginning.gif) · [ending](stages/03_stage/seed-202/ending.gif) · [CSV trace](stages/03_stage/seed-202/trace.csv) · [last frame](stages/03_stage/seed-202/last-frame.png) |
+| 303 | 1,429 | 1,429 | 1,339.0 | ended without reaching the flag; cause unknown | 0 | 17 | [beginning](stages/03_stage/seed-303/beginning.gif) · [ending](stages/03_stage/seed-303/ending.gif) · [CSV trace](stages/03_stage/seed-303/trace.csv) · [last frame](stages/03_stage/seed-303/last-frame.png) |
+| 404 | 1,409 | 1,409 | 1,322.0 | ended without reaching the flag; cause unknown | 0 | 18 | [CSV trace](stages/03_stage/seed-404/trace.csv) |
+| 505 | 314 | 314 | 250.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/03_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–86 | Tramo final, semilla 101, decisiones 12–86 |
+| Beginning, seed 101, decisions 1–86 | Ending, seed 101, decisions 12–86 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–86](stages/03_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 12–86](stages/03_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–86](stages/03_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 12–86](stages/03_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 4: 60 min adicionales
+### Stage 4: 60 additional min
 
-Etapa `04_stage` · 60,0 minutos adicionales · 731.768 decisiones acumuladas.
+Stage `04_stage` · 60.0 additional minutes · 731,768 cumulative decisions.
 
-[Evaluación completa en JSON](stages/04_stage/evaluation.json) · [Resumen del entrenamiento](training/04_stage/training_summary.json)
+[Full evaluation JSON](stages/04_stage/evaluation.json) · [Training summary](training/04_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 1.128 | 1.128 | 1.049,0 | fin sin bandera; causa no identificada | 0 | 28 | [comienzo](stages/04_stage/seed-101/beginning.gif) · [tramo final](stages/04_stage/seed-101/ending.gif) · [traza CSV](stages/04_stage/seed-101/trace.csv) · [último fotograma](stages/04_stage/seed-101/last-frame.png) |
-| 202 | 1.674 | 1.674 | 1.573,0 | fin sin bandera; causa no identificada | 0 | 31 | [comienzo](stages/04_stage/seed-202/beginning.gif) · [tramo final](stages/04_stage/seed-202/ending.gif) · [traza CSV](stages/04_stage/seed-202/trace.csv) · [último fotograma](stages/04_stage/seed-202/last-frame.png) |
-| 303 | 2.028 | 2.028 | 1.930,0 | fin sin bandera; causa no identificada | 0 | 16 | [comienzo](stages/04_stage/seed-303/beginning.gif) · [tramo final](stages/04_stage/seed-303/ending.gif) · [traza CSV](stages/04_stage/seed-303/trace.csv) · [último fotograma](stages/04_stage/seed-303/last-frame.png) |
-| 404 | 1.435 | 1.435 | 1.354,0 | fin sin bandera; causa no identificada | 0 | 23 | [traza CSV](stages/04_stage/seed-404/trace.csv) |
-| 505 | 1.527 | 1.527 | 1.440,0 | fin sin bandera; causa no identificada | 0 | 33 | [traza CSV](stages/04_stage/seed-505/trace.csv) |
+| 101 | 1,128 | 1,128 | 1,049.0 | ended without reaching the flag; cause unknown | 0 | 28 | [beginning](stages/04_stage/seed-101/beginning.gif) · [ending](stages/04_stage/seed-101/ending.gif) · [CSV trace](stages/04_stage/seed-101/trace.csv) · [last frame](stages/04_stage/seed-101/last-frame.png) |
+| 202 | 1,674 | 1,674 | 1,573.0 | ended without reaching the flag; cause unknown | 0 | 31 | [beginning](stages/04_stage/seed-202/beginning.gif) · [ending](stages/04_stage/seed-202/ending.gif) · [CSV trace](stages/04_stage/seed-202/trace.csv) · [last frame](stages/04_stage/seed-202/last-frame.png) |
+| 303 | 2,028 | 2,028 | 1,930.0 | ended without reaching the flag; cause unknown | 0 | 16 | [beginning](stages/04_stage/seed-303/beginning.gif) · [ending](stages/04_stage/seed-303/ending.gif) · [CSV trace](stages/04_stage/seed-303/trace.csv) · [last frame](stages/04_stage/seed-303/last-frame.png) |
+| 404 | 1,435 | 1,435 | 1,354.0 | ended without reaching the flag; cause unknown | 0 | 23 | [CSV trace](stages/04_stage/seed-404/trace.csv) |
+| 505 | 1,527 | 1,527 | 1,440.0 | ended without reaching the flag; cause unknown | 0 | 33 | [CSV trace](stages/04_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 87–161 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 87–161 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/04_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 87–161](stages/04_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/04_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 87–161](stages/04_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 5: 75 min adicionales
+### Stage 5: 75 additional min
 
-Etapa `05_stage` · 75,0 minutos adicionales · 897.056 decisiones acumuladas.
+Stage `05_stage` · 75.0 additional minutes · 897,056 cumulative decisions.
 
-[Evaluación completa en JSON](stages/05_stage/evaluation.json) · [Resumen del entrenamiento](training/05_stage/training_summary.json)
+[Full evaluation JSON](stages/05_stage/evaluation.json) · [Training summary](training/05_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 699 | 699 | 636,0 | fin sin bandera; causa no identificada | 0 | 2 | [comienzo](stages/05_stage/seed-101/beginning.gif) · [tramo final](stages/05_stage/seed-101/ending.gif) · [traza CSV](stages/05_stage/seed-101/trace.csv) · [último fotograma](stages/05_stage/seed-101/last-frame.png) |
-| 202 | 1.801 | 1.801 | 1.707,0 | fin sin bandera; causa no identificada | 0 | 15 | [comienzo](stages/05_stage/seed-202/beginning.gif) · [tramo final](stages/05_stage/seed-202/ending.gif) · [traza CSV](stages/05_stage/seed-202/trace.csv) · [último fotograma](stages/05_stage/seed-202/last-frame.png) |
-| 303 | 1.669 | 1.669 | 1.572,0 | fin sin bandera; causa no identificada | 0 | 18 | [comienzo](stages/05_stage/seed-303/beginning.gif) · [tramo final](stages/05_stage/seed-303/ending.gif) · [traza CSV](stages/05_stage/seed-303/trace.csv) · [último fotograma](stages/05_stage/seed-303/last-frame.png) |
-| 404 | 688 | 688 | 618,0 | fin sin bandera; causa no identificada | 0 | 13 | [traza CSV](stages/05_stage/seed-404/trace.csv) |
-| 505 | 314 | 314 | 251,0 | fin sin bandera; causa no identificada | 0 | 1 | [traza CSV](stages/05_stage/seed-505/trace.csv) |
+| 101 | 699 | 699 | 636.0 | ended without reaching the flag; cause unknown | 0 | 2 | [beginning](stages/05_stage/seed-101/beginning.gif) · [ending](stages/05_stage/seed-101/ending.gif) · [CSV trace](stages/05_stage/seed-101/trace.csv) · [last frame](stages/05_stage/seed-101/last-frame.png) |
+| 202 | 1,801 | 1,801 | 1,707.0 | ended without reaching the flag; cause unknown | 0 | 15 | [beginning](stages/05_stage/seed-202/beginning.gif) · [ending](stages/05_stage/seed-202/ending.gif) · [CSV trace](stages/05_stage/seed-202/trace.csv) · [last frame](stages/05_stage/seed-202/last-frame.png) |
+| 303 | 1,669 | 1,669 | 1,572.0 | ended without reaching the flag; cause unknown | 0 | 18 | [beginning](stages/05_stage/seed-303/beginning.gif) · [ending](stages/05_stage/seed-303/ending.gif) · [CSV trace](stages/05_stage/seed-303/trace.csv) · [last frame](stages/05_stage/seed-303/last-frame.png) |
+| 404 | 688 | 688 | 618.0 | ended without reaching the flag; cause unknown | 0 | 13 | [CSV trace](stages/05_stage/seed-404/trace.csv) |
+| 505 | 314 | 314 | 251.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/05_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–73 | Tramo final, semilla 101, decisiones 1–73 |
+| Beginning, seed 101, decisions 1–73 | Ending, seed 101, decisions 1–73 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–73](stages/05_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 1–73](stages/05_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–73](stages/05_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 1–73](stages/05_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 6: 90 min adicionales
+### Stage 6: 90 additional min
 
-Etapa `06_stage` · 90,0 minutos adicionales · 1.060.900 decisiones acumuladas.
+Stage `06_stage` · 90.0 additional minutes · 1,060,900 cumulative decisions.
 
-[Evaluación completa en JSON](stages/06_stage/evaluation.json) · [Resumen del entrenamiento](training/06_stage/training_summary.json)
+[Full evaluation JSON](stages/06_stage/evaluation.json) · [Training summary](training/06_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 1.534 | 1.534 | 1.453,0 | fin sin bandera; causa no identificada | 0 | 9 | [comienzo](stages/06_stage/seed-101/beginning.gif) · [tramo final](stages/06_stage/seed-101/ending.gif) · [traza CSV](stages/06_stage/seed-101/trace.csv) · [último fotograma](stages/06_stage/seed-101/last-frame.png) |
-| 202 | 1.526 | 1.526 | 1.441,0 | fin sin bandera; causa no identificada | 0 | 18 | [comienzo](stages/06_stage/seed-202/beginning.gif) · [tramo final](stages/06_stage/seed-202/ending.gif) · [traza CSV](stages/06_stage/seed-202/trace.csv) · [último fotograma](stages/06_stage/seed-202/last-frame.png) |
-| 303 | 3.161 | 3.161 | 3.075,0 | bandera alcanzada | 0 | 14 | [comienzo](stages/06_stage/seed-303/beginning.gif) · [tramo final](stages/06_stage/seed-303/ending.gif) · [traza CSV](stages/06_stage/seed-303/trace.csv) · [último fotograma](stages/06_stage/seed-303/last-frame.png) |
-| 404 | 680 | 680 | 610,0 | fin sin bandera; causa no identificada | 0 | 1 | [traza CSV](stages/06_stage/seed-404/trace.csv) |
-| 505 | 1.418 | 1.418 | 1.336,0 | fin sin bandera; causa no identificada | 0 | 11 | [traza CSV](stages/06_stage/seed-505/trace.csv) |
+| 101 | 1,534 | 1,534 | 1,453.0 | ended without reaching the flag; cause unknown | 0 | 9 | [beginning](stages/06_stage/seed-101/beginning.gif) · [ending](stages/06_stage/seed-101/ending.gif) · [CSV trace](stages/06_stage/seed-101/trace.csv) · [last frame](stages/06_stage/seed-101/last-frame.png) |
+| 202 | 1,526 | 1,526 | 1,441.0 | ended without reaching the flag; cause unknown | 0 | 18 | [beginning](stages/06_stage/seed-202/beginning.gif) · [ending](stages/06_stage/seed-202/ending.gif) · [CSV trace](stages/06_stage/seed-202/trace.csv) · [last frame](stages/06_stage/seed-202/last-frame.png) |
+| 303 | 3,161 | 3,161 | 3,075.0 | flag reached | 0 | 14 | [beginning](stages/06_stage/seed-303/beginning.gif) · [ending](stages/06_stage/seed-303/ending.gif) · [CSV trace](stages/06_stage/seed-303/trace.csv) · [last frame](stages/06_stage/seed-303/last-frame.png) |
+| 404 | 680 | 680 | 610.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/06_stage/seed-404/trace.csv) |
+| 505 | 1,418 | 1,418 | 1,336.0 | ended without reaching the flag; cause unknown | 0 | 11 | [CSV trace](stages/06_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 88–162 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 88–162 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/06_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 88–162](stages/06_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/06_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 88–162](stages/06_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 7: 105 min adicionales
+### Stage 7: 105 additional min
 
-Etapa `07_stage` · 105,0 minutos adicionales · 1.226.324 decisiones acumuladas.
+Stage `07_stage` · 105.0 additional minutes · 1,226,324 cumulative decisions.
 
-[Evaluación completa en JSON](stages/07_stage/evaluation.json) · [Resumen del entrenamiento](training/07_stage/training_summary.json)
+[Full evaluation JSON](stages/07_stage/evaluation.json) · [Training summary](training/07_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 1.814 | 1.814 | 1.724,0 | fin sin bandera; causa no identificada | 0 | 26 | [comienzo](stages/07_stage/seed-101/beginning.gif) · [tramo final](stages/07_stage/seed-101/ending.gif) · [traza CSV](stages/07_stage/seed-101/trace.csv) · [último fotograma](stages/07_stage/seed-101/last-frame.png) |
-| 202 | 2.476 | 2.476 | 2.366,0 | fin sin bandera; causa no identificada | 0 | 16 | [comienzo](stages/07_stage/seed-202/beginning.gif) · [tramo final](stages/07_stage/seed-202/ending.gif) · [traza CSV](stages/07_stage/seed-202/trace.csv) · [último fotograma](stages/07_stage/seed-202/last-frame.png) |
-| 303 | 1.129 | 1.129 | 1.015,0 | fin sin bandera; causa no identificada | 1 | 173 | [comienzo](stages/07_stage/seed-303/beginning.gif) · [tramo final](stages/07_stage/seed-303/ending.gif) · [traza CSV](stages/07_stage/seed-303/trace.csv) · [último fotograma](stages/07_stage/seed-303/last-frame.png) |
-| 404 | 3.161 | 3.161 | 3.054,0 | bandera alcanzada | 0 | 19 | [traza CSV](stages/07_stage/seed-404/trace.csv) |
-| 505 | 2.473 | 2.473 | 2.389,0 | fin sin bandera; causa no identificada | 0 | 5 | [traza CSV](stages/07_stage/seed-505/trace.csv) |
+| 101 | 1,814 | 1,814 | 1,724.0 | ended without reaching the flag; cause unknown | 0 | 26 | [beginning](stages/07_stage/seed-101/beginning.gif) · [ending](stages/07_stage/seed-101/ending.gif) · [CSV trace](stages/07_stage/seed-101/trace.csv) · [last frame](stages/07_stage/seed-101/last-frame.png) |
+| 202 | 2,476 | 2,476 | 2,366.0 | ended without reaching the flag; cause unknown | 0 | 16 | [beginning](stages/07_stage/seed-202/beginning.gif) · [ending](stages/07_stage/seed-202/ending.gif) · [CSV trace](stages/07_stage/seed-202/trace.csv) · [last frame](stages/07_stage/seed-202/last-frame.png) |
+| 303 | 1,129 | 1,129 | 1,015.0 | ended without reaching the flag; cause unknown | 1 | 173 | [beginning](stages/07_stage/seed-303/beginning.gif) · [ending](stages/07_stage/seed-303/ending.gif) · [CSV trace](stages/07_stage/seed-303/trace.csv) · [last frame](stages/07_stage/seed-303/last-frame.png) |
+| 404 | 3,161 | 3,161 | 3,054.0 | flag reached | 0 | 19 | [CSV trace](stages/07_stage/seed-404/trace.csv) |
+| 505 | 2,473 | 2,473 | 2,389.0 | ended without reaching the flag; cause unknown | 0 | 5 | [CSV trace](stages/07_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 130–204 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 130–204 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/07_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 130–204](stages/07_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/07_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 130–204](stages/07_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 8: 120 min adicionales
+### Stage 8: 120 additional min
 
-Etapa `08_stage` · 120,0 minutos adicionales · 1.387.392 decisiones acumuladas.
+Stage `08_stage` · 120.0 additional minutes · 1,387,392 cumulative decisions.
 
-[Evaluación completa en JSON](stages/08_stage/evaluation.json) · [Resumen del entrenamiento](training/08_stage/training_summary.json)
+[Full evaluation JSON](stages/08_stage/evaluation.json) · [Training summary](training/08_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 2.473 | 2.473 | 2.379,0 | fin sin bandera; causa no identificada | 0 | 6 | [comienzo](stages/08_stage/seed-101/beginning.gif) · [tramo final](stages/08_stage/seed-101/ending.gif) · [traza CSV](stages/08_stage/seed-101/trace.csv) · [último fotograma](stages/08_stage/seed-101/last-frame.png) |
-| 202 | 2.762 | 2.762 | 2.659,0 | fin sin bandera; causa no identificada | 0 | 22 | [comienzo](stages/08_stage/seed-202/beginning.gif) · [tramo final](stages/08_stage/seed-202/ending.gif) · [traza CSV](stages/08_stage/seed-202/trace.csv) · [último fotograma](stages/08_stage/seed-202/last-frame.png) |
-| 303 | 2.475 | 2.475 | 2.380,0 | fin sin bandera; causa no identificada | 0 | 7 | [comienzo](stages/08_stage/seed-303/beginning.gif) · [tramo final](stages/08_stage/seed-303/ending.gif) · [traza CSV](stages/08_stage/seed-303/trace.csv) · [último fotograma](stages/08_stage/seed-303/last-frame.png) |
-| 404 | 3.161 | 3.161 | 3.076,0 | bandera alcanzada | 0 | 10 | [traza CSV](stages/08_stage/seed-404/trace.csv) |
-| 505 | 3.161 | 3.161 | 3.079,0 | bandera alcanzada | 0 | 5 | [traza CSV](stages/08_stage/seed-505/trace.csv) |
+| 101 | 2,473 | 2,473 | 2,379.0 | ended without reaching the flag; cause unknown | 0 | 6 | [beginning](stages/08_stage/seed-101/beginning.gif) · [ending](stages/08_stage/seed-101/ending.gif) · [CSV trace](stages/08_stage/seed-101/trace.csv) · [last frame](stages/08_stage/seed-101/last-frame.png) |
+| 202 | 2,762 | 2,762 | 2,659.0 | ended without reaching the flag; cause unknown | 0 | 22 | [beginning](stages/08_stage/seed-202/beginning.gif) · [ending](stages/08_stage/seed-202/ending.gif) · [CSV trace](stages/08_stage/seed-202/trace.csv) · [last frame](stages/08_stage/seed-202/last-frame.png) |
+| 303 | 2,475 | 2,475 | 2,380.0 | ended without reaching the flag; cause unknown | 0 | 7 | [beginning](stages/08_stage/seed-303/beginning.gif) · [ending](stages/08_stage/seed-303/ending.gif) · [CSV trace](stages/08_stage/seed-303/trace.csv) · [last frame](stages/08_stage/seed-303/last-frame.png) |
+| 404 | 3,161 | 3,161 | 3,076.0 | flag reached | 0 | 10 | [CSV trace](stages/08_stage/seed-404/trace.csv) |
+| 505 | 3,161 | 3,161 | 3,079.0 | flag reached | 0 | 5 | [CSV trace](stages/08_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 168–242 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 168–242 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/08_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 168–242](stages/08_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/08_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 168–242](stages/08_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 9: 135 min adicionales
+### Stage 9: 135 additional min
 
-Etapa `09_stage` · 135,0 minutos adicionales · 1.547.240 decisiones acumuladas.
+Stage `09_stage` · 135.0 additional minutes · 1,547,240 cumulative decisions.
 
-[Evaluación completa en JSON](stages/09_stage/evaluation.json) · [Resumen del entrenamiento](training/09_stage/training_summary.json)
+[Full evaluation JSON](stages/09_stage/evaluation.json) · [Training summary](training/09_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 3.161 | 3.161 | 3.077,0 | bandera alcanzada | 0 | 12 | [comienzo](stages/09_stage/seed-101/beginning.gif) · [tramo final](stages/09_stage/seed-101/ending.gif) · [traza CSV](stages/09_stage/seed-101/trace.csv) · [último fotograma](stages/09_stage/seed-101/last-frame.png) |
-| 202 | 3.161 | 3.161 | 3.077,0 | bandera alcanzada | 0 | 19 | [comienzo](stages/09_stage/seed-202/beginning.gif) · [tramo final](stages/09_stage/seed-202/ending.gif) · [traza CSV](stages/09_stage/seed-202/trace.csv) · [último fotograma](stages/09_stage/seed-202/last-frame.png) |
-| 303 | 2.762 | 2.762 | 2.675,0 | fin sin bandera; causa no identificada | 0 | 1 | [comienzo](stages/09_stage/seed-303/beginning.gif) · [tramo final](stages/09_stage/seed-303/ending.gif) · [traza CSV](stages/09_stage/seed-303/trace.csv) · [último fotograma](stages/09_stage/seed-303/last-frame.png) |
-| 404 | 3.161 | 3.161 | 3.086,0 | bandera alcanzada | 0 | 10 | [traza CSV](stages/09_stage/seed-404/trace.csv) |
-| 505 | 3.161 | 3.161 | 3.083,0 | bandera alcanzada | 0 | 5 | [traza CSV](stages/09_stage/seed-505/trace.csv) |
+| 101 | 3,161 | 3,161 | 3,077.0 | flag reached | 0 | 12 | [beginning](stages/09_stage/seed-101/beginning.gif) · [ending](stages/09_stage/seed-101/ending.gif) · [CSV trace](stages/09_stage/seed-101/trace.csv) · [last frame](stages/09_stage/seed-101/last-frame.png) |
+| 202 | 3,161 | 3,161 | 3,077.0 | flag reached | 0 | 19 | [beginning](stages/09_stage/seed-202/beginning.gif) · [ending](stages/09_stage/seed-202/ending.gif) · [CSV trace](stages/09_stage/seed-202/trace.csv) · [last frame](stages/09_stage/seed-202/last-frame.png) |
+| 303 | 2,762 | 2,762 | 2,675.0 | ended without reaching the flag; cause unknown | 0 | 1 | [beginning](stages/09_stage/seed-303/beginning.gif) · [ending](stages/09_stage/seed-303/ending.gif) · [CSV trace](stages/09_stage/seed-303/trace.csv) · [last frame](stages/09_stage/seed-303/last-frame.png) |
+| 404 | 3,161 | 3,161 | 3,086.0 | flag reached | 0 | 10 | [CSV trace](stages/09_stage/seed-404/trace.csv) |
+| 505 | 3,161 | 3,161 | 3,083.0 | flag reached | 0 | 5 | [CSV trace](stages/09_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 259–333 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 259–333 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/09_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 259–333](stages/09_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/09_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 259–333](stages/09_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 10: 150 min adicionales
+### Stage 10: 150 additional min
 
-Etapa `10_stage` · 150,0 minutos adicionales · 1.708.772 decisiones acumuladas.
+Stage `10_stage` · 150.0 additional minutes · 1,708,772 cumulative decisions.
 
-[Evaluación completa en JSON](stages/10_stage/evaluation.json) · [Resumen del entrenamiento](training/10_stage/training_summary.json)
+[Full evaluation JSON](stages/10_stage/evaluation.json) · [Training summary](training/10_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 3.161 | 3.161 | 3.089,0 | bandera alcanzada | 0 | 10 | [comienzo](stages/10_stage/seed-101/beginning.gif) · [tramo final](stages/10_stage/seed-101/ending.gif) · [traza CSV](stages/10_stage/seed-101/trace.csv) · [último fotograma](stages/10_stage/seed-101/last-frame.png) |
-| 202 | 3.161 | 3.161 | 3.089,0 | bandera alcanzada | 0 | 12 | [comienzo](stages/10_stage/seed-202/beginning.gif) · [tramo final](stages/10_stage/seed-202/ending.gif) · [traza CSV](stages/10_stage/seed-202/trace.csv) · [último fotograma](stages/10_stage/seed-202/last-frame.png) |
-| 303 | 3.161 | 3.161 | 3.086,0 | bandera alcanzada | 0 | 7 | [comienzo](stages/10_stage/seed-303/beginning.gif) · [tramo final](stages/10_stage/seed-303/ending.gif) · [traza CSV](stages/10_stage/seed-303/trace.csv) · [último fotograma](stages/10_stage/seed-303/last-frame.png) |
-| 404 | 3.161 | 3.161 | 3.078,0 | bandera alcanzada | 0 | 10 | [traza CSV](stages/10_stage/seed-404/trace.csv) |
-| 505 | 3.161 | 3.161 | 3.091,0 | bandera alcanzada | 0 | 6 | [traza CSV](stages/10_stage/seed-505/trace.csv) |
+| 101 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 10 | [beginning](stages/10_stage/seed-101/beginning.gif) · [ending](stages/10_stage/seed-101/ending.gif) · [CSV trace](stages/10_stage/seed-101/trace.csv) · [last frame](stages/10_stage/seed-101/last-frame.png) |
+| 202 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 12 | [beginning](stages/10_stage/seed-202/beginning.gif) · [ending](stages/10_stage/seed-202/ending.gif) · [CSV trace](stages/10_stage/seed-202/trace.csv) · [last frame](stages/10_stage/seed-202/last-frame.png) |
+| 303 | 3,161 | 3,161 | 3,086.0 | flag reached | 0 | 7 | [beginning](stages/10_stage/seed-303/beginning.gif) · [ending](stages/10_stage/seed-303/ending.gif) · [CSV trace](stages/10_stage/seed-303/trace.csv) · [last frame](stages/10_stage/seed-303/last-frame.png) |
+| 404 | 3,161 | 3,161 | 3,078.0 | flag reached | 0 | 10 | [CSV trace](stages/10_stage/seed-404/trace.csv) |
+| 505 | 3,161 | 3,161 | 3,091.0 | flag reached | 0 | 6 | [CSV trace](stages/10_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 235–309 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 235–309 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/10_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 235–309](stages/10_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/10_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 235–309](stages/10_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-### Etapa 11: 163 min adicionales
+### Stage 11: 163 additional min
 
-Etapa `11_stage` · 162,8 minutos adicionales · 1.846.520 decisiones acumuladas.
+Stage `11_stage` · 162.8 additional minutes · 1,846,520 cumulative decisions.
 
-[Evaluación completa en JSON](stages/11_stage/evaluation.json) · [Resumen del entrenamiento](training/11_stage/training_summary.json)
+[Full evaluation JSON](stages/11_stage/evaluation.json) · [Training summary](training/11_stage/training_summary.json)
 
-| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 101 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 7 | [comienzo](stages/11_stage/seed-101/beginning.gif) · [tramo final](stages/11_stage/seed-101/ending.gif) · [traza CSV](stages/11_stage/seed-101/trace.csv) · [último fotograma](stages/11_stage/seed-101/last-frame.png) |
-| 202 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 8 | [comienzo](stages/11_stage/seed-202/beginning.gif) · [tramo final](stages/11_stage/seed-202/ending.gif) · [traza CSV](stages/11_stage/seed-202/trace.csv) · [último fotograma](stages/11_stage/seed-202/last-frame.png) |
-| 303 | 3.161 | 3.161 | 3.091,0 | bandera alcanzada | 0 | 3 | [comienzo](stages/11_stage/seed-303/beginning.gif) · [tramo final](stages/11_stage/seed-303/ending.gif) · [traza CSV](stages/11_stage/seed-303/trace.csv) · [último fotograma](stages/11_stage/seed-303/last-frame.png) |
-| 404 | 3.161 | 3.161 | 3.088,0 | bandera alcanzada | 0 | 9 | [traza CSV](stages/11_stage/seed-404/trace.csv) |
-| 505 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 5 | [traza CSV](stages/11_stage/seed-505/trace.csv) |
+| 101 | 3,161 | 3,161 | 3,087.0 | flag reached | 0 | 7 | [beginning](stages/11_stage/seed-101/beginning.gif) · [ending](stages/11_stage/seed-101/ending.gif) · [CSV trace](stages/11_stage/seed-101/trace.csv) · [last frame](stages/11_stage/seed-101/last-frame.png) |
+| 202 | 3,161 | 3,161 | 3,087.0 | flag reached | 0 | 8 | [beginning](stages/11_stage/seed-202/beginning.gif) · [ending](stages/11_stage/seed-202/ending.gif) · [CSV trace](stages/11_stage/seed-202/trace.csv) · [last frame](stages/11_stage/seed-202/last-frame.png) |
+| 303 | 3,161 | 3,161 | 3,091.0 | flag reached | 0 | 3 | [beginning](stages/11_stage/seed-303/beginning.gif) · [ending](stages/11_stage/seed-303/ending.gif) · [CSV trace](stages/11_stage/seed-303/trace.csv) · [last frame](stages/11_stage/seed-303/last-frame.png) |
+| 404 | 3,161 | 3,161 | 3,088.0 | flag reached | 0 | 9 | [CSV trace](stages/11_stage/seed-404/trace.csv) |
+| 505 | 3,161 | 3,161 | 3,087.0 | flag reached | 0 | 5 | [CSV trace](stages/11_stage/seed-505/trace.csv) |
 
-| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 245–319 |
+| Beginning, seed 101, decisions 1–150 | Ending, seed 101, decisions 245–319 |
 | --- | --- |
-| ![Comienzo, semilla 101, decisiones 1–150](stages/11_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 245–319](stages/11_stage/seed-101/ending.gif) |
+| ![Beginning, seed 101, decisions 1–150](stages/11_stage/seed-101/beginning.gif) | ![Ending, seed 101, decisions 245–319](stages/11_stage/seed-101/ending.gif) |
 
-**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
-## Prueba final con semillas nuevas
+## Final test with new seeds
 
-Estas semillas se reservaron para el modelo final; no se mezclan con la curva de cinco pruebas repetidas ni se usan para elegir una etapa. Siguen siendo intentos del mismo World 1-1.
+These seeds were reserved for the final model; they are not included in the curve of five repeated trials or used to select a stage. They are still attempts on the same World 1-1 level.
 
-[Datos de la prueba final](final_audit/evaluation.json)
+[Final test data](final_audit/evaluation.json)
 
-Posición máxima media: **2.818,6 px** · Mediana: **3.161,0 px** · Bandera: **7/10 pruebas**.
+Mean maximum position: **2,818.6 px** · Median: **3,161.0 px** · Flag: **7/10 trials**.
 
-| Semilla | Máx. x | Bandera | Evidencia |
+| Seed | Max. x | Flag | Evidence |
 | ---: | ---: | ---: | --- |
-| 1001 | 3.161 | sí | [comienzo](final_audit/seed-1001/beginning.gif) · [tramo final](final_audit/seed-1001/ending.gif) · [traza CSV](final_audit/seed-1001/trace.csv) |
-| 1002 | 1.790 | no | [traza CSV](final_audit/seed-1002/trace.csv) |
-| 1003 | 3.161 | sí | [traza CSV](final_audit/seed-1003/trace.csv) |
-| 1004 | 3.161 | sí | [traza CSV](final_audit/seed-1004/trace.csv) |
-| 1005 | 2.470 | no | [traza CSV](final_audit/seed-1005/trace.csv) |
-| 1006 | 1.799 | no | [traza CSV](final_audit/seed-1006/trace.csv) |
-| 1007 | 3.161 | sí | [traza CSV](final_audit/seed-1007/trace.csv) |
-| 1008 | 3.161 | sí | [traza CSV](final_audit/seed-1008/trace.csv) |
-| 1009 | 3.161 | sí | [traza CSV](final_audit/seed-1009/trace.csv) |
-| 1010 | 3.161 | sí | [traza CSV](final_audit/seed-1010/trace.csv) |
+| 1001 | 3,161 | yes | [beginning](final_audit/seed-1001/beginning.gif) · [ending](final_audit/seed-1001/ending.gif) · [CSV trace](final_audit/seed-1001/trace.csv) |
+| 1002 | 1,790 | no | [CSV trace](final_audit/seed-1002/trace.csv) |
+| 1003 | 3,161 | yes | [CSV trace](final_audit/seed-1003/trace.csv) |
+| 1004 | 3,161 | yes | [CSV trace](final_audit/seed-1004/trace.csv) |
+| 1005 | 2,470 | no | [CSV trace](final_audit/seed-1005/trace.csv) |
+| 1006 | 1,799 | no | [CSV trace](final_audit/seed-1006/trace.csv) |
+| 1007 | 3,161 | yes | [CSV trace](final_audit/seed-1007/trace.csv) |
+| 1008 | 3,161 | yes | [CSV trace](final_audit/seed-1008/trace.csv) |
+| 1009 | 3,161 | yes | [CSV trace](final_audit/seed-1009/trace.csv) |
+| 1010 | 3,161 | yes | [CSV trace](final_audit/seed-1010/trace.csv) |
 
-## Material conservado y próximas sesiones
+## Saved materials and future sessions
 
-Los checkpoints publicados se descargan desde la [versión de modelos de esta sesión](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260916). Son archivos separados del historial de código y requieren los permisos del repositorio. El enlace se incorpora al manifiesto después de confirmar la subida; consultar allí los archivos efectivamente publicados.
+Published checkpoints can be downloaded from the [model release for this session](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260916). These files are separate from the code history and require repository access. The link is added to the manifest after the upload is confirmed; check the release for the files actually published.
 
-El repositorio conserva los reportes, las métricas y las muestras publicadas. Los logs detallados permanecen locales.
+The repository retains the reports, metrics, and published samples. Detailed logs remain local.
 
-Último checkpoint local registrado: `results/teaching_20260916/training/11_stage/checkpoints/final.zip`.
+Latest recorded local checkpoint: `results/teaching_20260916/training/11_stage/checkpoints/final.zip`.
 
-[Informe de esta sesión](INFORME.md) · [Guía docente](../../docs/aula/GUIA_DOCENTE.md)
+[Session report](INFORME.md) · [Teacher guide](../../docs/aula/GUIA_DOCENTE.md)
 
-Sesiones conservadas:
+Archived sessions:
 
 - [teaching_20260916](INFORME.md)
 
-Motivo de cierre registrado: `session_time_budget_reached`.
+Recorded reason for ending the session: `session_time_budget_reached`.
 
-Para actualizar el mismo panel después de generar nuevas evaluaciones:
+To update this dashboard after generating new evaluations:
 
 ```sh
 .venv/bin/python lesson_report.py --manifest results/teaching_20260916/manifest.json --repo-root .
 ```
 
-La actualización del panel es local hasta que se confirma y se sube a GitHub. No ejecuta aprendizaje ni modifica los pesos del modelo.
+The dashboard update remains local until it is committed and uploaded to GitHub. It does not run training or modify model weights.
