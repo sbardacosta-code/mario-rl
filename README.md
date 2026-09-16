@@ -1,83 +1,93 @@
 # Mario RL
 
-Learn reinforcement learning by training an agent to play Super Mario Bros. with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros).
+Train a Super Mario Bros. agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
-**Status: planning only.** This repository contains the starting plan. No environment has been installed, no training code has been implemented, and no training has been started.
+**World 1-1 setup is verified on Apple Silicon macOS.** The repository now includes a keyboard-play launcher, reproducible dependencies, and an environment check with saved evidence. No model has been trained; the setup report records zero learning updates.
 
-First goal: teach an agent to finish **World 1-1** consistently, then measure how well it handles other levels.
+## Play on the configured Mac
 
-## 1. Clone the repository when ready
+Open `play.command` in Finder, or run it from this repository:
+
+```sh
+./play.command
+```
+
+Click the game window to focus it. Use **A / D** to move, **O** to jump, **D + P** to run right, and **Escape** to quit. The launcher uses the simple action set, so only its supported button combinations are active.
+
+The launcher uses this repository's `.venv`; it does not need shell activation.
+
+## Verified setup
+
+| Component | Tested version |
+| --- | --- |
+| Python | 3.13.15, native ARM64 |
+| gym-super-mario-bros | 9.1.0 |
+| nes-py | 9.0.1 |
+| Gymnasium | 1.3.0 |
+| Stable Baselines3 | 2.9.0 |
+| PyTorch | 2.14.0 |
+| macOS | 26.6.2 |
+
+[requirements.txt](requirements.txt) pins the direct dependencies. [requirements-lock.txt](requirements-lock.txt) records the full installed package set for this Python/macOS setup. The configured machine keeps Python in `.python/` and the virtual environment in `.venv/`; neither is committed.
+
+## Check the environment again
+
+```sh
+.venv/bin/python -m pip check
+MPLCONFIGDIR="$PWD/.cache/matplotlib" .venv/bin/python scripts/check_environment.py
+```
+
+The script checks the game without training and rewrites `results/setup/`. You can choose a different destination with `--output-dir`.
+
+The saved [report](results/setup/report.json) confirms:
+
+- World 1-1 produces nonblank 240 × 256 RGB images and exposes five `RIGHT_ONLY` actions.
+- 1,000 random actions with seed 123 changed the image on 965 steps and reached horizontal position 594.
+- Holding right without jumping caused death after 160 steps; the next reset succeeded.
+- An external three-step time limit caused truncation; the next reset succeeded.
+- Resized grayscale inputs stacked into four frames have shape `(4, 84, 84)` and passed Stable Baselines3's environment checker.
+
+The screenshot below is from random play, not a trained model. These checks establish that the environment works; they do not measure learning ability or level completion.
+
+![World 1-1 during the random-action check](results/setup/mario-world-1-1.png)
+
+## Recreate the environment
+
+Use an installed native Python 3.13 interpreter:
 
 ```sh
 git clone https://github.com/sbardacosta-code/mario-rl.git
 cd mario-rl
-```
-
-All commands below are instructions for a future setup session; they have not been run for this project.
-
-## 2. Create a separate Python environment
-
-Use native ARM64 **Python 3.13** on an Apple Silicon Mac. If that interpreter is not installed, install it before running:
-
-```sh
 python3.13 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-```
-
-The current Mario release requires Python 3.13 or newer. The NES emulator publishes a Python 3.13 macOS ARM64 wheel. See [Mario requirements](https://pypi.org/project/gym-super-mario-bros/) and [NES emulator downloads](https://pypi.org/project/nes-py/#files).
-
-## 3. Install and verify the learning tools
-
-Proposed starting versions, checked against published packages on September 15, 2026:
-
-```sh
-python -m pip install "gym-super-mario-bros==9.1.0" "nes-py==9.0.1" "stable-baselines3[extra]==2.9.0"
+python -m pip install -r requirements-lock.txt
 python -m pip check
+MPLCONFIGDIR="$PWD/.cache/matplotlib" python scripts/check_environment.py
+./play.command
 ```
 
-[Stable Baselines3](https://pypi.org/project/stable-baselines3/) provides the learning algorithm and uses PyTorch; its extras include TensorBoard for training charts. These versions are a documented starting point, not an installation tested on this machine. After the environment checks below pass, save the resolved versions for reproducibility.
+The [current Mario package requires Python 3.13 or newer](https://pypi.org/project/gym-super-mario-bros/). The package versions above were installed and checked on this Mac; other platforms should repeat the checks.
 
-Use the modern Gymnasium API in future code: `reset()` returns observation and info; `step()` returns observation, reward, terminated, truncated, and info. End an episode when either termination flag is true.
-
-## 4. Check the game before training
-
-First open World 1-1 and play with the keyboard:
+**Launcher correction:** the published 9.1.0 wheel does not contain `gym_super_mario_bros/__main__.py`, so its documented `python -m gym_super_mario_bros` command fails. Use the installed executable instead:
 
 ```sh
-python -m gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode human --actionspace simple
+.venv/bin/gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode human --actionspace simple
 ```
 
-Then run a short random-action check:
+For a quick built-in random-action demo:
 
 ```sh
-python -m gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode random --actionspace right --steps 1000 --no-render --seed 123
+.venv/bin/gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode random --actionspace right --steps 1000 --no-render --no-progress --seed 123
 ```
 
-Verify that the game opens, actions advance it, observations and rewards arrive, and episodes reset correctly. Random play is a functionality check, not learning. [Environment and CLI documentation](https://github.com/Kautenja/gym-super-mario-bros#usage)
+The built-in CLI seeds the environment but not action sampling. Use `scripts/check_environment.py` when you need the separately seeded random-action check used in the saved report.
 
-## 5. Prepare what the agent sees and controls
+## Next: build the learning experiment
 
-Implement preprocessing: resize screenshots, convert them to grayscale, repeat each action for a few game frames, and stack four observations so the model can infer motion. Start with the `RIGHT_ONLY` action set, which includes jumping. Validate the final observation shape, action space, and reset/step behavior before training.
+1. Extract the checked image preprocessing into a reusable environment factory and add a validated action-repeat wrapper. The setup check currently advances one emulator frame per action.
+2. Add PPO with `CnnPolicy`, initially using World 1-1 and `RIGHT_ONLY`. Run a short check of learning, logs, and checkpoint saving before increasing the budget.
+3. Evaluate saved models separately using identical preprocessing and action mappings. Track distance, reward, and level completion rate; record videos.
+4. Once World 1-1 is reliable, train and evaluate on more levels, including levels the agent has not trained on.
 
-## 6. Add the first training experiment
-
-Implement PPO with Stable Baselines3's `CnnPolicy`, which learns from images. Begin with one environment and a short CPU run to check the training loop, model saving, and logs. Only then increase the training budget. Benchmark hardware options before choosing them. [PPO documentation](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html)
-
-Planned files to add during implementation:
-
-- `src/mario_rl/env.py`: environment creation and preprocessing.
-- `train.py`: PPO training, checkpoint saving, and logging.
-- `evaluate.py`: load a checkpoint and watch or record the agent.
-- `requirements.txt`: verified dependency versions.
-- `.gitignore`: exclude the virtual environment, checkpoints, recordings, and logs.
-
-## 7. Measure progress and watch saved models
-
-Train without continuously drawing the game window. Evaluate saved checkpoints separately using the same preprocessing and action mapping. Record distance reached, level completion rate, episode reward, and evaluation seeds. Compare with random play; retain the best model and a short video of its behavior.
-
-## 8. Expand after World 1-1 works
-
-Aim for reliable completion across repeated evaluation episodes. Then add other levels and evaluate on levels the agent did not train on. Change one major setting at a time and record what changed and what happened.
-
-The next milestone is a verified World 1-1 environment. Training time and success will depend on the implementation, hardware, and learning settings.
+Planned additions: `src/mario_rl/env.py`, `train.py`, and `evaluate.py`. Model checkpoints, recordings, and logs are excluded from Git. See the [PPO documentation](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html) for the learning algorithm.
