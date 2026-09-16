@@ -1,0 +1,72 @@
+{
+  "session_id": "teaching_20260916",
+  "session_dir": "results/teaching_20260916",
+  "status": "prepared",
+  "created_at": "2026-09-16T07:04:00.592921+00:00",
+  "started_at": null,
+  "deadline_utc": null,
+  "pid": 7937,
+  "initial_checkpoint": "results/reward_scaled/checkpoints/final.zip",
+  "initial_checkpoint_sha256": "676a8f2cc5f4dc6e0407fe89dbf5496819d7364749b33acfcb5adc3bf3305184",
+  "configuration": {
+    "reward_scale": 0.01,
+    "learning_rate": 0.0001,
+    "target_kl": 0.02,
+    "ent_coef": 0.01,
+    "training_seed": 123,
+    "eval_seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "chunk_seconds": 900,
+    "device": "cpu",
+    "threads": 1,
+    "n_envs": 4
+  },
+  "session_args": {
+    "max_seconds": 10800,
+    "chunk_seconds": 900,
+    "max_chunks": 100,
+    "eval_seconds": 180,
+    "eval_max_decisions": 3000,
+    "eval_seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "video_seeds": [
+      101,
+      202,
+      303
+    ]
+  },
+  "stages": [
+    {
+      "id": "00_baseline",
+      "label": "Inicio: modelo con 102,400 decisiones previas",
+      "elapsed_training_seconds": 0,
+      "training_timesteps": 102400,
+      "evaluation_path": "results/teaching_20260916/stages/00_baseline/evaluation.json",
+      "checkpoint_path": "results/reward_scaled/checkpoints/final.zip",
+      "training_summary_path": null
+    }
+  ],
+  "elapsed_training_seconds": 0,
+  "completion_reason": null,
+  "interpretation": "Contin\u00faa un modelo previo; cambia tasa de aprendizaje y l\u00edmite KL juntos. No permite atribuir una diferencia a un solo par\u00e1metro. Cinco semillas de acciones son una muestra peque\u00f1a del mismo nivel.",
+  "source_hashes": {
+    "train.py": "0525569810abc72c4938339eee35903935ab9b5270d70515eba4e7f7e7eb7201",
+    "mario_env.py": "4084a125ceeb56ab518a77a2ffdbdd3f6732e54a501e4bd0c1f0eb235ad08968",
+    "lesson_eval.py": "8d870aeed17314f03712a0dde820cdfd252bfede825e854e153af47dbbe4c969",
+    "lesson_report.py": "7338418a6747798975decd5ab0e328b6547ec065b985d931bf3b9c0c8243aea7",
+    "lesson_session.py": "510d5014a47d1eb138372ade6aab3a115ab95b3110720dc53f2b8d882574d4e5",
+    "publish_lesson_models.py": "e570aab91f57cbeeebcfda732d364cf1cec07eae5ebd90f502a719cc287f4936",
+    "requirements-lock.txt": "24f481f95bf0b9772b65f40fa9af167c514bf5a50179bf7605752d0082ad4348"
+  },
+  "preparation_note": "Publication helper strengthened after baseline evaluation; learning and evaluation sources unchanged. Final source hashes recorded before any training."
+}

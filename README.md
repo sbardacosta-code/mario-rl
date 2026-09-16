@@ -2,6 +2,23 @@
 
 Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
+## Proyecto para el aula
+
+[**Abrir la galería de aprendizaje de Mario**](docs/aula/README.md) · [Guía para el profe](docs/aula/GUIA_DOCENTE.md) · [Plan de entrenamiento y enseñanza](docs/aula/PLAN.md)
+
+El laboratorio conserva muestras de cada etapa, métricas comparables y trazas de acciones para discutir cómo aprende una política, dónde falla y cuándo retrocede. El enlace del aula permanece estable al publicar nuevas sesiones. El acceso depende de los permisos del repositorio.
+
+La sesión docente usa bloques de aproximadamente 15 minutos y cinco evaluaciones fijas por etapa. Sus parámetros son una configuración candidata, no un óptimo demostrado. Al finalizar se evalúa el modelo con diez semillas nuevas y se respaldan los checkpoints de la sesión en GitHub Releases cuando la publicación está habilitada.
+
+Para preparar y ejecutar una nueva sesión local (hasta tres horas, reservando tiempo para evaluar y guardar):
+
+```sh
+.venv/bin/python lesson_session.py --run-dir results/mi_clase --initial-model results/reward_scaled/checkpoints/final.zip --prepare-only
+.venv/bin/python lesson_session.py --run-dir results/mi_clase --start-prepared --publish
+```
+
+El primer comando requiere un checkpoint local existente. Se conserva una carpeta distinta por sesión; no se sobrescriben resultados anteriores. `--publish` confirma y sube únicamente los resultados de esa sesión y los documentos del aula a `main`. Para detenerla con guardado, crear un archivo `STOP` en su carpeta de resultados.
+
 ## Reward scaling pilot
 
 The second experiment changed **only the training reward multiplier to 0.01**, restarting the exact original untrained checkpoint. It trained for **10.0 minutes**, using **102,400 decisions and 1,600 optimizer steps**. The comparison uses the original run's approximately 10-minute checkpoint, which has the same number of completed learning updates.

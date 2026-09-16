@@ -25,6 +25,7 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback
 from stable_baselines3.common.logger import configure
 from stable_baselines3.common.monitor import Monitor
+from stable_baselines3.common.utils import FloatSchedule
 from stable_baselines3.common.vec_env import DummyVecEnv
 
 from mario_env import make_env
@@ -71,12 +72,13 @@ def optimizer_steps(model):
 
 
 class SessionCallback(BaseCallback):
-    def __init__(self, run_dir, max_seconds, deadline_utc, checkpoint_seconds):
+    def __init__(self, run_dir, max_seconds, deadline_utc, checkpoint_seconds, archive_seconds=300):
         super().__init__()
         self.run_dir = run_dir
         self.max_seconds = max_seconds
         self.deadline = datetime.fromisoformat(deadline_utc.replace("Z", "+00:00")).timestamp() if deadline_utc else None
         self.checkpoint_seconds = checkpoint_seconds
+        self.archive_seconds = archive_seconds
         self.recent = deque(maxlen=100)
         self.episode_count = 0
         self.completions = 0
@@ -86,8 +88,11 @@ class SessionCallback(BaseCallback):
     def _on_training_start(self):
         self.started = time.monotonic()
         self.first_timestep = self.model.num_timesteps
+        self.first_optimizer_steps = optimizer_steps(self.model)
+        self.completed_rollouts = 0
+        self.completed_rollout_decisions = 0
         self.next_checkpoint = self.checkpoint_seconds
-        self.next_archive = 300.0
+        self.next_archive = self.archive_seconds if self.archive_seconds else math.inf
         self.next_progress = 0.0
         self.next_print = 0.0
         self.csv_file = (self.run_dir / "episodes.csv").open("w", newline="")
@@ -101,6 +106,8 @@ class SessionCallback(BaseCallback):
         return {
             "elapsed_seconds": round(elapsed, 3),
             "timesteps": self.model.num_timesteps,
+            "base_num_timesteps": self.first_timestep,
+            "base_optimizer_steps": self.first_optimizer_steps,
             "decisions_this_run": self.model.num_timesteps - self.first_timestep,
             "decisions_per_second": round((self.model.num_timesteps - self.first_timestep) / max(elapsed, 0.001), 2),
             "episodes": self.episode_count,
@@ -110,7 +117,24 @@ class SessionCallback(BaseCallback):
             "recent_mean_return": float(np.mean([row["return"] for row in recent])) if recent else None,
             "ppo_epochs": self.model._n_updates,
             "optimizer_steps": optimizer_steps(self.model),
+            "optimizer_steps_this_run": optimizer_steps(self.model) - self.first_optimizer_steps,
+            "completed_rollouts_collected_this_run": self.completed_rollouts,
+            "decisions_in_completed_rollouts_this_run": self.completed_rollout_decisions,
+            "uncompleted_rollout_decisions": self.model.num_timesteps - self.first_timestep - self.completed_rollout_decisions,
+            "rollout_accounting_note": "Counts describe collected rollouts, not unique samples optimized; target-KL stopping can skip minibatches or epochs. PPO epoch counts may include an unfinished epoch.",
         }
+
+    def _on_rollout_end(self):
+        self.completed_rollouts += 1
+        self.completed_rollout_decisions += self.model.n_steps * self.model.n_envs
+
+    def checkpoint(self, path):
+        save_model(self.model, path)
+        write_json(Path(path).with_suffix(".json"), {
+            "saved_at": datetime.now(timezone.utc).isoformat(),
+            "checkpoint": str(Path(path).relative_to(self.run_dir)),
+            **self.progress(),
+        })
 
     def _on_step(self):
         elapsed = time.monotonic() - self.started
@@ -138,11 +162,11 @@ class SessionCallback(BaseCallback):
             print(json.dumps(self.progress()), flush=True)
             self.next_print = elapsed + 30
         if elapsed >= self.next_checkpoint:
-            save_model(self.model, self.run_dir / "checkpoints/latest.zip")
+            self.checkpoint(self.run_dir / "checkpoints/latest.zip")
             self.next_checkpoint = elapsed + self.checkpoint_seconds
         if elapsed >= self.next_archive:
-            save_model(self.model, self.run_dir / f"checkpoints/step_{self.model.num_timesteps:09d}.zip")
-            self.next_archive = elapsed + 300
+            self.checkpoint(self.run_dir / f"checkpoints/step_{self.model.num_timesteps:09d}.zip")
+            self.next_archive = elapsed + self.archive_seconds
         if elapsed >= self.max_seconds:
             self.stop_reason = "training_time_budget_reached"
             return False
@@ -165,36 +189,87 @@ def main():
     parser.add_argument("--device", choices=["cpu", "mps"], default="cpu")
     parser.add_argument("--threads", type=int, default=4)
     parser.add_argument("--n-envs", type=int, default=4)
-    parser.add_argument("--seed", type=int, default=123)
+    parser.add_argument("--seed", type=int, default=123, help="fresh-model seed; --resume preserves the checkpoint's seed and ignores this flag")
     parser.add_argument("--max-decisions", type=int, default=3000)
     parser.add_argument("--checkpoint-seconds", type=float, default=60)
+    parser.add_argument("--archive-seconds", type=float, default=300, help="interval for extra archived checkpoints; 0 disables archives")
     parser.add_argument("--reward-scale", type=float, default=1.0, help="multiply training rewards only; native episode metrics remain unchanged")
+    parser.add_argument("--learning-rate", type=float, help="override the learning rate; omitted preserves the checkpoint value, or uses 0.00025 for a fresh model")
+    parser.add_argument("--target-kl", type=float, help="positive KL early-stop threshold; omitted preserves the checkpoint value, or disables it for a fresh model")
+    parser.add_argument("--ent-coef", type=float, help="nonnegative entropy coefficient; omitted preserves the checkpoint value, or uses 0.01 for a fresh model")
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--initialize-only", action="store_true")
     args = parser.parse_args()
-    if min(args.max_seconds, args.max_timesteps, args.threads, args.n_envs, args.max_decisions, args.checkpoint_seconds) <= 0:
-        parser.error("budgets, worker counts, and checkpoint interval must be positive")
+    if args.initialize_only and args.resume:
+        parser.error("--initialize-only and --resume cannot be combined")
+    if any(not math.isfinite(value) or value <= 0 for value in [args.max_seconds, args.max_timesteps, args.threads, args.n_envs, args.max_decisions, args.checkpoint_seconds]):
+        parser.error("budgets, worker counts, and checkpoint interval must be finite and positive")
+    if not math.isfinite(args.archive_seconds) or args.archive_seconds < 0:
+        parser.error("archive interval must be finite and nonnegative; 0 disables archives")
+    for name in ("learning_rate", "target_kl"):
+        value = getattr(args, name)
+        if value is not None and (not math.isfinite(value) or value <= 0):
+            parser.error(f"--{name.replace('_', '-')} must be finite and positive")
+    if args.ent_coef is not None and (not math.isfinite(args.ent_coef) or args.ent_coef < 0):
+        parser.error("entropy coefficient must be finite and nonnegative")
     if not math.isfinite(args.reward_scale) or args.reward_scale <= 0:
         parser.error("reward scale must be finite and positive")
+    if args.deadline_utc:
+        try:
+            deadline = datetime.fromisoformat(args.deadline_utc.replace("Z", "+00:00"))
+            if deadline.tzinfo is None:
+                raise ValueError("timezone missing")
+        except ValueError:
+            parser.error("--deadline-utc must be an ISO datetime with a timezone")
+    occupied = [args.run_dir / name for name in ("training_summary.json", "episodes.csv", "progress.json", "checkpoints/latest.zip", "checkpoints/final.zip")]
+    if any(path.exists() for path in occupied) or any(path.is_file() for path in (args.run_dir / "logs").rglob("*")) or any((args.run_dir / "checkpoints").glob("step_*.zip")):
+        parser.error("choose a new --run-dir; existing or interrupted training outputs are not overwritten")
+    initial_path = args.run_dir / "checkpoints/initial.zip"
+    if initial_path.exists() and (not args.resume or args.resume.resolve() != initial_path.resolve()):
+        parser.error("this run has an initialized model; resume its checkpoints/initial.zip or choose a new --run-dir")
     args.run_dir.mkdir(parents=True, exist_ok=True)
     (args.run_dir / "checkpoints").mkdir(exist_ok=True)
-    if (args.run_dir / "training_summary.json").exists():
-        parser.error("choose a new --run-dir; completed experiments are not overwritten")
     torch.set_num_threads(args.threads)
     torch.set_num_interop_threads(1)
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is unavailable; choose --device cpu")
-    env = DummyVecEnv([lambda i=i: Monitor(ScaleReward(make_env(seed=args.seed+i, max_decisions=args.max_decisions), args.reward_scale)) for i in range(args.n_envs)])
-    hyperparameters = dict(n_steps=256, batch_size=256, n_epochs=4, learning_rate=2.5e-4, gamma=0.99, gae_lambda=0.95, ent_coef=0.01, clip_range=0.2)
+    env = DummyVecEnv([lambda i=i: Monitor(ScaleReward(make_env(seed=None if args.resume else args.seed+i, max_decisions=args.max_decisions), args.reward_scale)) for i in range(args.n_envs)])
+    hyperparameters = dict(n_steps=256, batch_size=256, n_epochs=4, learning_rate=2.5e-4, gamma=0.99, gae_lambda=0.95, ent_coef=0.01, clip_range=0.2, target_kl=None)
     try:
         if args.resume:
             model = PPO.load(args.resume, env=env, device=args.device)
         else:
             model = PPO("CnnPolicy", env, seed=args.seed, device=args.device, verbose=0, **hyperparameters)
+        overrides = {}
+        if args.learning_rate is not None:
+            model.learning_rate = args.learning_rate
+            model.lr_schedule = FloatSchedule(args.learning_rate)
+            for group in model.policy.optimizer.param_groups:
+                group["lr"] = args.learning_rate
+            overrides["learning_rate"] = args.learning_rate
+        for name in ("target_kl", "ent_coef"):
+            value = getattr(args, name)
+            if value is not None:
+                setattr(model, name, value)
+                overrides[name] = value
+        # Read effective values after loading and overrides, rather than recording
+        # fresh-model defaults for a resumed checkpoint with different settings.
+        hyperparameters = {name: getattr(model, name) for name in ("n_steps", "batch_size", "n_epochs", "gamma", "gae_lambda", "ent_coef", "target_kl", "vf_coef", "max_grad_norm", "normalize_advantage")}
+        hyperparameters.update({
+            "learning_rate": float(model.lr_schedule(model._current_progress_remaining)),
+            "learning_rate_schedule": repr(model.lr_schedule),
+            "clip_range": float(model.clip_range(model._current_progress_remaining)),
+            "clip_range_vf": float(model.clip_range_vf(model._current_progress_remaining)) if model.clip_range_vf is not None else None,
+        })
         config = {
             "created_at": datetime.now(timezone.utc).isoformat(),
             "environment": "SuperMarioBros-1-1-v0", "algorithm": "PPO", "policy": "CnnPolicy",
             "hyperparameters": hyperparameters, "action_set": "RIGHT_ONLY", "action_repeat": 4,
+            "hyperparameter_overrides": overrides,
+            "effective_seed": model.seed,
+            "seed_note": "Fresh models use --seed. Resumed models retain the saved seed; --seed is ignored. A saved non-null seed reseeds RNGs and the emulator; exact prior RNG state is not restored.",
+            "base_num_timesteps": model.num_timesteps,
+            "base_optimizer_steps": optimizer_steps(model),
             "observation_shape": [4,84,84], "reward": "native summed across repeated frames, multiplied by reward_scale for learning",
             "reward_scale": args.reward_scale,
             "metric_units": {"episodes.csv:return": "native reward", "logs:rollout/ep_rew_mean": "scaled training reward", "evaluation": "native reward"},
@@ -206,13 +281,20 @@ def main():
         write_json(args.run_dir / "config.json", config)
         if not args.resume:
             save_model(model, args.run_dir / "checkpoints/initial.zip")
+            write_json(args.run_dir / "checkpoints/initial.json", {
+                "saved_at": datetime.now(timezone.utc).isoformat(), "elapsed_seconds": 0,
+                "base_num_timesteps": model.num_timesteps, "timesteps": model.num_timesteps,
+                "base_optimizer_steps": optimizer_steps(model), "optimizer_steps": optimizer_steps(model),
+                "decisions_this_run": 0, "optimizer_steps_this_run": 0,
+            })
         if args.initialize_only:
             print(json.dumps({"status":"initialized", "initial_model":str(args.run_dir / "checkpoints/initial.zip"), "learning_updates":0}), flush=True)
             return 0
         before = {key:value.detach().cpu().clone() for key,value in model.policy.state_dict().items()}
+        first_timestep = model.num_timesteps
         first_optimizer_steps = optimizer_steps(model)
         first_epochs = model._n_updates
-        callback = SessionCallback(args.run_dir, args.max_seconds, args.deadline_utc, args.checkpoint_seconds)
+        callback = SessionCallback(args.run_dir, args.max_seconds, args.deadline_utc, args.checkpoint_seconds, args.archive_seconds)
         model.set_logger(configure(str(args.run_dir / "logs"), ["csv", "tensorboard"]))
         status = "completed"
         error = None
@@ -229,14 +311,24 @@ def main():
         finally:
             if hasattr(callback, "csv_file") and not callback.csv_file.closed:
                 callback.csv_file.close()
-            save_model(model, args.run_dir / "checkpoints/final.zip")
-            save_model(model, args.run_dir / "checkpoints/latest.zip")
+            if hasattr(callback, "started"):
+                callback.checkpoint(args.run_dir / "checkpoints/final.zip")
+                callback.checkpoint(args.run_dir / "checkpoints/latest.zip")
+            else:
+                save_model(model, args.run_dir / "checkpoints/final.zip")
+                save_model(model, args.run_dir / "checkpoints/latest.zip")
         after = model.policy.state_dict()
         changed = sum(not torch.equal(before[key], tensor.detach().cpu()) for key,tensor in after.items())
         finite = all(bool(torch.isfinite(tensor).all().item()) for tensor in after.values())
+        progress = callback.progress() if hasattr(callback, "started") else {
+            "elapsed_seconds": 0, "timesteps": model.num_timesteps,
+            "base_num_timesteps": first_timestep, "base_optimizer_steps": first_optimizer_steps,
+            "decisions_this_run": model.num_timesteps - first_timestep,
+            "optimizer_steps": optimizer_steps(model),
+        }
         summary = {
             "status": status, "error":error, "completed_at":datetime.now(timezone.utc).isoformat(),
-            "stop_reason": callback.stop_reason, **callback.progress(),
+            "stop_reason": callback.stop_reason, **progress,
             "optimizer_steps_this_run":optimizer_steps(model)-first_optimizer_steps,
             "ppo_epochs_this_run":model._n_updates-first_epochs,
             "changed_parameter_tensors":changed, "all_parameters_finite":finite,

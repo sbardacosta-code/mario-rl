@@ -1,0 +1,37 @@
+{
+  "integration_status": "completed",
+  "integration_stages": 2,
+  "integration_final_audit": true,
+  "integration_training_seconds": 16.48,
+  "integration_test_limits": {
+    "chunk_seconds": 15,
+    "max_decisions_per_eval": 60,
+    "regular_eval_seeds": [
+      101
+    ],
+    "final_audit_seeds": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010
+    ]
+  },
+  "production_baseline_complete": true,
+  "production_eval_seeds": [
+    101,
+    202,
+    303,
+    404,
+    505
+  ],
+  "production_source_hashes_match": true,
+  "markdown_links_resolve": true,
+  "chart_visually_inspected": true,
+  "note": "El ensayo de integraci\u00f3n usa l\u00edmites peque\u00f1os y sus puntuaciones no se presentan como resultados de la sesi\u00f3n docente. La subida de modelos se verifica contra tama\u00f1o y SHA-256 remotos al publicar."
+}
