@@ -1,0 +1,75 @@
+{
+  "action_repeat": 4,
+  "action_set": "RIGHT_ONLY",
+  "algorithm": "PPO",
+  "args": {
+    "archive_seconds": 0.0,
+    "checkpoint_seconds": 60,
+    "deadline_utc": "2026-09-16T10:03:43.010326+00:00",
+    "device": "cpu",
+    "ent_coef": 0.01,
+    "initialize_only": false,
+    "learning_rate": 0.0001,
+    "max_decisions": 3000,
+    "max_seconds": 900.0,
+    "max_timesteps": 100000000,
+    "n_envs": 4,
+    "resume": "results/teaching_20260916/training/09_stage/checkpoints/final.zip",
+    "reward_scale": 0.01,
+    "run_dir": "results/teaching_20260916/training/10_stage",
+    "seed": 123,
+    "target_kl": 0.02,
+    "threads": 1
+  },
+  "base_num_timesteps": 1547240,
+  "base_optimizer_steps": 24128,
+  "continuation_note": "PPO parameters and optimizer resume; simulator state, partial rollout, and RNG state are not restored exactly.",
+  "created_at": "2026-09-16T09:35:42.424473+00:00",
+  "effective_seed": 123,
+  "environment": "SuperMarioBros-1-1-v0",
+  "hyperparameter_overrides": {
+    "ent_coef": 0.01,
+    "learning_rate": 0.0001,
+    "target_kl": 0.02
+  },
+  "hyperparameters": {
+    "batch_size": 256,
+    "clip_range": 0.2,
+    "clip_range_vf": null,
+    "ent_coef": 0.01,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "learning_rate": 0.0001,
+    "learning_rate_schedule": "FloatSchedule(ConstantSchedule(val=0.0001))",
+    "max_grad_norm": 0.5,
+    "n_epochs": 4,
+    "n_steps": 256,
+    "normalize_advantage": true,
+    "target_kl": 0.02,
+    "vf_coef": 0.5
+  },
+  "metric_units": {
+    "episodes.csv:return": "native reward",
+    "evaluation": "native reward",
+    "logs:rollout/ep_rew_mean": "scaled training reward"
+  },
+  "observation_shape": [
+    4,
+    84,
+    84
+  ],
+  "packages": {
+    "gym-super-mario-bros": "9.1.0",
+    "gymnasium": "1.3.0",
+    "nes-py": "9.0.1",
+    "numpy": "2.5.3",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.14.0"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "policy": "CnnPolicy",
+  "python": "3.13.15",
+  "reward": "native summed across repeated frames, multiplied by reward_scale for learning",
+  "reward_scale": 0.01,
+  "seed_note": "Fresh models use --seed. Resumed models retain the saved seed; --seed is ignored. A saved non-null seed reseeds RNGs and the emulator; exact prior RNG state is not restored."
+}
