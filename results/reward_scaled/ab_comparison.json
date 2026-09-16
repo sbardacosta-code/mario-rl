@@ -1,0 +1,179 @@
+{
+  "created_at": "2026-09-16T06:15:12.058716+00:00",
+  "checks": {
+    "same_evaluation_protocol": true,
+    "three_distinct_prespecified_seeds": true,
+    "all_three_evaluations_complete": true,
+    "native_evaluation_reward": true,
+    "same_initial_policy": true,
+    "initial_optimizer_empty": true,
+    "same_ppo_hyperparameters": true,
+    "same_dependency_versions": true,
+    "same_execution_configuration": true,
+    "same_environment_preprocessing": true,
+    "reward_scaling_preflight_passed": true,
+    "training_completed_with_finite_changed_weights": true,
+    "reference_optimizer_count_consistent": true,
+    "pilot_optimizer_count_consistent": true,
+    "same_optimized_decision_budget": true,
+    "same_optimizer_step_budget": true,
+    "same_epoch_budget": true,
+    "optimized_decisions_do_not_exceed_collection": true
+  },
+  "failed_checks": [],
+  "identical_training_update_budget_confirmed": true,
+  "controlled_comparison_verified": true,
+  "evaluation_seeds": [
+    101,
+    202,
+    303
+  ],
+  "groups": {
+    "untrained": {
+      "status": "complete",
+      "finished_trials": 3,
+      "mean_max_x": 1584.6666666666667,
+      "mean_native_reward": 1396.3333333333333,
+      "level_completions": 0,
+      "trials": [
+        {
+          "seed": 101,
+          "max_x": 1435,
+          "native_reward": 1182.0,
+          "completed": false,
+          "decisions": 1030
+        },
+        {
+          "seed": 202,
+          "max_x": 1647,
+          "native_reward": 1530.0,
+          "completed": false,
+          "decisions": 399
+        },
+        {
+          "seed": 303,
+          "max_x": 1672,
+          "native_reward": 1477.0,
+          "completed": false,
+          "decisions": 710
+        }
+      ],
+      "optimized_decisions": 0
+    },
+    "native_rewards": {
+      "status": "complete",
+      "finished_trials": 3,
+      "mean_max_x": 296.0,
+      "mean_native_reward": 231.0,
+      "level_completions": 0,
+      "trials": [
+        {
+          "seed": 101,
+          "max_x": 296,
+          "native_reward": 231.0,
+          "completed": false,
+          "decisions": 40
+        },
+        {
+          "seed": 202,
+          "max_x": 296,
+          "native_reward": 231.0,
+          "completed": false,
+          "decisions": 40
+        },
+        {
+          "seed": 303,
+          "max_x": 296,
+          "native_reward": 231.0,
+          "completed": false,
+          "decisions": 40
+        }
+      ],
+      "optimized_decisions": 102400,
+      "checkpoint_collected_decisions": 102796,
+      "optimizer_steps": 1600
+    },
+    "scaled_rewards_0_01": {
+      "status": "complete",
+      "finished_trials": 3,
+      "mean_max_x": 434.0,
+      "mean_native_reward": 369.0,
+      "level_completions": 0,
+      "trials": [
+        {
+          "seed": 101,
+          "max_x": 300,
+          "native_reward": 236.0,
+          "completed": false,
+          "decisions": 36
+        },
+        {
+          "seed": 202,
+          "max_x": 688,
+          "native_reward": 620.0,
+          "completed": false,
+          "decisions": 86
+        },
+        {
+          "seed": 303,
+          "max_x": 314,
+          "native_reward": 251.0,
+          "completed": false,
+          "decisions": 28
+        }
+      ],
+      "optimized_decisions": 102400,
+      "checkpoint_collected_decisions": 102400,
+      "optimizer_steps": 1600
+    }
+  },
+  "scaled_minus_native_mean_max_x": 138.0,
+  "scaled_minus_untrained_mean_max_x": -1150.6666666666667,
+  "context_only_original_25_minute_final": {
+    "status": "complete",
+    "finished_trials": 3,
+    "mean_max_x": 575.6666666666666,
+    "mean_native_reward": 501.6666666666667,
+    "level_completions": 0,
+    "trials": [
+      {
+        "seed": 101,
+        "max_x": 308,
+        "native_reward": 244.0,
+        "completed": false,
+        "decisions": 36
+      },
+      {
+        "seed": 202,
+        "max_x": 295,
+        "native_reward": 230.0,
+        "completed": false,
+        "decisions": 40
+      },
+      {
+        "seed": 303,
+        "max_x": 1124,
+        "native_reward": 1031.0,
+        "completed": false,
+        "decisions": 204
+      }
+    ],
+    "optimized_decisions": 262144,
+    "checkpoint_collected_decisions": 262556,
+    "equal_budget_comparator": false
+  },
+  "training_curve": {
+    "decision_limit": 102400,
+    "trailing_episode_window": 20,
+    "native_finished_episodes": 785,
+    "scaled_finished_episodes": 807
+  },
+  "notes": [
+    "One training seed and three sampled-action evaluation trials are exploratory, not conclusive evidence.",
+    "All evaluation rewards and training episode returns shown here use the game's native units.",
+    "Different evaluation seeds vary sampled actions; they do not create different levels.",
+    "The native-reward reference archive contains 396 additional collected decisions that had not been optimized.",
+    "Training curves include only finished episodes at or before 102,400 collected decisions and use a trailing mean of up to 20 episodes.",
+    "Final checkpoints are chosen by the prespecified budgets, not by their evaluation scores."
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "reward_scale": 0.01,
+  "observations_identical": true,
+  "termination_identical": true,
+  "native_metrics_identical": true,
+  "scaled_rewards_verified": true,
+  "native_episode_return": 665.0,
+  "scaled_episode_return": 6.650000000000003,
+  "initial_policy_sha256": "d8bdb9aa63eb0ba36a99d5caa1d830760f675e928b51ec8307c4355941b27cd1",
+  "initial_optimizer_steps": 0,
+  "reference_optimizer_steps": 1600,
+  "reference_epochs": 400,
+  "reference_timesteps": 102796
+}

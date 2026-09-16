@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from hashlib import sha256
 from importlib.metadata import version
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -17,6 +18,7 @@ import traceback
 
 os.environ.setdefault("MPLCONFIGDIR", str(Path(__file__).resolve().parent / ".cache/matplotlib"))
 
+from gymnasium import RewardWrapper
 import numpy as np
 import torch
 from stable_baselines3 import PPO
@@ -26,6 +28,19 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import DummyVecEnv
 
 from mario_env import make_env
+
+
+class ScaleReward(RewardWrapper):
+    """Scale learning rewards while preserving native episode metrics in info."""
+
+    def __init__(self, env, scale=1.0):
+        super().__init__(env)
+        if not math.isfinite(scale) or scale <= 0:
+            raise ValueError("reward scale must be finite and positive")
+        self.scale = float(scale)
+
+    def reward(self, reward):
+        return float(reward) * self.scale
 
 
 def write_json(path, value):
@@ -153,11 +168,14 @@ def main():
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--max-decisions", type=int, default=3000)
     parser.add_argument("--checkpoint-seconds", type=float, default=60)
+    parser.add_argument("--reward-scale", type=float, default=1.0, help="multiply training rewards only; native episode metrics remain unchanged")
     parser.add_argument("--resume", type=Path)
     parser.add_argument("--initialize-only", action="store_true")
     args = parser.parse_args()
     if min(args.max_seconds, args.max_timesteps, args.threads, args.n_envs, args.max_decisions, args.checkpoint_seconds) <= 0:
         parser.error("budgets, worker counts, and checkpoint interval must be positive")
+    if not math.isfinite(args.reward_scale) or args.reward_scale <= 0:
+        parser.error("reward scale must be finite and positive")
     args.run_dir.mkdir(parents=True, exist_ok=True)
     (args.run_dir / "checkpoints").mkdir(exist_ok=True)
     if (args.run_dir / "training_summary.json").exists():
@@ -166,7 +184,7 @@ def main():
     torch.set_num_interop_threads(1)
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is unavailable; choose --device cpu")
-    env = DummyVecEnv([lambda i=i: Monitor(make_env(seed=args.seed+i, max_decisions=args.max_decisions)) for i in range(args.n_envs)])
+    env = DummyVecEnv([lambda i=i: Monitor(ScaleReward(make_env(seed=args.seed+i, max_decisions=args.max_decisions), args.reward_scale)) for i in range(args.n_envs)])
     hyperparameters = dict(n_steps=256, batch_size=256, n_epochs=4, learning_rate=2.5e-4, gamma=0.99, gae_lambda=0.95, ent_coef=0.01, clip_range=0.2)
     try:
         if args.resume:
@@ -177,7 +195,9 @@ def main():
             "created_at": datetime.now(timezone.utc).isoformat(),
             "environment": "SuperMarioBros-1-1-v0", "algorithm": "PPO", "policy": "CnnPolicy",
             "hyperparameters": hyperparameters, "action_set": "RIGHT_ONLY", "action_repeat": 4,
-            "observation_shape": [4,84,84], "reward": "native summed across repeated frames",
+            "observation_shape": [4,84,84], "reward": "native summed across repeated frames, multiplied by reward_scale for learning",
+            "reward_scale": args.reward_scale,
+            "metric_units": {"episodes.csv:return": "native reward", "logs:rollout/ep_rew_mean": "scaled training reward", "evaluation": "native reward"},
             "args": {key: str(value) if isinstance(value, Path) else value for key,value in vars(args).items()},
             "python": platform.python_version(), "platform": platform.platform(),
             "packages": {name:version(name) for name in ["gym-super-mario-bros","nes-py","gymnasium","stable-baselines3","torch","numpy"]},

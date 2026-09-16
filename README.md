@@ -2,6 +2,40 @@
 
 Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
+## Reward scaling pilot
+
+The second experiment changed **only the training reward multiplier to 0.01**, restarting the exact original untrained checkpoint. It trained for **10.0 minutes**, using **102,400 decisions and 1,600 optimizer steps**. The comparison uses the original run's approximately 10-minute checkpoint, which has the same number of completed learning updates.
+
+**The scaled agent traveled farther than the unscaled agent at the same update budget. It still fell short of the untrained network on these three trials. The scaled model cleared the level in 0 of 3 trials.**
+
+| Three-trial evaluation | Untrained | Native rewards | Rewards × 0.01 |
+| --- | ---: | ---: | ---: |
+| Mean furthest position | 1,584.7 px | 296.0 px | 434.0 px |
+| Mean native reward | 1,396.3 | 231.0 | 369.0 |
+| Level completions | 0 / 3 | 0 / 3 | 0 / 3 |
+
+The trained columns each represent 100 complete PPO rollouts and 400 epochs. The original archive has 102,796 collected decisions, including 396 not yet used in learning; its policy reflects 102,400 optimized decisions. The final scaled checkpoint was selected by the predefined budget. The original 25-minute final is retained below as a separate result, with a larger training budget.
+
+![Reward scaling comparison](results/reward_scaled/reward_scale_comparison.png)
+
+[Experiment plan](results/reward_scaled/experiment_plan.json) · [Comparison data](results/reward_scaled/ab_comparison.json) · [Checkpoint verification](results/reward_scaled/verification.json) · [Scaled gameplay clip](results/reward_scaled/final/first-seed.gif)
+
+The initial policy hash and first rollout match the original run. Saved weights are finite, changed during learning, and reload with the recorded policy hash and optimizer step count. Evaluation still uses native rewards and the same three stochastic seeds. This is a short pilot with one training seed, so the result does not establish reliable performance.
+
+Reward scaling uses a [Gymnasium reward wrapper](https://gymnasium.farama.org/api/wrappers/reward_wrappers/) outside native episode accounting. `episodes.csv` and evaluation retain native rewards; SB3's `rollout/ep_rew_mean` logs scaled learning rewards. The [early diagnostics](results/reward_scaled/early_diagnostics.json) show smaller policy changes and retained action diversity at the early steps where the original run collapsed. That observation supports improved early stability; it does not prove the cause of the original failure. Value losses use different reward units and are not directly comparable quality scores.
+
+Reproduce this pilot on the configured Mac in a new results directory:
+
+```sh
+.venv/bin/python scripts/check_reward_scaling.py
+.venv/bin/python train.py --run-dir results/reward_scaled_repeat --resume results/first_training/checkpoints/initial.zip --reward-scale 0.01 --device cpu --threads 1 --n-envs 4 --seed 123 --max-timesteps 102400 --max-seconds 660
+.venv/bin/python evaluate.py --model results/reward_scaled_repeat/checkpoints/final.zip --output-dir results/reward_scaled_repeat/final --seeds 101 202 303
+```
+
+The initial checkpoint is local. On a fresh checkout, create one in a new directory with `.venv/bin/python train.py --run-dir results/recreated_initial --initialize-only --threads 1`, then change the pilot command to use `--resume results/recreated_initial/checkpoints/initial.zip`. Regenerate the recorded comparison with `.venv/bin/python compare_reward_scaling.py --repo .`.
+
+## First experiment: native rewards
+
 The first experiment trained PPO for **25 minutes**, collecting **262,556 agent decisions** and completing **4,096 optimizer steps**. The final checkpoint was evaluated against its untrained initial network. **All three evaluation trials regressed; this run did not produce a better-playing agent.**
 
 | Three-trial evaluation | Before | After |
@@ -45,11 +79,11 @@ These looping GIFs show the first 300 decisions, or the earlier episode end, of 
 
 ## What learns
 
-PPO uses `CnnPolicy`, four World 1-1 environments, training seed 123, and one CPU thread. The five `RIGHT_ONLY` actions are wait, right, right+jump, right+run, and right+run+jump. Each decision repeats for up to four emulator frames, stopping at episode end. Rewards are the native rewards summed across those frames.
+PPO uses `CnnPolicy`, four World 1-1 environments, training seed 123, and one CPU thread. The five `RIGHT_ONLY` actions are wait, right, right+jump, right+run, and right+run+jump. Each decision repeats for up to four emulator frames, stopping at episode end. Native rewards are summed across those frames. `--reward-scale` then multiplies rewards for learning only; it defaults to `1.0` and was `0.01` in the scaling pilot.
 
 Inputs are four stacked 84 × 84 grayscale images: `uint8`, shape `(4, 84, 84)`. Episodes have a 3,000-decision limit. The current objective is increasing distance and eventually finishing World 1-1.
 
-This is one training seed and three stochastic evaluation trials, using matched seeds 101, 202, and 303. Seeds vary sampled actions; they do not create new levels. These results cannot establish reliable completion or generalization. The reported model is the final checkpoint, chosen by the time budget.
+This is one training seed and three stochastic evaluation trials, using matched seeds 101, 202, and 303. Seeds vary sampled actions; they do not create new levels. These results cannot establish reliable completion or generalization. Each reported model is the final checkpoint chosen by its predefined training budget.
 
 ## Run locally
 
@@ -68,10 +102,10 @@ Start a fresh 25-minute experiment in a new directory:
 .venv/bin/python train.py --run-dir results/next_training --max-seconds 1500 --device cpu --threads 1 --n-envs 4
 ```
 
-Continue the saved model:
+Continue the scaled model, keeping its reward multiplier:
 
 ```sh
-.venv/bin/python train.py --resume results/first_training/checkpoints/final.zip --run-dir results/continued_training --max-seconds 1500 --threads 1
+.venv/bin/python train.py --resume results/reward_scaled/checkpoints/final.zip --run-dir results/continued_training --reward-scale 0.01 --max-seconds 1500 --threads 1
 ```
 
 Resume restores parameters and optimizer state; simulator state, partial rollouts, and random-number state are not restored exactly. Checkpoint ZIPs and detailed logs stay local and are Git-ignored. Cloning this repository does not download model weights.
@@ -90,6 +124,4 @@ Double-click `play.command` in Finder or run `./play.command`. Focus the game wi
 
 ## Next experiment
 
-The [learning log](results/first_training/learning_metrics.csv) shows very large early policy changes and a rapid loss of action diversity. The [diagnostics](results/first_training/early_diagnostics.json) record that evidence. Unscaled value targets affecting the shared visual network are a possible cause; this has not been proven.
-
-For the next controlled run, start from the same untrained model and scale rewards used for learning by `0.01`, keeping native rewards for evaluation and all other settings fixed. This tests reward scale as one change. A limit on policy changes (`target_kl`) is a separate later experiment if instability persists. Neither change was applied during this run.
+The scaling pilot improved distance against the matched unscaled checkpoint. A useful next test is a longer run with the same scaled configuration, followed by more evaluation trials and additional training seeds. This session stopped after the short pilot; no longer run has been started.

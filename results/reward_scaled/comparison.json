@@ -1,0 +1,132 @@
+{
+  "baseline_status": "complete",
+  "final_status": "complete",
+  "protocol_matches": true,
+  "complete_matched_three_trial_comparison": true,
+  "matched_seeds": [
+    101,
+    202,
+    303
+  ],
+  "baseline": {
+    "episodes": 3,
+    "mean_max_x": 1584.6666666666667,
+    "mean_native_reward": 1396.3333333333333,
+    "level_completions": 0,
+    "completion_rate": 0.0
+  },
+  "final": {
+    "episodes": 3,
+    "mean_max_x": 434.0,
+    "mean_native_reward": 369.0,
+    "level_completions": 0,
+    "completion_rate": 0.0
+  },
+  "mean_max_x_change": -1150.6666666666667,
+  "matched_trials": [
+    {
+      "seed": 101,
+      "baseline": {
+        "seed": 101,
+        "max_x": 1435,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 1182.0,
+        "decisions": 1030,
+        "raw_frames": 4117,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 3.123
+      },
+      "final": {
+        "seed": 101,
+        "max_x": 300,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 236.0,
+        "decisions": 36,
+        "raw_frames": 142,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 0.144
+      },
+      "max_x_change": -1135
+    },
+    {
+      "seed": 202,
+      "baseline": {
+        "seed": 202,
+        "max_x": 1647,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 1530.0,
+        "decisions": 399,
+        "raw_frames": 1594,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 1.168
+      },
+      "final": {
+        "seed": 202,
+        "max_x": 688,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 620.0,
+        "decisions": 86,
+        "raw_frames": 342,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 0.286
+      },
+      "max_x_change": -959
+    },
+    {
+      "seed": 303,
+      "baseline": {
+        "seed": 303,
+        "max_x": 1672,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 1477.0,
+        "decisions": 710,
+        "raw_frames": 2840,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 2.078
+      },
+      "final": {
+        "seed": 303,
+        "max_x": 314,
+        "completed": false,
+        "flag_get": false,
+        "native_reward": 251.0,
+        "decisions": 28,
+        "raw_frames": 112,
+        "terminated": true,
+        "truncated": false,
+        "end_reason": "terminated",
+        "elapsed_seconds": 0.092
+      },
+      "max_x_change": -1358
+    }
+  ],
+  "training": {
+    "finished_episodes": 807,
+    "skipped_csv_rows": 0,
+    "last_logged_timesteps": 102300,
+    "last_logged_elapsed_seconds": 595.605,
+    "best_max_x": 2470.0,
+    "level_completions": 0
+  },
+  "notes": [
+    "Three seeded trials are a small sample and cannot establish reliable performance.",
+    "Partial episodes stopped by the evaluation wall-time limit are excluded.",
+    "Training curves contain finished episodes only.",
+    "No level completion was observed in the finished final evaluation trials."
+  ]
+}

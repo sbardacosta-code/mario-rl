@@ -1,0 +1,23 @@
+{
+  "checkpoint_reloads": true,
+  "policy_hash_matches_training_record": true,
+  "initial_policy_matches_original": true,
+  "original_initial_rollout_reproduced": true,
+  "source_files_unchanged_since_training_started": true,
+  "all_parameters_finite": true,
+  "native_evaluation_protocol_unchanged": true,
+  "all_evaluations_complete": true,
+  "same_hyperparameters_packages_device_threads_env_count_and_seed": true,
+  "reward_scale": 0.01,
+  "optimizer_steps": 1600,
+  "reference_optimizer_steps": 1600,
+  "equal_optimization_budgets": true,
+  "timesteps": 102400,
+  "decisions_in_completed_rollouts": 102400,
+  "unoptimized_decisions": 0,
+  "episodes_csv_rows": 807,
+  "final_model_sha256": "676a8f2cc5f4dc6e0407fe89dbf5496819d7364749b33acfcb5adc3bf3305184",
+  "final_policy_sha256": "b014ffac310af40865c487ea7c0f714f05eca1580f130cc0dd9e7d12e02ba3a1",
+  "initial_policy_sha256": "d8bdb9aa63eb0ba36a99d5caa1d830760f675e928b51ec8307c4355941b27cd1",
+  "note": "Optimizer step count and policy tensors checked after reload; full optimizer tensor equality not asserted."
+}

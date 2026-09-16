@@ -1,0 +1,20 @@
+{
+  "created_at": "2026-09-16T06:04:20.867400+00:00",
+  "session_deadline_utc": "2026-09-16T06:19:46Z",
+  "training_deadline_utc": "2026-09-16T06:16:30Z",
+  "change": "Training rewards multiplied by 0.01 only. Native metrics and evaluation unchanged.",
+  "initial_checkpoint": "results/first_training/checkpoints/initial.zip",
+  "initial_checkpoint_sha256": "fff52afdbdfaf17eb5418db27eb15b6bfdcf3489fab4ed81ad98405bad820117",
+  "max_timesteps": 102400,
+  "max_seconds": 660,
+  "primary_reference": "results/first_training/intermediate/step_000102796/evaluation.json",
+  "comparison_basis": "Both policies should have 100 complete 1024-decision rollouts, 400 PPO epochs, and 1600 optimizer steps. Reference archive includes 396 collected decisions not yet optimized.",
+  "final_selection": "Final checkpoint at the predefined step/time limit; no selection by evaluation score.",
+  "seed": 123,
+  "evaluation_seeds": [
+    101,
+    202,
+    303
+  ],
+  "limitations": "One training seed and three sampled-action evaluation trials. Short pilot, not conclusive evidence. If wall time stops training early, explicitly report unmatched update budgets."
+}

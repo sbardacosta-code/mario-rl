@@ -1,0 +1,42 @@
+{
+  "comparison": {
+    "first_training": [
+      {
+        "time/total_timesteps": "6144",
+        "train/approx_kl": "4.4111714",
+        "train/entropy_loss": "-0.4361887079976441",
+        "train/clip_fraction": "0.884521484375",
+        "train/value_loss": "8488.97055053711"
+      },
+      {
+        "time/total_timesteps": "7168",
+        "train/approx_kl": "0.0",
+        "train/entropy_loss": "-0.0002790026513821431",
+        "train/clip_fraction": "0.0",
+        "train/value_loss": "8306.961547851562"
+      }
+    ],
+    "reward_scaled": [
+      {
+        "time/total_timesteps": "6144",
+        "train/approx_kl": "0.01027807",
+        "train/entropy_loss": "-1.5160948112607002",
+        "train/clip_fraction": "0.03857421875",
+        "train/value_loss": "0.28703687246888876"
+      },
+      {
+        "time/total_timesteps": "7168",
+        "train/approx_kl": "0.0088766925",
+        "train/entropy_loss": "-1.5291393250226974",
+        "train/clip_fraction": "0.013916015625",
+        "train/value_loss": "0.5780879706144333"
+      }
+    ]
+  },
+  "interpretation": "At the same early logging points, reward scaling has much smaller approximate KL and retains higher action entropy. This supports improved early optimization stability; it is not proof of improved gameplay or a definitive cause of the original collapse. Value losses are in different reward units and must not be treated as directly comparable quality scores.",
+  "logging_note": "SB3 logs the preceding optimization pass when the next rollout finishes.",
+  "sources": [
+    "https://gymnasium.farama.org/api/wrappers/reward_wrappers/",
+    "https://stable-baselines3.readthedocs.io/en/master/guide/rl_tips.html"
+  ]
+}
