@@ -1,0 +1,25 @@
+{
+  "checkpoint": "results/first_training/checkpoints/step_000102796.zip",
+  "seed": 101,
+  "initial_action_probabilities": [
+    2.045028857367015e-08,
+    1.812017896840601e-10,
+    1.0,
+    4.033722661445083e-11,
+    1.0962113161649967e-11
+  ],
+  "action_order": [
+    "wait",
+    "right",
+    "right+jump",
+    "right+run",
+    "right+run+jump"
+  ],
+  "action_counts": {
+    "2": 40
+  },
+  "decisions": 40,
+  "ended": true,
+  "max_x": 296,
+  "learning_updates": 0
+}

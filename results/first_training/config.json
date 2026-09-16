@@ -1,0 +1,49 @@
+{
+  "action_repeat": 4,
+  "action_set": "RIGHT_ONLY",
+  "algorithm": "PPO",
+  "args": {
+    "checkpoint_seconds": 60.0,
+    "deadline_utc": "2026-09-16T06:09:46Z",
+    "device": "cpu",
+    "initialize_only": false,
+    "max_decisions": 3000,
+    "max_seconds": 1500.0,
+    "max_timesteps": 100000000,
+    "n_envs": 4,
+    "resume": "results/first_training/checkpoints/initial.zip",
+    "run_dir": "results/first_training",
+    "seed": 123,
+    "threads": 1
+  },
+  "continuation_note": "PPO parameters and optimizer resume; simulator state, partial rollout, and RNG state are not restored exactly.",
+  "created_at": "2026-09-16T05:28:43.692135+00:00",
+  "environment": "SuperMarioBros-1-1-v0",
+  "hyperparameters": {
+    "batch_size": 256,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "gae_lambda": 0.95,
+    "gamma": 0.99,
+    "learning_rate": 0.00025,
+    "n_epochs": 4,
+    "n_steps": 256
+  },
+  "observation_shape": [
+    4,
+    84,
+    84
+  ],
+  "packages": {
+    "gym-super-mario-bros": "9.1.0",
+    "gymnasium": "1.3.0",
+    "nes-py": "9.0.1",
+    "numpy": "2.5.3",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.14.0"
+  },
+  "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "policy": "CnnPolicy",
+  "python": "3.13.15",
+  "reward": "native summed across repeated frames"
+}

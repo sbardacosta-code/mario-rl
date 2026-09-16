@@ -12,3 +12,4 @@ recordings/
 *.pt
 *.pth
 *.zip
+.matplotlib/

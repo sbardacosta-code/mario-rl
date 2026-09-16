@@ -1,0 +1,13 @@
+{
+  "best_training_x": 2019,
+  "decisions_per_second": 175.04,
+  "decisions_this_run": 262556,
+  "elapsed_seconds": 1500.001,
+  "episodes": 1908,
+  "optimizer_steps": 4096,
+  "ppo_epochs": 1024,
+  "recent_mean_return": 629.965,
+  "recent_mean_x": 707.59,
+  "timesteps": 262556,
+  "training_completions": 0
+}

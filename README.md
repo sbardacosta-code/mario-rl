@@ -1,93 +1,95 @@
 # Mario RL
 
-Train a Super Mario Bros. agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
+Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
-**World 1-1 setup is verified on Apple Silicon macOS.** The repository now includes a keyboard-play launcher, reproducible dependencies, and an environment check with saved evidence. No model has been trained; the setup report records zero learning updates.
+The first experiment trained PPO for **25 minutes**, collecting **262,556 agent decisions** and completing **4,096 optimizer steps**. The final checkpoint was evaluated against its untrained initial network. **All three evaluation trials regressed; this run did not produce a better-playing agent.**
 
-## Play on the configured Mac
+| Three-trial evaluation | Before | After |
+| --- | ---: | ---: |
+| Mean furthest horizontal position | 1,584.7 px | 575.7 px |
+| Mean native episode reward | 1,396.3 | 501.7 |
+| Level completions | 0 / 3 | 0 / 3 |
 
-Open `play.command` in Finder, or run it from this repository:
 
-```sh
-./play.command
-```
+| Evaluation seed | Before: furthest position | After: furthest position |
+| --- | ---: | ---: |
+| 101 | 1,435 | 308 |
+| 202 | 1,647 | 295 |
+| 303 | 1,672 | 1,124 |
 
-Click the game window to focus it. Use **A / D** to move, **O** to jump, **D + P** to run right, and **Escape** to quit. The launcher uses the simple action set, so only its supported button combinations are active.
+The timed run stopped automatically. 28 parameter tensors changed, all saved parameters are finite, and the checkpoint reloads with matching weights and optimizer step count. See [verification](results/first_training/verification.json). Of the collected decisions, 262,144 belonged to complete PPO rollouts; the final 412 were discarded when the time limit stopped collection.
 
-The launcher uses this repository's `.venv`; it does not need shell activation.
+See [comparison](results/first_training/comparison.json), [training summary](results/first_training/training_summary.json), and [configuration](results/first_training/config.json).
 
-## Verified setup
+![Training progress](results/first_training/progress.png)
 
-| Component | Tested version |
+## Checkpoint evaluations
+
+| Approximate training time | Decisions | Mean furthest position | Level clears |
+| --- | ---: | ---: | ---: |
+| 5 min | 52,228 | 296.0 | 0 / 3 |
+| 10 min | 102,796 | 296.0 | 0 / 3 |
+| 15 min | 156,392 | 683.3 | 0 / 3 |
+| 20 min | 209,924 | 1,040.3 | 0 / 3 |
+| 25 min (reported final) | 262,556 | 575.7 | 0 / 3 |
+
+The earlier checkpoints show an initial collapse and partial recovery. We report the final time-budget checkpoint; no model was selected after looking at the final scores. All intermediate metrics and clips are retained in [intermediate](results/first_training/intermediate).
+
+## Watch the result
+
+| Untrained network | Final checkpoint |
 | --- | --- |
-| Python | 3.13.15, native ARM64 |
-| gym-super-mario-bros | 9.1.0 |
-| nes-py | 9.0.1 |
-| Gymnasium | 1.3.0 |
-| Stable Baselines3 | 2.9.0 |
-| PyTorch | 2.14.0 |
-| macOS | 26.6.2 |
+| ![Before training](results/first_training/baseline/first-seed.gif) | ![After training](results/first_training/final/first-seed.gif) |
 
-[requirements.txt](requirements.txt) pins the direct dependencies. [requirements-lock.txt](requirements-lock.txt) records the full installed package set for this Python/macOS setup. The configured machine keeps Python in `.python/` and the virtual environment in `.venv/`; neither is committed.
+These looping GIFs show the first 300 decisions, or the earlier episode end, of evaluation seed 101. One native RGB frame is recorded after each repeated action, played at an approximate rate because GIF frame timings are quantized. They are short excerpts; the JSON metrics cover complete trials. The baseline samples actions from an untrained PPO network.
 
-## Check the environment again
+## What learns
 
-```sh
-.venv/bin/python -m pip check
-MPLCONFIGDIR="$PWD/.cache/matplotlib" .venv/bin/python scripts/check_environment.py
-```
+PPO uses `CnnPolicy`, four World 1-1 environments, training seed 123, and one CPU thread. The five `RIGHT_ONLY` actions are wait, right, right+jump, right+run, and right+run+jump. Each decision repeats for up to four emulator frames, stopping at episode end. Rewards are the native rewards summed across those frames.
 
-The script checks the game without training and rewrites `results/setup/`. You can choose a different destination with `--output-dir`.
+Inputs are four stacked 84 × 84 grayscale images: `uint8`, shape `(4, 84, 84)`. Episodes have a 3,000-decision limit. The current objective is increasing distance and eventually finishing World 1-1.
 
-The saved [report](results/setup/report.json) confirms:
+This is one training seed and three stochastic evaluation trials, using matched seeds 101, 202, and 303. Seeds vary sampled actions; they do not create new levels. These results cannot establish reliable completion or generalization. The reported model is the final checkpoint, chosen by the time budget.
 
-- World 1-1 produces nonblank 240 × 256 RGB images and exposes five `RIGHT_ONLY` actions.
-- 1,000 random actions with seed 123 changed the image on 965 steps and reached horizontal position 594.
-- Holding right without jumping caused death after 160 steps; the next reset succeeded.
-- An external three-step time limit caused truncation; the next reset succeeded.
-- Resized grayscale inputs stacked into four frames have shape `(4, 84, 84)` and passed Stable Baselines3's environment checker.
+## Run locally
 
-The screenshot below is from random play, not a trained model. These checks establish that the environment works; they do not measure learning ability or level completion.
-
-![World 1-1 during the random-action check](results/setup/mario-world-1-1.png)
-
-## Recreate the environment
-
-Use an installed native Python 3.13 interpreter:
+The configured Mac can use its existing `.venv` immediately. For a fresh checkout, first install native Python 3.13, then run:
 
 ```sh
-git clone https://github.com/sbardacosta-code/mario-rl.git
-cd mario-rl
 python3.13 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r requirements-lock.txt
-python -m pip check
-MPLCONFIGDIR="$PWD/.cache/matplotlib" python scripts/check_environment.py
-./play.command
+.venv/bin/python -m pip install -r requirements-lock.txt
+.venv/bin/python -m pip check
+.venv/bin/python mario_env.py
 ```
 
-The [current Mario package requires Python 3.13 or newer](https://pypi.org/project/gym-super-mario-bros/). The package versions above were installed and checked on this Mac; other platforms should repeat the checks.
-
-**Launcher correction:** the published 9.1.0 wheel does not contain `gym_super_mario_bros/__main__.py`, so its documented `python -m gym_super_mario_bros` command fails. Use the installed executable instead:
+Start a fresh 25-minute experiment in a new directory:
 
 ```sh
-.venv/bin/gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode human --actionspace simple
+.venv/bin/python train.py --run-dir results/next_training --max-seconds 1500 --device cpu --threads 1 --n-envs 4
 ```
 
-For a quick built-in random-action demo:
+Continue the saved model:
 
 ```sh
-.venv/bin/gym_super_mario_bros --env SuperMarioBros-1-1-v0 --mode random --actionspace right --steps 1000 --no-render --no-progress --seed 123
+.venv/bin/python train.py --resume results/first_training/checkpoints/final.zip --run-dir results/continued_training --max-seconds 1500 --threads 1
 ```
 
-The built-in CLI seeds the environment but not action sampling. Use `scripts/check_environment.py` when you need the separately seeded random-action check used in the saved report.
+Resume restores parameters and optimizer state; simulator state, partial rollouts, and random-number state are not restored exactly. Checkpoint ZIPs and detailed logs stay local and are Git-ignored. Cloning this repository does not download model weights.
 
-## Next: build the learning experiment
+Evaluate without learning and generate a replay GIF:
 
-1. Extract the checked image preprocessing into a reusable environment factory and add a validated action-repeat wrapper. The setup check currently advances one emulator frame per action.
-2. Add PPO with `CnnPolicy`, initially using World 1-1 and `RIGHT_ONLY`. Run a short check of learning, logs, and checkpoint saving before increasing the budget.
-3. Evaluate saved models separately using identical preprocessing and action mappings. Track distance, reward, and level completion rate; record videos.
-4. Once World 1-1 is reliable, train and evaluate on more levels, including levels the agent has not trained on.
+```sh
+.venv/bin/python evaluate.py --model results/first_training/checkpoints/final.zip --output-dir results/replay --seeds 101 202 303
+open results/replay/first-seed.gif
+.venv/bin/python summarize.py --run-dir results/first_training
+```
 
-Planned additions: `src/mario_rl/env.py`, `train.py`, and `evaluate.py`. Model checkpoints, recordings, and logs are excluded from Git. See the [PPO documentation](https://stable-baselines3.readthedocs.io/en/master/modules/ppo.html) for the learning algorithm.
+## Play manually
+
+Double-click `play.command` in Finder or run `./play.command`. Focus the game window: **A/D** move, **O** jumps, **D+P** runs right, **Escape** quits. The launcher uses this repository's `.venv`.
+
+## Next experiment
+
+The [learning log](results/first_training/learning_metrics.csv) shows very large early policy changes and a rapid loss of action diversity. The [diagnostics](results/first_training/early_diagnostics.json) record that evidence. Unscaled value targets affecting the shared visual network are a possible cause; this has not been proven.
+
+For the next controlled run, start from the same untrained model and scale rewards used for learning by `0.01`, keeping native rewards for evaluation and all other settings fixed. This tests reward scale as one change. A limit on policy changes (`target_kl`) is a separate later experiment if instability persists. Neither change was applied during this run.

@@ -1,0 +1,16 @@
+{
+  "verified_at": "2026-09-16T05:54:53.384352+00:00",
+  "final_checkpoint_reloads": true,
+  "reloaded_final_policy_matches_summary": true,
+  "baseline_policy_matches_training_start": true,
+  "all_parameters_finite": true,
+  "optimizer_steps_restored": 4096,
+  "timesteps_restored": 262556,
+  "episode_csv_rows": 1908,
+  "episode_count_matches_summary": true,
+  "source_files_unchanged_since_training_started": true,
+  "decisions_in_completed_rollouts": 262144,
+  "unused_final_rollout_decisions": 412,
+  "final_checkpoint_sha256": "ca866cfd7d9cc71a17e9b5bf494d81b668cd39bf6606ce7775ad115605f22a06",
+  "initial_checkpoint_sha256": "fff52afdbdfaf17eb5418db27eb15b6bfdcf3489fab4ed81ad98405bad820117"
+}

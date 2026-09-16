@@ -1,0 +1,83 @@
+{
+  "status": "complete",
+  "model": "/Users/sebastianbardacostaartagaveytia/Documents/ChatGPT/mario-rl/results/first_training/checkpoints/step_000156392.zip",
+  "started_at": "2026-09-16T05:44:33.900632+00:00",
+  "learning_updates": 0,
+  "protocol": {
+    "version": 1,
+    "environment": "SuperMarioBros-1-1-v0",
+    "seeds": [
+      101,
+      202,
+      303
+    ],
+    "max_decisions": 3000,
+    "deterministic": false,
+    "seed_method": "SB3 set_random_seed plus environment reset(seed)",
+    "action_space": "RIGHT_ONLY",
+    "action_repeat": 4,
+    "observation_shape": [
+      4,
+      84,
+      84
+    ],
+    "reward": "native reward summed over repeated frames",
+    "device": "cpu"
+  },
+  "max_seconds": 120.0,
+  "episodes": [
+    {
+      "seed": 101,
+      "max_x": 1133,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 881.0,
+      "decisions": 1030,
+      "raw_frames": 4117,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "terminated",
+      "elapsed_seconds": 3.2
+    },
+    {
+      "seed": 202,
+      "max_x": 653,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 573.0,
+      "decisions": 129,
+      "raw_frames": 514,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "terminated",
+      "elapsed_seconds": 0.395
+    },
+    {
+      "seed": 303,
+      "max_x": 264,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 206.0,
+      "decisions": 53,
+      "raw_frames": 210,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "terminated",
+      "elapsed_seconds": 0.161
+    }
+  ],
+  "partial_episode": null,
+  "mean_max_x": 683.3333333333334,
+  "mean_native_reward": 553.3333333333334,
+  "level_completions": 0,
+  "completion_rate": 0.0,
+  "limitations": "3 seeded trials are a small sample; a short GIF shows only one trial.",
+  "finished_episodes": 3,
+  "planned_episodes": 3,
+  "elapsed_seconds": 6.037,
+  "gif": "/Users/sebastianbardacostaartagaveytia/Documents/ChatGPT/mario-rl/results/first_training/intermediate/step_000156392/first-seed.gif",
+  "gif_frames": 300,
+  "gif_seed": 101,
+  "gif_duration_ms_per_frame": 67,
+  "finished_at": "2026-09-16T05:44:39.937306+00:00"
+}

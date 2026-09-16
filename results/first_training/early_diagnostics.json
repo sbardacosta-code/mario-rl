@@ -1,0 +1,22 @@
+{
+  "observed_during_training": true,
+  "rows": [
+    {
+      "time/total_timesteps": "6144",
+      "train/approx_kl": "4.4111714",
+      "train/clip_fraction": "0.884521484375",
+      "train/value_loss": "8488.97055053711",
+      "train/entropy_loss": "-0.4361887079976441"
+    },
+    {
+      "time/total_timesteps": "7168",
+      "train/approx_kl": "0.0",
+      "train/clip_fraction": "0.0",
+      "train/value_loss": "8306.961547851562",
+      "train/entropy_loss": "-0.0002790026513821431"
+    }
+  ],
+  "interpretation": "Large early policy changes and low action entropy are consistent with unstable optimization. A dominant value-loss contribution through shared CNN features is a hypothesis, not a proven cause.",
+  "configuration_changed": false,
+  "note": "SB3 logs the preceding optimization pass at the next rollout boundary."
+}

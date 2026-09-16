@@ -1,0 +1,32 @@
+{
+  "session_start_utc": "2026-09-16T05:19:46Z",
+  "session_deadline_utc": "2026-09-16T06:19:46Z",
+  "training_deadline_utc": "2026-09-16T06:09:46Z",
+  "training_budget_seconds": 1500,
+  "objective": "A complete first World 1-1 PPO experiment with saved model and matched before/after evaluation.",
+  "device": "cpu",
+  "threads": 1,
+  "parallel_environments": 4,
+  "device_choice": "Short 2048-decision learning checks: CPU one thread 163.11/s, CPU four threads 162.51/s, MPS 152.73/s. These include startup effects and are close; CPU one thread selected.",
+  "seed": 123,
+  "evaluation_seeds": [
+    101,
+    202,
+    303
+  ],
+  "evaluation_policy": "stochastic actions with explicit fixed seeds; fresh simulator reset; no updates",
+  "episode_decision_limit": 3000,
+  "evaluation_primary_metrics": [
+    "level_completions",
+    "mean_max_x"
+  ],
+  "evaluation_secondary_metric": "mean_native_reward",
+  "hypothesis": "Training may increase typical distance reached. Level completion is a stretch goal, not assumed.",
+  "checkpoint_policy": "Atomic latest checkpoint every60seconds, archived checkpoint every300seconds, final model saved on completion.",
+  "selection": "Report the final time-budget checkpoint, not a checkpoint picked after seeing final evaluation scores.",
+  "baseline": "Untrained PPO network, identical environment preprocessing and action set to final evaluation.",
+  "limitations": [
+    "One training seed and three evaluation trials are not strong statistical evidence.",
+    "Different reset seeds do not create new Mario levels; sampled actions create variation in these trials."
+  ]
+}
