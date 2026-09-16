@@ -2,7 +2,7 @@
 
 Compará cómo cambia una política de aprendizaje por refuerzo entre etapas guardadas. El panel reúne mediciones, errores observables y clips del mismo nivel; los resultados pueden mejorar o empeorar.
 
-**Sesión:** `teaching_20260916` · **Estado:** preparada para entrenar · **Actualizado:** 2026-09-16 07:05 UTC.
+**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 07:18 UTC.
 
 [Guía docente: clase de 35–45 minutos](../../docs/aula/GUIA_DOCENTE.md) · [Datos y configuración de esta sesión](manifest.json) · [Proyecto y experimentos anteriores](../../README.md)
 
