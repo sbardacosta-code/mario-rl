@@ -1,0 +1,280 @@
+{
+  "schema_version": 2,
+  "status": "complete",
+  "model": "/Users/sebastianbardacostaartagaveytia/Documents/ChatGPT/mario-rl/results/teaching_20260916/training/04_stage/checkpoints/final.zip",
+  "model_sha256": "e9b8ac80ee60482d4d3620559727b40322976b707f08a012bc18be74dd56306a",
+  "started_at": "2026-09-16T08:19:23.719765+00:00",
+  "learning_updates": 0,
+  "protocol": {
+    "version": 2,
+    "environment": "SuperMarioBros-1-1-v0",
+    "seeds": [
+      101,
+      202,
+      303,
+      404,
+      505
+    ],
+    "max_decisions": 3000,
+    "deterministic": false,
+    "seed_method": "SB3 set_random_seed plus environment reset(seed)",
+    "action_space": "RIGHT_ONLY",
+    "action_repeat": 4,
+    "observation_shape": [
+      4,
+      84,
+      84
+    ],
+    "reward": "native reward summed over repeated frames",
+    "device": "cpu",
+    "stall_threshold_decisions": 120,
+    "stall_definition": "consecutive decisions without a new maximum x position"
+  },
+  "media_protocol": {
+    "video_seeds": [
+      101,
+      202,
+      303
+    ],
+    "beginning_decisions": 150,
+    "ending_decisions": 75,
+    "format": "GIF excerpts plus PNG last frame",
+    "timing": "approximately game speed; repeated native frames / 60 fps, rounded to GIF centiseconds",
+    "full_episode": false
+  },
+  "max_seconds": 180.0,
+  "episodes": [
+    {
+      "seed": 101,
+      "max_x": 1128,
+      "last_x": 1128,
+      "last_y": 253,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 1049.0,
+      "decisions": 161,
+      "raw_frames": 644,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "episode_ended_without_flag",
+      "death_cause": "unknown",
+      "last_life": 2,
+      "last_game_time": 368,
+      "longest_no_progress_decisions": 28,
+      "stall_events": [],
+      "action_counts": [
+        1,
+        0,
+        65,
+        47,
+        48
+      ],
+      "mean_action_entropy_nats": 1.0485868354021393,
+      "trace_csv": "seed-101/trace.csv",
+      "trace_rows": 161,
+      "media": {
+        "beginning": {
+          "path": "seed-101/beginning.gif",
+          "first_decision": 1,
+          "last_decision": 150,
+          "captured_frames": 150,
+          "duration_seconds": 10.5,
+          "is_full_episode": false
+        },
+        "ending": {
+          "path": "seed-101/ending.gif",
+          "first_decision": 87,
+          "last_decision": 161,
+          "captured_frames": 75,
+          "duration_seconds": 5.25,
+          "is_full_episode": false
+        },
+        "terminal_frame": "seed-101/last-frame.png"
+      },
+      "elapsed_seconds": 0.762
+    },
+    {
+      "seed": 202,
+      "max_x": 1674,
+      "last_x": 1674,
+      "last_y": 79,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 1573.0,
+      "decisions": 215,
+      "raw_frames": 860,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "episode_ended_without_flag",
+      "death_cause": "unknown",
+      "last_life": 2,
+      "last_game_time": 357,
+      "longest_no_progress_decisions": 31,
+      "stall_events": [],
+      "action_counts": [
+        1,
+        2,
+        78,
+        59,
+        75
+      ],
+      "mean_action_entropy_nats": 1.0609805328901425,
+      "trace_csv": "seed-202/trace.csv",
+      "trace_rows": 215,
+      "media": {
+        "beginning": {
+          "path": "seed-202/beginning.gif",
+          "first_decision": 1,
+          "last_decision": 150,
+          "captured_frames": 150,
+          "duration_seconds": 10.5,
+          "is_full_episode": false
+        },
+        "ending": {
+          "path": "seed-202/ending.gif",
+          "first_decision": 141,
+          "last_decision": 215,
+          "captured_frames": 75,
+          "duration_seconds": 5.25,
+          "is_full_episode": false
+        },
+        "terminal_frame": "seed-202/last-frame.png"
+      },
+      "elapsed_seconds": 0.958
+    },
+    {
+      "seed": 303,
+      "max_x": 2028,
+      "last_x": 2028,
+      "last_y": 79,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 1930.0,
+      "decisions": 251,
+      "raw_frames": 1004,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "episode_ended_without_flag",
+      "death_cause": "unknown",
+      "last_life": 2,
+      "last_game_time": 350,
+      "longest_no_progress_decisions": 16,
+      "stall_events": [],
+      "action_counts": [
+        1,
+        2,
+        95,
+        74,
+        79
+      ],
+      "mean_action_entropy_nats": 1.0602208124213959,
+      "trace_csv": "seed-303/trace.csv",
+      "trace_rows": 251,
+      "media": {
+        "beginning": {
+          "path": "seed-303/beginning.gif",
+          "first_decision": 1,
+          "last_decision": 150,
+          "captured_frames": 150,
+          "duration_seconds": 10.5,
+          "is_full_episode": false
+        },
+        "ending": {
+          "path": "seed-303/ending.gif",
+          "first_decision": 177,
+          "last_decision": 251,
+          "captured_frames": 75,
+          "duration_seconds": 5.25,
+          "is_full_episode": false
+        },
+        "terminal_frame": "seed-303/last-frame.png"
+      },
+      "elapsed_seconds": 1.082
+    },
+    {
+      "seed": 404,
+      "max_x": 1435,
+      "last_x": 1435,
+      "last_y": 253,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 1354.0,
+      "decisions": 166,
+      "raw_frames": 664,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "episode_ended_without_flag",
+      "death_cause": "unknown",
+      "last_life": 2,
+      "last_game_time": 367,
+      "longest_no_progress_decisions": 23,
+      "stall_events": [],
+      "action_counts": [
+        3,
+        0,
+        58,
+        39,
+        66
+      ],
+      "mean_action_entropy_nats": 1.0474904430917946,
+      "trace_csv": "seed-404/trace.csv",
+      "trace_rows": 166,
+      "media": {},
+      "elapsed_seconds": 0.492
+    },
+    {
+      "seed": 505,
+      "max_x": 1527,
+      "last_x": 1527,
+      "last_y": 79,
+      "completed": false,
+      "flag_get": false,
+      "native_reward": 1440.0,
+      "decisions": 194,
+      "raw_frames": 774,
+      "terminated": true,
+      "truncated": false,
+      "end_reason": "episode_ended_without_flag",
+      "death_cause": "unknown",
+      "last_life": 2,
+      "last_game_time": 362,
+      "longest_no_progress_decisions": 33,
+      "stall_events": [],
+      "action_counts": [
+        1,
+        1,
+        61,
+        58,
+        73
+      ],
+      "mean_action_entropy_nats": 1.0525256266298981,
+      "trace_csv": "seed-505/trace.csv",
+      "trace_rows": 194,
+      "media": {},
+      "elapsed_seconds": 0.578
+    }
+  ],
+  "partial_episode": null,
+  "mean_max_x": 1558.4,
+  "mean_native_reward": 1469.2,
+  "level_completions": 0,
+  "completion_rate": 0.0,
+  "limitations": [
+    "Small fixed-seed evaluation is descriptive, not proof of general skill.",
+    "Seeds vary sampled policy actions on the same level and initial state.",
+    "GIFs show excerpts; the CSV contains every decision in the trial.",
+    "A stalled maximum does not establish that Mario cannot move or identify a collision.",
+    "A non-clearing termination does not identify a death cause; inspect the clip."
+  ],
+  "finished_episodes": 5,
+  "planned_episodes": 5,
+  "elapsed_seconds": 5.867,
+  "action_labels": {
+    "0": "NOOP",
+    "1": "right",
+    "2": "right+A",
+    "3": "right+B",
+    "4": "right+A+B"
+  },
+  "finished_at": "2026-09-16T08:19:29.577221+00:00"
+}
