@@ -2,7 +2,7 @@
 
 Compará cómo cambia una política de aprendizaje por refuerzo entre etapas guardadas. El panel reúne mediciones, errores observables y clips del mismo nivel; los resultados pueden mejorar o empeorar.
 
-**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 09:50 UTC.
+**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 10:03 UTC.
 
 [Guía docente: clase de 35–45 minutos](../../docs/aula/GUIA_DOCENTE.md) · [Datos y configuración de esta sesión](manifest.json) · [Proyecto y experimentos anteriores](../../README.md)
 
@@ -36,6 +36,7 @@ El eje horizontal mide entrenamiento **adicional de esta sesión**. Las decision
 | Etapa 8: 120 min adicionales | 120,0 | 1.387.392 | 2.806,4 | 2.762,0 | 2.473–3.161 | 2/5 |
 | Etapa 9: 135 min adicionales | 135,0 | 1.547.240 | 3.081,2 | 3.161,0 | 2.762–3.161 | 4/5 |
 | Etapa 10: 150 min adicionales | 150,0 | 1.708.772 | 3.161,0 | 3.161,0 | 3.161–3.161 | 5/5 |
+| Etapa 11: 163 min adicionales | 162,8 | 1.846.520 | 3.161,0 | 3.161,0 | 3.161–3.161 | 5/5 |
 
 | Etapa | Recompensa nativa media | Rachas sin progreso | Pruebas con alguna racha |
 | --- | ---: | ---: | ---: |
@@ -50,6 +51,7 @@ El eje horizontal mide entrenamiento **adicional de esta sesión**. Las decision
 | Etapa 8: 120 min adicionales | 2.714,6 | 0 | 0/5 |
 | Etapa 9: 135 min adicionales | 2.999,6 | 0 | 0/5 |
 | Etapa 10: 150 min adicionales | 3.086,6 | 0 | 0/5 |
+| Etapa 11: 163 min adicionales | 3.088,0 | 0 | 0/5 |
 
 ## Cómo se midió
 
@@ -292,13 +294,33 @@ Etapa `10_stage` · 150,0 minutos adicionales · 1.708.772 decisiones acumuladas
 
 **Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
 
+### Etapa 11: 163 min adicionales
+
+Etapa `11_stage` · 162,8 minutos adicionales · 1.846.520 decisiones acumuladas.
+
+[Evaluación completa en JSON](stages/11_stage/evaluation.json) · [Resumen del entrenamiento](training/11_stage/training_summary.json)
+
+| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| 101 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 7 | [comienzo](stages/11_stage/seed-101/beginning.gif) · [tramo final](stages/11_stage/seed-101/ending.gif) · [traza CSV](stages/11_stage/seed-101/trace.csv) · [último fotograma](stages/11_stage/seed-101/last-frame.png) |
+| 202 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 8 | [comienzo](stages/11_stage/seed-202/beginning.gif) · [tramo final](stages/11_stage/seed-202/ending.gif) · [traza CSV](stages/11_stage/seed-202/trace.csv) · [último fotograma](stages/11_stage/seed-202/last-frame.png) |
+| 303 | 3.161 | 3.161 | 3.091,0 | bandera alcanzada | 0 | 3 | [comienzo](stages/11_stage/seed-303/beginning.gif) · [tramo final](stages/11_stage/seed-303/ending.gif) · [traza CSV](stages/11_stage/seed-303/trace.csv) · [último fotograma](stages/11_stage/seed-303/last-frame.png) |
+| 404 | 3.161 | 3.161 | 3.088,0 | bandera alcanzada | 0 | 9 | [traza CSV](stages/11_stage/seed-404/trace.csv) |
+| 505 | 3.161 | 3.161 | 3.087,0 | bandera alcanzada | 0 | 5 | [traza CSV](stages/11_stage/seed-505/trace.csv) |
+
+| Comienzo, semilla 101, decisiones 1–150 | Tramo final, semilla 101, decisiones 245–319 |
+| --- | --- |
+| ![Comienzo, semilla 101, decisiones 1–150](stages/11_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 245–319](stages/11_stage/seed-101/ending.gif) |
+
+**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+
 ## Material conservado y próximas sesiones
 
 Los checkpoints `.zip` se guardan localmente; todavía no hay una publicación de pesos confirmada en este manifiesto. Descargar el código de GitHub no incluye esos modelos. El manifiesto registra sus rutas para quien tenga esa copia local.
 
 El repositorio conserva los reportes, las métricas y las muestras publicadas. Los logs detallados permanecen locales.
 
-Último checkpoint local registrado: `results/teaching_20260916/training/10_stage/checkpoints/final.zip`.
+Último checkpoint local registrado: `results/teaching_20260916/training/11_stage/checkpoints/final.zip`.
 
 [Informe de esta sesión](INFORME.md) · [Guía docente](../../docs/aula/GUIA_DOCENTE.md)
 
