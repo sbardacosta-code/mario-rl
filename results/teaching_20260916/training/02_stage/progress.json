@@ -1,0 +1,20 @@
+{
+  "base_num_timesteps": 262500,
+  "base_optimizer_steps": 4096,
+  "best_training_x": 3161,
+  "completed_rollouts_collected_this_run": 148,
+  "decisions_in_completed_rollouts_this_run": 151552,
+  "decisions_per_second": 169.36,
+  "decisions_this_run": 152428,
+  "elapsed_seconds": 900.007,
+  "episodes": 1319,
+  "optimizer_steps": 6464,
+  "optimizer_steps_this_run": 2368,
+  "ppo_epochs": 1616,
+  "recent_mean_return": 769.44,
+  "recent_mean_x": 845.32,
+  "rollout_accounting_note": "Counts describe collected rollouts, not unique samples optimized; target-KL stopping can skip minibatches or epochs. PPO epoch counts may include an unfinished epoch.",
+  "timesteps": 414928,
+  "training_completions": 2,
+  "uncompleted_rollout_decisions": 876
+}
