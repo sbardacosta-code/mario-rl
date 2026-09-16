@@ -1,7 +1,7 @@
 {
   "session_id": "teaching_20260916",
   "session_dir": "results/teaching_20260916",
-  "status": "running",
+  "status": "completed",
   "created_at": "2026-09-16T07:04:00.592921+00:00",
   "started_at": "2026-09-16T07:18:43.010326+00:00",
   "deadline_utc": "2026-09-16T10:18:43.010326+00:00",
@@ -167,7 +167,7 @@
     }
   ],
   "elapsed_training_seconds": 9766.391,
-  "completion_reason": null,
+  "completion_reason": "session_time_budget_reached",
   "interpretation": "Contin\u00faa un modelo previo; cambia tasa de aprendizaje y l\u00edmite KL juntos. No permite atribuir una diferencia a un solo par\u00e1metro. Cinco semillas de acciones son una muestra peque\u00f1a del mismo nivel.",
   "source_hashes": {
     "train.py": "0525569810abc72c4938339eee35903935ab9b5270d70515eba4e7f7e7eb7201",
@@ -182,5 +182,84 @@
   "active_stage": null,
   "active_training_dir": "results/teaching_20260916/training/11_stage",
   "latest_checkpoint": "results/teaching_20260916/training/11_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5"
+  "latest_checkpoint_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "final_audit_path": "results/teaching_20260916/final_audit/evaluation.json",
+  "finished_at": "2026-09-16T10:04:08.850815+00:00",
+  "wall_seconds": 9925.84065,
+  "model_release_url": "https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260916",
+  "model_release_status": "complete",
+  "published_models": [
+    {
+      "stage_id": "00_baseline",
+      "asset": "00_baseline.zip",
+      "sha256": "676a8f2cc5f4dc6e0407fe89dbf5496819d7364749b33acfcb5adc3bf3305184",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "01_stage",
+      "asset": "01_stage.zip",
+      "sha256": "20ae29bbdf0fc396553c03806de05c756cfdc65f2c3f6142fa86747da3fa4c98",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "02_stage",
+      "asset": "02_stage.zip",
+      "sha256": "3b606feb9e2c439ae438882bfd2663c123fdf7bb7fce3a9927faedd23cdb92e7",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "03_stage",
+      "asset": "03_stage.zip",
+      "sha256": "799dc963a8f030b901dc9eb701d6e6f51a02c3b5038cbe3ba403f0c2132c0ed3",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "04_stage",
+      "asset": "04_stage.zip",
+      "sha256": "e9b8ac80ee60482d4d3620559727b40322976b707f08a012bc18be74dd56306a",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "05_stage",
+      "asset": "05_stage.zip",
+      "sha256": "993887122f9cc66424e94e0ee17cdf393fdcddadc6c800348bb6f1d1cf90a87b",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "06_stage",
+      "asset": "06_stage.zip",
+      "sha256": "621fe9def29b381481431086adfbfdf1f077b273bc1bf5c7180e99591118a111",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "07_stage",
+      "asset": "07_stage.zip",
+      "sha256": "d5afec2f2ac5eeb0a159d35bb0c897fac8e2bb7978802436802e532f9e7f52d1",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "08_stage",
+      "asset": "08_stage.zip",
+      "sha256": "9f7c0b0e47ee9366b260c867938007bd7ce19bfbd7b59ef95b6d5f19bdbb634a",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "09_stage",
+      "asset": "09_stage.zip",
+      "sha256": "ebbb6d14368db7324e61934cb143eb4185a70ef6d487d65970bf5eef6ad2bf39",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "10_stage",
+      "asset": "10_stage.zip",
+      "sha256": "6b9eb8124b3591961e18eaa8cad406f62b719955d6ba43687a08517c0c5c49f5",
+      "remote_bytes_verified": true
+    },
+    {
+      "stage_id": "11_stage",
+      "asset": "11_stage.zip",
+      "sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+      "remote_bytes_verified": true
+    }
+  ]
 }

@@ -2,7 +2,7 @@
 
 Compará cómo cambia una política de aprendizaje por refuerzo entre etapas guardadas. El panel reúne mediciones, errores observables y clips del mismo nivel; los resultados pueden mejorar o empeorar.
 
-**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 10:03 UTC.
+**Sesión:** `teaching_20260916` · **Estado:** finalizada · **Actualizado:** 2026-09-16 10:04 UTC.
 
 [Guía docente: clase de 35–45 minutos](GUIA_DOCENTE.md) · [Datos y configuración de esta sesión](../../results/teaching_20260916/manifest.json) · [Proyecto y experimentos anteriores](../../README.md)
 
@@ -314,9 +314,30 @@ Etapa `11_stage` · 162,8 minutos adicionales · 1.846.520 decisiones acumuladas
 
 **Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
 
+## Prueba final con semillas nuevas
+
+Estas semillas se reservaron para el modelo final; no se mezclan con la curva de cinco pruebas repetidas ni se usan para elegir una etapa. Siguen siendo intentos del mismo World 1-1.
+
+[Datos de la prueba final](../../results/teaching_20260916/final_audit/evaluation.json)
+
+Posición máxima media: **2.818,6 px** · Mediana: **3.161,0 px** · Bandera: **7/10 pruebas**.
+
+| Semilla | Máx. x | Bandera | Evidencia |
+| ---: | ---: | ---: | --- |
+| 1001 | 3.161 | sí | [comienzo](../../results/teaching_20260916/final_audit/seed-1001/beginning.gif) · [tramo final](../../results/teaching_20260916/final_audit/seed-1001/ending.gif) · [traza CSV](../../results/teaching_20260916/final_audit/seed-1001/trace.csv) |
+| 1002 | 1.790 | no | [traza CSV](../../results/teaching_20260916/final_audit/seed-1002/trace.csv) |
+| 1003 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1003/trace.csv) |
+| 1004 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1004/trace.csv) |
+| 1005 | 2.470 | no | [traza CSV](../../results/teaching_20260916/final_audit/seed-1005/trace.csv) |
+| 1006 | 1.799 | no | [traza CSV](../../results/teaching_20260916/final_audit/seed-1006/trace.csv) |
+| 1007 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1007/trace.csv) |
+| 1008 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1008/trace.csv) |
+| 1009 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1009/trace.csv) |
+| 1010 | 3.161 | sí | [traza CSV](../../results/teaching_20260916/final_audit/seed-1010/trace.csv) |
+
 ## Material conservado y próximas sesiones
 
-Los checkpoints `.zip` se guardan localmente; todavía no hay una publicación de pesos confirmada en este manifiesto. Descargar el código de GitHub no incluye esos modelos. El manifiesto registra sus rutas para quien tenga esa copia local.
+Los checkpoints publicados se descargan desde la [versión de modelos de esta sesión](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260916). Son archivos separados del historial de código y requieren los permisos del repositorio. El enlace se incorpora al manifiesto después de confirmar la subida; consultar allí los archivos efectivamente publicados.
 
 El repositorio conserva los reportes, las métricas y las muestras publicadas. Los logs detallados permanecen locales.
 
@@ -327,6 +348,8 @@ El repositorio conserva los reportes, las métricas y las muestras publicadas. L
 Sesiones conservadas:
 
 - [teaching_20260916](../../results/teaching_20260916/INFORME.md)
+
+Motivo de cierre registrado: `session_time_budget_reached`.
 
 Para actualizar el mismo panel después de generar nuevas evaluaciones:
 
