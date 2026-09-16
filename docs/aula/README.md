@@ -2,7 +2,7 @@
 
 Compará cómo cambia una política de aprendizaje por refuerzo entre etapas guardadas. El panel reúne mediciones, errores observables y clips del mismo nivel; los resultados pueden mejorar o empeorar.
 
-**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 07:18 UTC.
+**Sesión:** `teaching_20260916` · **Estado:** en curso · **Actualizado:** 2026-09-16 07:33 UTC.
 
 [Guía docente: clase de 35–45 minutos](GUIA_DOCENTE.md) · [Datos y configuración de esta sesión](../../results/teaching_20260916/manifest.json) · [Proyecto y experimentos anteriores](../../README.md)
 
@@ -17,7 +17,7 @@ Este panel mantiene la misma ruta `docs/aula/README.md` cuando se publican nueva
 
 ## Qué pasó hasta ahora
 
-Ya está evaluado el punto de partida. Hace falta otra etapa comparable para medir el cambio de esta sesión.
+Entre la primera y la última etapa comparable, la posición máxima media **subió: 649,6 → 893,4 píxeles**. La última etapa alcanzó la bandera en **0 de 5 pruebas**. Es una descripción de estas pruebas del mismo nivel; no demuestra desempeño general ni mejora estable.
 
 ![Gráfico de evolución de todas las etapas comparables](../../results/teaching_20260916/progress.png)
 
@@ -26,10 +26,12 @@ El eje horizontal mide entrenamiento **adicional de esta sesión**. Las decision
 | Etapa | Minutos adicionales | Decisiones acumuladas | Media x | Mediana x | Mín.–máx. x | Bandera |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Inicio: modelo con 102,400 decisiones previas | 0,0 | 102.400 | 649,6 | 688,0 | 300–1.127 | 0/5 |
+| Etapa 1: 15 min adicionales | 15,0 | 262.500 | 893,4 | 686,0 | 310–1.663 | 0/5 |
 
 | Etapa | Recompensa nativa media | Rachas sin progreso | Pruebas con alguna racha |
 | --- | ---: | ---: | ---: |
 | Inicio: modelo con 102,400 decisiones previas | 575,8 | 0 | 0/5 |
+| Etapa 1: 15 min adicionales | 812,0 | 0 | 0/5 |
 
 ## Cómo se midió
 
@@ -72,11 +74,33 @@ Etapa `00_baseline` · 0,0 minutos adicionales · 102.400 decisiones acumuladas.
 
 **Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
 
+### Etapa 1: 15 min adicionales
+
+Etapa `01_stage` · 15,0 minutos adicionales · 262.500 decisiones acumuladas.
+
+[Evaluación completa en JSON](../../results/teaching_20260916/stages/01_stage/evaluation.json) · [Resumen del entrenamiento](../../results/teaching_20260916/training/01_stage/training_summary.json)
+
+| Semilla | Máx. x | Última x | Recompensa nativa | Final del intento | Rachas | Mayor racha (decisiones) | Evidencia |
+| ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| 101 | 682 | 682 | 606,0 | fin sin bandera; causa no identificada | 0 | 22 | [comienzo](../../results/teaching_20260916/stages/01_stage/seed-101/beginning.gif) · [tramo final](../../results/teaching_20260916/stages/01_stage/seed-101/ending.gif) · [traza CSV](../../results/teaching_20260916/stages/01_stage/seed-101/trace.csv) · [último fotograma](../../results/teaching_20260916/stages/01_stage/seed-101/last-frame.png) |
+| 202 | 310 | 310 | 254,0 | fin sin bandera; causa no identificada | 0 | 1 | [comienzo](../../results/teaching_20260916/stages/01_stage/seed-202/beginning.gif) · [tramo final](../../results/teaching_20260916/stages/01_stage/seed-202/ending.gif) · [traza CSV](../../results/teaching_20260916/stages/01_stage/seed-202/trace.csv) · [último fotograma](../../results/teaching_20260916/stages/01_stage/seed-202/last-frame.png) |
+| 303 | 1.663 | 1.663 | 1.556,0 | fin sin bandera; causa no identificada | 0 | 49 | [comienzo](../../results/teaching_20260916/stages/01_stage/seed-303/beginning.gif) · [tramo final](../../results/teaching_20260916/stages/01_stage/seed-303/ending.gif) · [traza CSV](../../results/teaching_20260916/stages/01_stage/seed-303/trace.csv) · [último fotograma](../../results/teaching_20260916/stages/01_stage/seed-303/last-frame.png) |
+| 404 | 686 | 686 | 613,0 | fin sin bandera; causa no identificada | 0 | 16 | [traza CSV](../../results/teaching_20260916/stages/01_stage/seed-404/trace.csv) |
+| 505 | 1.126 | 1.126 | 1.031,0 | fin sin bandera; causa no identificada | 0 | 40 | [traza CSV](../../results/teaching_20260916/stages/01_stage/seed-505/trace.csv) |
+
+| Comienzo, semilla 101, decisiones 1–93 | Tramo final, semilla 101, decisiones 19–93 |
+| --- | --- |
+| ![Comienzo, semilla 101, decisiones 1–93](../../results/teaching_20260916/stages/01_stage/seed-101/beginning.gif) | ![Tramo final, semilla 101, decisiones 19–93](../../results/teaching_20260916/stages/01_stage/seed-101/ending.gif) |
+
+**Para discutir:** ¿qué se observa al terminar este intento? ¿Qué evidencia distingue un salto tardío, una repetición de acciones o un límite de decisiones? La causa específica requiere revisar los clips; la posición por sí sola no la identifica.
+
 ## Material conservado y próximas sesiones
 
 Los checkpoints `.zip` se guardan localmente; todavía no hay una publicación de pesos confirmada en este manifiesto. Descargar el código de GitHub no incluye esos modelos. El manifiesto registra sus rutas para quien tenga esa copia local.
 
 El repositorio conserva los reportes, las métricas y las muestras publicadas. Los logs detallados permanecen locales.
+
+Último checkpoint local registrado: `results/teaching_20260916/training/01_stage/checkpoints/final.zip`.
 
 [Informe de esta sesión](../../results/teaching_20260916/INFORME.md) · [Guía docente](GUIA_DOCENTE.md)
 
