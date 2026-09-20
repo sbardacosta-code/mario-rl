@@ -223,6 +223,30 @@ def make_report(repo: Path, manifest_path: Path, manifest: dict, stages: list[di
         content.append("The starting point has been evaluated. Another comparable stage is needed to measure change during this session.")
     else:
         content.append("There are no complete, comparable evaluations yet. Pending stages are not counted as failures or zero values.")
+    followups = manifest.get("followup_evaluations", [])
+    if followups:
+        content += ["", "## Later evaluations of the saved model", "",
+            "These evaluations use frozen model weights. Each trial set is reported separately; none is added to the training-stage curve or the original final test.", "",
+        ]
+        for followup in followups:
+            report_file = within(repo, followup["report_path"])
+            evaluation_file = within(repo, followup["evaluation_path"])
+            label = followup.get("label", "Follow-up evaluation")
+            title = link(label, report_file, document) if report_file.is_file() else f"{cell(label)} (report pending)"
+            result = "**Evaluation pending.** No completed result is available."
+            if evaluation_file.is_file():
+                evaluation = read_json(evaluation_file)
+                episodes = evaluation.get("episodes", [])
+                planned = evaluation.get("protocol", {}).get("seeds", [])
+                recorded = [episode.get("seed") for episode in episodes]
+                if evaluation.get("status") == "complete" and planned and recorded == planned and len(set(recorded)) == len(recorded):
+                    clears = sum(bool(episode["completed"]) for episode in episodes)
+                    result = f"**Flag reached: {clears}/{len(episodes)} trials.** All {len(planned)} planned trials are complete."
+                else:
+                    result = "**Evaluation incomplete.** Partial or mismatched trials are not presented as a completed result."
+                result += " " + link("Evaluation data", evaluation_file, document) + "."
+            content.append(f"- {title} — {result}")
+        content += ["", "## Training-stage progress"]
     content += ["", link("Progress chart for all comparable stages", chart, document, image=True), "",
         "The horizontal axis measures **additional training during this session**. The decisions in the table are cumulative and may include earlier training. The band shows the minimum and maximum across trials; it is not a confidence interval. The x position is a coordinate within the level, not a completion percentage.", "",
         "| Stage | Additional minutes | Cumulative decisions | Mean x | Median x | Min.–max. x | Flag |",

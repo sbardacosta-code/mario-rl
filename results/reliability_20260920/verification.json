@@ -1,0 +1,77 @@
+{
+  "verified_at": "2026-09-20T21:26:02.723025+00:00",
+  "all_planned_trials_complete": true,
+  "learning_updates": 0,
+  "model_sha256_before": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "model_sha256_after": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "same_model_as_original_final_audit": true,
+  "protocol_matches_original_final_audit_except_seeds": true,
+  "csv_rows_verified": 14532,
+  "media_files_verified": 15,
+  "metrics": {
+    "attempts": 50,
+    "level_completions": 42,
+    "completion_rate": 0.84,
+    "wilson_95_interval": [
+      0.7148578393696501,
+      0.916625793219666
+    ],
+    "mean_max_x": 2967.1,
+    "median_max_x": 3161.0,
+    "mean_native_reward": 2891.68,
+    "ending_counts": {
+      "level_completed": 42,
+      "episode_ended_without_flag": 8
+    },
+    "failures": [
+      {
+        "seed": 2005,
+        "max_x": 2762,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2009,
+        "max_x": 2474,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2011,
+        "max_x": 1793,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2014,
+        "max_x": 1791,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2018,
+        "max_x": 2472,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2028,
+        "max_x": 1796,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2033,
+        "max_x": 710,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      },
+      {
+        "seed": 2038,
+        "max_x": 1795,
+        "end_reason": "episode_ended_without_flag",
+        "death_cause": "unknown"
+      }
+    ]
+  }
+}

@@ -261,5 +261,12 @@
       "sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
       "remote_bytes_verified": true
     }
+  ],
+  "followup_evaluations": [
+    {
+      "label": "September 20 reliability check: 50 new attempts",
+      "report_path": "results/reliability_20260920/README.md",
+      "evaluation_path": "results/reliability_20260920/evaluation/evaluation.json"
+    }
   ]
 }

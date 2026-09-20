@@ -2,7 +2,7 @@
 
 Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Session:** `teaching_20260916` · **Status:** completed · **Updated:** 2026-09-16 14:57 UTC.
+**Session:** `teaching_20260916` · **Status:** completed · **Updated:** 2026-09-20 21:26 UTC.
 
 [Teacher guide: a 35–45 minute lesson](../../docs/aula/GUIA_DOCENTE.md) · [Session data and configuration](manifest.json) · [Project and previous experiments](../../README.md)
 
@@ -18,6 +18,14 @@ This dashboard keeps the same path, `docs/aula/README.md`, when new sessions are
 ## What has happened so far
 
 Between the first and last comparable stages, the mean maximum position **increased: 649.6 → 3,161.0 pixels**. The last stage reached the flag in **5 of 5 trials**. This describes these trials on the same level; it does not establish general performance or consistent improvement.
+
+## Later evaluations of the saved model
+
+These evaluations use frozen model weights. Each trial set is reported separately; none is added to the training-stage curve or the original final test.
+
+- [September 20 reliability check: 50 new attempts](../reliability_20260920/README.md) — **Flag reached: 42/50 trials.** All 50 planned trials are complete. [Evaluation data](../reliability_20260920/evaluation/evaluation.json).
+
+## Training-stage progress
 
 ![Progress chart for all comparable stages](progress.png)
 
