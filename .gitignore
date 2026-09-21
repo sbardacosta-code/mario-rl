@@ -13,3 +13,7 @@ recordings/
 *.pth
 *.zip
 .matplotlib/
+
+live_frame.json
+
+.live_frame.json.*.tmp

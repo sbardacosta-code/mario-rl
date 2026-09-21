@@ -22,6 +22,7 @@ TRACE_FIELDS = [
     "prob_0", "prob_1", "prob_2", "prob_3", "prob_4", "action_entropy_nats",
     "native_reward", "native_reward_sum", "no_progress_decisions", "life",
     "game_time", "flag_get", "terminated", "truncated",
+    "game_score", "score_gain", "coins",
 ]
 
 
@@ -86,7 +87,7 @@ def main() -> int:
     deadline = started + args.max_seconds
     report_path = args.output_dir / "evaluation.json"
     report = {
-        "schema_version": 2,
+        "schema_version": 3,
         "status": "running",
         "model": str(args.model.resolve()),
         "model_sha256": sha256(args.model),
@@ -103,6 +104,7 @@ def main() -> int:
             "action_repeat": 4,
             "observation_shape": [4, 84, 84],
             "reward": "native reward summed over repeated frames",
+            "score_metric": "actual HUD points earned before flag touch; post-flag and remaining-time bonuses excluded",
             "device": args.device,
             "stall_threshold_decisions": args.stall_decisions,
             "stall_definition": "consecutive decisions without a new maximum x position",
@@ -113,7 +115,7 @@ def main() -> int:
             "ending_decisions": args.ending_decisions,
             "format": "GIF excerpts plus PNG last frame",
             "timing": "approximately game speed; repeated native frames / 60 fps, rounded to GIF centiseconds",
-            "full_episode": False,
+            "full_episode": args.beginning_decisions >= args.max_decisions,
         },
         "max_seconds": args.max_seconds,
         "episodes": [],
@@ -126,7 +128,8 @@ def main() -> int:
             "Small fixed-seed evaluation is descriptive, not proof of general skill.",
             "Deterministic actions on the same level and initial state can repeat the same trajectory across seeds."
             if args.deterministic else "Seeds vary sampled policy actions on the same level and initial state.",
-            "GIFs show excerpts; the CSV contains every decision in the trial.",
+            "Beginning clips cover each completed video trial; ending clips are excerpts."
+            if args.beginning_decisions >= args.max_decisions else "GIFs show excerpts; the CSV contains every decision in the trial.",
             "A stalled maximum does not establish that Mario cannot move or identify a collision.",
             "A non-clearing termination does not identify a death cause; inspect the clip.",
         ],
@@ -141,6 +144,11 @@ def main() -> int:
         report["mean_native_reward"] = sum(e["native_reward"] for e in episodes) / count if count else None
         report["level_completions"] = sum(e["completed"] for e in episodes)
         report["completion_rate"] = report["level_completions"] / count if count else None
+        report["mean_game_score"] = sum(e["game_score"] for e in episodes) / count if count else None
+        report["mean_score_gain"] = sum(e["score_gain"] for e in episodes) / count if count else None
+        report["mean_completed_score"] = sum(e["score_gain"] if e["completed"] else 0 for e in episodes) / count if count else None
+        clears = [e["score_gain"] for e in episodes if e["completed"]]
+        report["mean_score_on_clears"] = sum(clears) / len(clears) if clears else None
         report["elapsed_seconds"] = round(time.monotonic() - started, 3)
         write_json(report_path, report)
 
@@ -258,6 +266,9 @@ def main() -> int:
                             "life": info.get("life"), "game_time": info.get("time"),
                             "flag_get": int(bool(info.get("flag_get", False))),
                             "terminated": int(terminated), "truncated": int(truncated),
+                            "game_score": int(info["score_metrics"]["current_score"]),
+                            "score_gain": int(info["score_metrics"]["score_gain"]),
+                            "coins": int(info["coins"]),
                         }
                         row.update({f"prob_{i}": float(probabilities[i]) for i in range(5)})
                         writer.writerow(row)
@@ -292,6 +303,13 @@ def main() -> int:
                     "last_x": last_x, "last_y": last_y,
                     "completed": completed, "flag_get": bool(info.get("flag_get", completed)),
                     "native_reward": float(metrics.get("native_reward_sum", native_reward)),
+                    "game_score": int(info["score_metrics"]["current_score"]),
+                    "initial_score": int(info["score_metrics"]["initial_score"]),
+                    "score_gain": int(info["score_metrics"]["score_gain"]),
+                    "max_score": int(info["score_metrics"]["max_score"]),
+                    "coins": int(info["coins"]),
+                    "objective_reward_sum": float(info["score_metrics"]["objective_reward_sum"]),
+                    "score_anomalies": info["score_metrics"].get("score_anomalies", []),
                     "decisions": decisions, "raw_frames": raw_frames,
                     "terminated": bool(terminated), "truncated": bool(truncated),
                     "end_reason": end_reason,

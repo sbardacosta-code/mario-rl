@@ -29,6 +29,7 @@ from stable_baselines3.common.utils import FloatSchedule
 from stable_baselines3.common.vec_env import DummyVecEnv
 
 from mario_env import make_env
+from score_objective import SCORE_REWARD_CONFIG
 
 
 class ScaleReward(RewardWrapper):
@@ -72,7 +73,7 @@ def optimizer_steps(model):
 
 
 class SessionCallback(BaseCallback):
-    def __init__(self, run_dir, max_seconds, deadline_utc, checkpoint_seconds, archive_seconds=300):
+    def __init__(self, run_dir, max_seconds, deadline_utc, checkpoint_seconds, archive_seconds=300, objective="native"):
         super().__init__()
         self.run_dir = run_dir
         self.max_seconds = max_seconds
@@ -84,6 +85,7 @@ class SessionCallback(BaseCallback):
         self.completions = 0
         self.best_x = 0
         self.stop_reason = "timesteps_reached"
+        self.objective = objective
 
     def _on_training_start(self):
         self.started = time.monotonic()
@@ -96,7 +98,7 @@ class SessionCallback(BaseCallback):
         self.next_progress = 0.0
         self.next_print = 0.0
         self.csv_file = (self.run_dir / "episodes.csv").open("w", newline="")
-        self.writer = csv.DictWriter(self.csv_file, fieldnames=["elapsed_seconds", "timesteps", "return", "length", "max_x", "completed"])
+        self.writer = csv.DictWriter(self.csv_file, fieldnames=["elapsed_seconds", "timesteps", "return", "length", "max_x", "completed", "game_score", "score_gain", "coins", "objective_reward_sum"])
         self.writer.writeheader()
         self.csv_file.flush()
 
@@ -115,6 +117,12 @@ class SessionCallback(BaseCallback):
             "best_training_x": self.best_x,
             "recent_mean_x": float(np.mean([row["max_x"] for row in recent])) if recent else None,
             "recent_mean_return": float(np.mean([row["return"] for row in recent])) if recent else None,
+            "objective": self.objective,
+            "recent_mean_game_score": float(np.mean([row["game_score"] for row in recent])) if recent else None,
+            "recent_mean_score_gain": float(np.mean([row["score_gain"] for row in recent])) if recent else None,
+            "recent_completion_rate": float(np.mean([row["completed"] for row in recent])) if recent else None,
+            "recent_mean_completed_score": float(np.mean([row["score_gain"] if row["completed"] else 0 for row in recent])) if recent else None,
+            "recent_mean_objective_reward": float(np.mean([row["objective_reward_sum"] for row in recent])) if recent else None,
             "ppo_epochs": self.model._n_updates,
             "optimizer_steps": optimizer_steps(self.model),
             "optimizer_steps_this_run": optimizer_steps(self.model) - self.first_optimizer_steps,
@@ -148,6 +156,10 @@ class SessionCallback(BaseCallback):
                     "length": int(metrics["decisions"]),
                     "max_x": int(metrics["max_x"]),
                     "completed": int(metrics["completed"]),
+                    "game_score": int(metrics["game_score"]),
+                    "score_gain": int(metrics["score_gain"]),
+                    "coins": int(metrics["coins"]),
+                    "objective_reward_sum": float(metrics["objective_reward_sum"]),
                 }
                 self.writer.writerow(row)
                 self.csv_file.flush()
@@ -194,6 +206,8 @@ def main():
     parser.add_argument("--checkpoint-seconds", type=float, default=60)
     parser.add_argument("--archive-seconds", type=float, default=300, help="interval for extra archived checkpoints; 0 disables archives")
     parser.add_argument("--reward-scale", type=float, default=1.0, help="multiply training rewards only; native episode metrics remain unchanged")
+    parser.add_argument("--objective", choices=["native", "score"], default="native", help="native reward or game points with completion/failure bonuses")
+    parser.add_argument("--live-preview", action="store_true", help="publish sampled live frames from the first training environment")
     parser.add_argument("--learning-rate", type=float, help="override the learning rate; omitted preserves the checkpoint value, or uses 0.00025 for a fresh model")
     parser.add_argument("--target-kl", type=float, help="positive KL early-stop threshold; omitted preserves the checkpoint value, or disables it for a fresh model")
     parser.add_argument("--ent-coef", type=float, help="nonnegative entropy coefficient; omitted preserves the checkpoint value, or uses 0.01 for a fresh model")
@@ -233,13 +247,23 @@ def main():
     torch.set_num_interop_threads(1)
     if args.device == "mps" and not torch.backends.mps.is_available():
         parser.error("MPS is unavailable; choose --device cpu")
-    env = DummyVecEnv([lambda i=i: Monitor(ScaleReward(make_env(seed=None if args.resume else args.seed+i, max_decisions=args.max_decisions), args.reward_scale)) for i in range(args.n_envs)])
+    env = DummyVecEnv([
+        lambda i=i: Monitor(ScaleReward(make_env(
+            seed=None if args.resume else args.seed+i, max_decisions=args.max_decisions,
+            objective=args.objective,
+            render_mode="rgb_array" if args.live_preview else None,
+            live_frame_path=args.run_dir / "live_frame.json" if args.live_preview and i == 0 else None,
+        ), args.reward_scale)) for i in range(args.n_envs)
+    ])
     hyperparameters = dict(n_steps=256, batch_size=256, n_epochs=4, learning_rate=2.5e-4, gamma=0.99, gae_lambda=0.95, ent_coef=0.01, clip_range=0.2, target_kl=None)
     try:
         if args.resume:
             model = PPO.load(args.resume, env=env, device=args.device)
         else:
             model = PPO("CnnPolicy", env, seed=args.seed, device=args.device, verbose=0, **hyperparameters)
+        previous_objective = getattr(model, "mario_objective", "native")
+        model.mario_objective = args.objective
+        model.mario_reward_scale = args.reward_scale
         overrides = {}
         if args.learning_rate is not None:
             model.learning_rate = args.learning_rate
@@ -270,9 +294,15 @@ def main():
             "seed_note": "Fresh models use --seed. Resumed models retain the saved seed; --seed is ignored. A saved non-null seed reseeds RNGs and the emulator; exact prior RNG state is not restored.",
             "base_num_timesteps": model.num_timesteps,
             "base_optimizer_steps": optimizer_steps(model),
-            "observation_shape": [4,84,84], "reward": "native summed across repeated frames, multiplied by reward_scale for learning",
+            "observation_shape": [4,84,84],
+            "objective": args.objective,
+            "previous_objective": previous_objective,
+            "objective_changed_on_resume": bool(args.resume and previous_objective != args.objective),
+            "score_reward_config": SCORE_REWARD_CONFIG if args.objective == "score" else None,
+            "reward": "game score delta / 1000 + 5 on completion - 5 on non-clearing episode end" if args.objective == "score" else "native summed across repeated frames, multiplied by reward_scale for learning",
             "reward_scale": args.reward_scale,
-            "metric_units": {"episodes.csv:return": "native reward", "logs:rollout/ep_rew_mean": "scaled training reward", "evaluation": "native reward"},
+            "metric_units": {"episodes.csv:return": "native reward", "episodes.csv:score_gain": "actual game points earned before flag touch", "episodes.csv:objective_reward_sum": "unscaled objective reward", "logs:rollout/ep_rew_mean": "scaled objective reward", "evaluation": "actual points and completion, plus native reward"},
+            "live_preview": {"enabled": args.live_preview, "environment_index": 0, "environment_count": args.n_envs, "path": "live_frame.json" if args.live_preview else None},
             "args": {key: str(value) if isinstance(value, Path) else value for key,value in vars(args).items()},
             "python": platform.python_version(), "platform": platform.platform(),
             "packages": {name:version(name) for name in ["gym-super-mario-bros","nes-py","gymnasium","stable-baselines3","torch","numpy"]},
@@ -294,7 +324,7 @@ def main():
         first_timestep = model.num_timesteps
         first_optimizer_steps = optimizer_steps(model)
         first_epochs = model._n_updates
-        callback = SessionCallback(args.run_dir, args.max_seconds, args.deadline_utc, args.checkpoint_seconds, args.archive_seconds)
+        callback = SessionCallback(args.run_dir, args.max_seconds, args.deadline_utc, args.checkpoint_seconds, args.archive_seconds, args.objective)
         model.set_logger(configure(str(args.run_dir / "logs"), ["csv", "tensorboard"]))
         status = "completed"
         error = None
@@ -328,6 +358,7 @@ def main():
         }
         summary = {
             "status": status, "error":error, "completed_at":datetime.now(timezone.utc).isoformat(),
+            "objective": args.objective, "reward_scale": args.reward_scale,
             "stop_reason": callback.stop_reason, **progress,
             "optimizer_steps_this_run":optimizer_steps(model)-first_optimizer_steps,
             "ppo_epochs_this_run":model._n_updates-first_epochs,

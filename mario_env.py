@@ -1,6 +1,7 @@
 """World 1-1 observations and episode accounting shared by training and evaluation."""
 
 from __future__ import annotations
+from pathlib import Path
 
 import gymnasium as gym
 import gym_super_mario_bros  # noqa: F401: registers the Mario environments
@@ -13,6 +14,7 @@ from gymnasium.wrappers import (
 )
 from nes_py.wrappers import JoypadSpace
 import numpy as np
+from score_objective import GameScore
 
 
 ENV_ID = "SuperMarioBros-1-1-v0"
@@ -97,7 +99,8 @@ class EpisodeMetrics(gym.Wrapper):
 
 def make_env(
     *, seed: int | None = None, render_mode: str | None = None,
-    max_decisions: int = 3000,
+    max_decisions: int = 3000, objective: str = "native",
+    live_frame_path: str | Path | None = None,
 ) -> gym.Env:
     """Create an unreset env with (4, 84, 84) uint8 pixels and five actions.
 
@@ -108,6 +111,10 @@ def make_env(
     """
     if max_decisions < 1:
         raise ValueError("max_decisions must be at least 1")
+    if objective not in ("native", "score"):
+        raise ValueError("objective must be native or score")
+    if live_frame_path is not None:
+        render_mode = "rgb_array"
     env = gym.make(
         ENV_ID, render_mode=render_mode,
         # The outer TimeLimit defines the episode budget in agent decisions.
@@ -117,6 +124,10 @@ def make_env(
     env = ActionRepeat(env)
     env = TimeLimit(env, max_episode_steps=max_decisions)
     env = EpisodeMetrics(env, initial_seed=seed)
+    env = GameScore(env, objective=objective)
+    if live_frame_path is not None:
+        from live_view import LiveFrames
+        env = LiveFrames(env, path=live_frame_path)
     # Resize/grayscale allocate independent images before history is retained.
     env = ResizeObservation(env, IMAGE_SIZE)
     env = GrayscaleObservation(env, keep_dim=False)

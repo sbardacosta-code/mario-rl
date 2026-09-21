@@ -2,6 +2,36 @@
 
 Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
+## Score-focused training and the live window
+
+The preserved completion model reached the flag in **100/100 fresh attempts** in the [September 20 comparison](results/teaching_20260920/README.md). The next experiment asks whether it can collect more actual game points while retaining reliable completion. Its original checkpoint stays unchanged.
+
+The score objective is **score increase / 1,000 + 5 for finishing − 5 for a non-clearing episode end**. It replaces the native training reward; coins, distance, and power-ups do not receive additional hand-written bonuses. The usual five actions and saved policy are retained. These reward weights are an initial experiment, not a demonstrated optimum.
+
+**Measurement boundary:** this emulator stops at flag touch, before the flag animation and remaining-time bonuses. Reports therefore measure **points earned before flag touch**, alongside completion rate. Native reward, game points, and the training reward are separate measurements. The five-action setup has no left, down, or stationary jump, so it cannot explore every possible scoring route.
+
+Start a 15-minute pilot with the popup window and GitHub publication:
+
+```sh
+.venv/bin/python score_session.py --run-dir results/teaching_score_20260921 --minutes 15 --show-window --publish
+```
+
+This requires the preserved checkpoint at `results/teaching_20260920/training/03_stage/checkpoints/final.zip`. On another computer, download `03_stage.zip` from the [September 20 model release](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260920) and use `--initial-model PATH`. A new run needs a new directory and unused seeds; `--seed-base` selects a different predeclared validation/test seed range. `--minutes 60` saves four 15-minute stages. Evaluation and uploads add time beyond training.
+
+The session evaluates 20 fixed validation attempts at each stage, saves clips and checkpoints, then compares the baseline and a preselected candidate on 100 fresh attempts each. Candidate selection prioritizes actual points with failed attempts counted as zero, subject to a 19/20 validation completion threshold. A candidate that does not meet that threshold is labeled diagnostic and does not replace the baseline automatically.
+
+To reopen the window without starting training:
+
+Double-click `watch-training.command` in Finder to open the most recently created session, or select a specific session:
+
+```sh
+.venv/bin/python watch_training.py results/teaching_score_20260921
+```
+
+The **Live training** view samples the first of four training environments at up to five frames per second. It shows that frame's score, coins, position, and clock. The **Recorded checkpoints** view plays saved evaluation GIFs with Pause, Replay, and checkpoint selection. Captions distinguish live samples, inactive frames, and saved clips. Closing the popup never stops training. Create a `STOP` file inside the session folder to stop training gracefully and retain its checkpoint.
+
+The viewer uses Tkinter and Pillow in the project's Python environment. macOS builds of Python must include Tk support. No game screen or model is uploaded by the live stream: its single overwritten frame file is local and Git-ignored. Saved evaluation clips are published only when the session uses `--publish`.
+
 ## Classroom project
 
 [**Open the Mario learning gallery**](docs/aula/README.md) · [Teaching guide](docs/aula/GUIA_DOCENTE.md) · [Training and teaching plan](docs/aula/PLAN.md)

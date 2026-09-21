@@ -148,6 +148,7 @@ def draw_chart(stages: list[dict], output: Path, session_id: str) -> None:
     fig, axes = plt.subplots(2, 2, figsize=(13, 8.2), layout="constrained")
     fig.suptitle("Mario RL · session progress\n" + session_id, fontsize=15)
     complete = [stage for stage in stages if stage["comparable"]]
+    score_data = bool(complete and all("mean_score_gain" in stage["evaluation"] for stage in complete))
     for axis in axes.flat:
         axis.grid(axis="y", alpha=0.22)
         axis.spines[["top", "right"]].set_visible(False)
@@ -158,8 +159,8 @@ def draw_chart(stages: list[dict], output: Path, session_id: str) -> None:
     axes[0, 1].set_ylabel("Maximum x position (level pixels)")
     axes[1, 0].set_title("Levels completed")
     axes[1, 0].set_ylabel("Trials reaching the flag")
-    axes[1, 1].set_title("Prolonged runs without a new maximum x")
-    axes[1, 1].set_ylabel("Mean runs per trial")
+    axes[1, 1].set_title("Game points earned before flag touch" if score_data else "Prolonged runs without a new maximum x")
+    axes[1, 1].set_ylabel("Mean game points" if score_data else "Mean runs per trial")
     if complete:
         times = [stage["minutes"] for stage in complete]
         axes[0, 0].fill_between(times, [s["minimum"] for s in complete], [s["maximum"] for s in complete], color="#cce5ef", alpha=.65, label="minimum–maximum (not a CI)")
@@ -176,7 +177,12 @@ def draw_chart(stages: list[dict], output: Path, session_id: str) -> None:
         axes[1, 0].set_ylim(-.2, count + .3)
         axes[1, 0].set_yticks(range(count + 1))
         axes[1, 0].set_ylabel(f"Trials reaching the flag (out of {count})")
-        axes[1, 1].plot(times, [s["mean_stalls"] for s in complete], "o-", color="#9b4560")
+        if score_data:
+            axes[1, 1].plot(times, [s["evaluation"]["mean_score_gain"] for s in complete], "o-", color="#9b4560", label="All attempts")
+            axes[1, 1].plot(times, [s["evaluation"]["mean_completed_score"] for s in complete], "s--", color="#326f48", label="Failures count as zero")
+            axes[1, 1].legend(fontsize=8)
+        else:
+            axes[1, 1].plot(times, [s["mean_stalls"] for s in complete], "o-", color="#9b4560")
         axes[1, 1].set_ylim(bottom=0)
         for axis in axes.flat:
             axis.set_xlim(left=-.5, right=max(times[-1] + 1, 1))
@@ -239,6 +245,19 @@ def make_report(repo: Path, manifest_path: Path, manifest: dict, stages: list[di
         content.append("The starting point has been evaluated. Another comparable stage is needed to measure change during this session.")
     else:
         content.append("There are no complete, comparable evaluations yet. Pending stages are not counted as failures or zero values.")
+    if config.get("objective") == "score":
+        content += ["", "## Current objective: more game points while still finishing", "",
+            "This session rewards actual score increases, with a separate bonus for finishing and a penalty for a non-clearing episode end. Native reward is retained only as a diagnostic. The score is measured at flag touch; the emulator stops before the later flag animation and remaining-time bonuses.", "",
+            "| Stage | Mean points, all attempts | Mean points with failures counted as zero | Flag reached |",
+            "| --- | ---: | ---: | ---: |",
+        ]
+        for stage in complete:
+            evaluation = stage["evaluation"]
+            content.append(f"| {cell(stage.get('label', stage['id']))} | {number(evaluation.get('mean_score_gain'), 1)} | {number(evaluation.get('mean_completed_score'), 1)} | {stage['clears']}/{stage['count']} |")
+        if manifest.get("comparison_report_path"):
+            target = within(repo, manifest["comparison_report_path"])
+            if target.is_file():
+                content += ["", link("Score experiment, selection rule, and final comparison", target, document)]
     followups = manifest.get("followup_evaluations", [])
     if followups:
         content += ["", "## Later evaluations of the saved model", "",
@@ -290,7 +309,7 @@ def make_report(repo: Path, manifest_path: Path, manifest: dict, stages: list[di
     mode = "deterministic (preferred action)" if deterministic is True else "stochastic (sampled actions)" if deterministic is False else "see protocol"
     content += ["", f"Evaluation mode: **{mode}**. Limit per attempt: **{number(protocol.get('max_decisions'))} decisions**. A run without progress is recorded after **{number(threshold)} decisions without increasing the previous maximum x**, as defined by the protocol. This can include jumps or movement within an area already traversed; it does not automatically detect walls or the cause of a death.", "",
         "All recorded stages are shown, including regressions. Averages exclude evaluations that are incomplete or use a different protocol. Any partial attempt is documented in its JSON file. If a stage was selected for demonstration, that selection is labeled and does not replace the latest stage.", "",
-        "Clips are excerpts from the beginning and ending of each recorded trial; they may overlap in short episodes. Not every seed needs to have video: each row retains its trace and metrics. Exact durations and capture boundaries are recorded in `evaluation.json`.", "",
+        "Clips can cover an entire trial or an excerpt from its beginning or ending. The capture boundaries and full-episode marker are recorded in `evaluation.json`. Not every seed needs video: each row retains its trace and metrics.", "",
         "## Stages and evidence", "",
     ]
     for stage in stages:
