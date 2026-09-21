@@ -107,9 +107,19 @@
       "checkpoint_path": "results/teaching_20260920/training/01_stage/checkpoints/final.zip",
       "checkpoint_sha256": "a31ea88a1eeca815d97730eb326e1b05cae8177d65fcdeae2ea71d6f672f26a7",
       "training_summary_path": "results/teaching_20260920/training/01_stage/training_summary.json"
+    },
+    {
+      "id": "02_stage",
+      "label": "Stage 2: 30 additional min",
+      "elapsed_training_seconds": 1800.22,
+      "training_timesteps": 2004968,
+      "evaluation_path": "results/teaching_20260920/stages/02_stage/evaluation.json",
+      "checkpoint_path": "results/teaching_20260920/training/02_stage/checkpoints/final.zip",
+      "checkpoint_sha256": "1c3881912121b752b0432a70447f47d7e4cfbb0fff11f6cb154b4decaaab9fed",
+      "training_summary_path": "results/teaching_20260920/training/02_stage/training_summary.json"
     }
   ],
-  "elapsed_training_seconds": 900.065,
+  "elapsed_training_seconds": 1800.22,
   "planned_training_seconds": 3600,
   "budget_note": "The four learning callback timers each allow 900 seconds. Evaluation, loading, checkpoint saving, reporting, and publication add wall time. Timer checks and final saving may cause a small measured overrun.",
   "interpretation": "Continue the existing policy and optimizer with the same reward and hyperparameters. Twenty repeated validation action seeds describe each stage and select one candidate. The baseline and selected candidate then receive the same 100 fresh stochastic action seeds on World 1-1. These seeds change sampled moves, not level layouts.",
@@ -241,11 +251,11 @@
   ],
   "diagnostic_report_path": "results/teaching_20260920/diagnostics/README.md",
   "comparison_report_path": "results/teaching_20260920/README.md",
-  "latest_checkpoint": "results/teaching_20260920/training/01_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "a31ea88a1eeca815d97730eb326e1b05cae8177d65fcdeae2ea71d6f672f26a7",
+  "latest_checkpoint": "results/teaching_20260920/training/02_stage/checkpoints/final.zip",
+  "latest_checkpoint_sha256": "1c3881912121b752b0432a70447f47d7e4cfbb0fff11f6cb154b4decaaab9fed",
   "completion_reason": null,
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "updated_at": "2026-09-21T04:38:37.093328+00:00"
+  "updated_at": "2026-09-21T04:55:48.147484+00:00"
 }

@@ -20,6 +20,7 @@ These 20 fixed validation seeds are reused to compare stages and select one cand
 | --- | ---: | ---: | ---: | --- |
 | 00_baseline | 0.0 min | 17/20 | 2,956.3 | Baseline |
 | 01_stage | 15.0 min | 18/20 | 3,039.9 | +1 completions on the same 20 seeds |
+| 02_stage | 30.0 min | 18/20 | 3,025.4 | +0 completions on the same 20 seeds |
 
 Small differences on reused validation seeds can be noisy or specific to those seeds. They are not independent proof of improvement.
 
