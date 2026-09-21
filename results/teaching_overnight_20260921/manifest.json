@@ -623,9 +623,9 @@
   "latest_checkpoint": "results/teaching_overnight_20260921/training/06_stage/checkpoints/final.zip",
   "latest_checkpoint_sha256": "3321a6a96e462aee67f9a554925e52fdb571c7bc5ec900b5128e2ed492326de4",
   "preferred_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
-  "active_stage": null,
-  "active_training_dir": null,
+  "active_stage": "07_stage",
+  "active_training_dir": "results/teaching_overnight_20260921/training/07_stage",
   "active_evaluation": null,
-  "updated_at": "2026-09-21T09:58:20.277326+00:00",
+  "updated_at": "2026-09-21T09:58:27.396377+00:00",
   "window_pid": 77386
 }
