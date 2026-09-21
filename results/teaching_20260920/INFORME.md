@@ -239,7 +239,7 @@ Stage `04_stage` · 60.1 additional minutes · 2,247,664 cumulative decisions.
 
 ## Saved materials and future sessions
 
-Checkpoint `.zip` files are stored locally; this manifest does not yet confirm a published release of model weights. Downloading the code from GitHub does not include those models. The manifest records their paths for anyone with that local copy.
+Published checkpoints can be downloaded from the [model release for this session](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260920). These files are separate from the code history and require repository access. The link is added to the manifest after the upload is confirmed; check the release for the files actually published.
 
 The repository retains the reports, metrics, and published samples. Detailed logs remain local.
 

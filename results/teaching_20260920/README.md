@@ -178,3 +178,5 @@ These four seeds were chosen before the final test. Each link opens a full recor
 - Did every 15-minute stage improve? What does a regression teach us?
 - Why are validation attempts separate from the final test?
 - What would we need to test before claiming Mario can handle other levels?
+
+[Download the saved checkpoints](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_20260920)
