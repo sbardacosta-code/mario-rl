@@ -216,6 +216,27 @@
       "stop_reason": "training_time_budget_reached",
       "evaluation_path": "results/teaching_overnight_20260921/stages/05_stage/evaluation.json",
       "decision": "Confirmed regression; resume best checkpoint"
+    },
+    {
+      "id": "06_stage",
+      "index": 6,
+      "label": "Stage 6: 80.0 min learned",
+      "elapsed_training_seconds": 4802.8640000000005,
+      "training_timesteps": 2570176,
+      "checkpoint_path": "results/teaching_overnight_20260921/training/06_stage/checkpoints/final.zip",
+      "checkpoint_sha256": "3321a6a96e462aee67f9a554925e52fdb571c7bc5ec900b5128e2ed492326de4",
+      "training_summary_path": "results/teaching_overnight_20260921/training/06_stage/training_summary.json",
+      "training_configuration": {
+        "objective": "score_bridge",
+        "score_weight": 0.25,
+        "learning_rate": 1e-05,
+        "target_kl": 0.01,
+        "ent_coef": 0.003
+      },
+      "resumed_checkpoint": "results/teaching_overnight_20260921/training/03_stage/checkpoints/final.zip",
+      "stop_reason": "training_time_budget_reached",
+      "evaluation_path": "results/teaching_overnight_20260921/stages/06_stage/evaluation.json",
+      "decision": "Preserve best; no qualifying improvement"
     }
   ],
   "failed_attempts": [],
@@ -393,6 +414,64 @@
       "confirmed_regression": true,
       "decision": "Confirmed regression; roll back to best",
       "record_path": "results/teaching_overnight_20260921/confirmations/05_stage/comparison.json"
+    },
+    {
+      "stage_id": "06_stage",
+      "seeds": [
+        21060,
+        21061,
+        21062,
+        21063,
+        21064,
+        21065,
+        21066,
+        21067,
+        21068,
+        21069,
+        21070,
+        21071,
+        21072,
+        21073,
+        21074,
+        21075,
+        21076,
+        21077,
+        21078,
+        21079
+      ],
+      "candidate": {
+        "trials": 20,
+        "clears": 20,
+        "mean_game_score": 5535.0,
+        "mean_score_gain": 5535.0,
+        "mean_completed_score": 5535.0,
+        "mean_augmented_score_gain": 5535.0,
+        "mean_completed_augmented_score": 5535.0,
+        "mean_one_ups": 0.0,
+        "mean_custom_one_up_bonus": 0.0,
+        "mean_flag_height_bonus": 4770.0,
+        "mean_score_on_clears": 5535.0,
+        "median_game_score": 5800.0,
+        "max_game_score": 5800
+      },
+      "reference": {
+        "trials": 20,
+        "clears": 20,
+        "mean_game_score": 4930.0,
+        "mean_score_gain": 4930.0,
+        "mean_completed_score": 4930.0,
+        "mean_augmented_score_gain": 4930.0,
+        "mean_completed_augmented_score": 4930.0,
+        "mean_one_ups": 0.0,
+        "mean_custom_one_up_bonus": 0.0,
+        "mean_flag_height_bonus": 4140.0,
+        "mean_score_on_clears": 4930.0,
+        "median_game_score": 5800.0,
+        "max_game_score": 5800
+      },
+      "confirmed_regression": false,
+      "decision": "Regression not confirmed; keep selection based on original validation",
+      "record_path": "results/teaching_overnight_20260921/confirmations/06_stage/comparison.json"
     }
   ],
   "adaptations": [
@@ -510,20 +589,43 @@
       "at": "2026-09-21T09:41:58.419941+00:00",
       "improving": false,
       "regression_confirmed": true
+    },
+    {
+      "after_stage": "06_stage",
+      "decision": "Preserve best; no qualifying improvement",
+      "configuration": {
+        "objective": "score_bridge",
+        "score_weight": 0.25,
+        "learning_rate": 1e-05,
+        "target_kl": 0.01,
+        "ent_coef": 0.003
+      },
+      "next_configuration": {
+        "objective": "score_bridge",
+        "score_weight": 0.25,
+        "learning_rate": 1e-05,
+        "target_kl": 0.01,
+        "ent_coef": 0.003
+      },
+      "next_working_checkpoint": "results/teaching_overnight_20260921/training/06_stage/checkpoints/final.zip",
+      "protected_best_checkpoint": "results/teaching_overnight_20260921/training/03_stage/checkpoints/final.zip",
+      "at": "2026-09-21T09:58:20.277321+00:00",
+      "improving": false,
+      "regression_confirmed": false
     }
   ],
-  "elapsed_training_seconds": 3902.8210000000004,
+  "elapsed_training_seconds": 4802.8640000000005,
   "planned_training_seconds": 17497.52895092964,
   "planned_wall_seconds": 20197.52895092964,
   "budget_note": "Six-hour maximum wall budget includes setup, all evaluation and publication; final 45 minutes reserved. Learning can stop early.",
   "interpretation": "Actual HUD points and a separate custom extra-life teaching bonus are measured under the event-aware environment. Adaptive choices are preregistered; final tests remain reserved.",
   "comparison_report_path": "results/teaching_overnight_20260921/README.md",
-  "latest_checkpoint": "results/teaching_overnight_20260921/training/05_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "637eb30388adfe4ff9bf01d07f05bb80f3228bf2001345d1886d2e93b8895695",
+  "latest_checkpoint": "results/teaching_overnight_20260921/training/06_stage/checkpoints/final.zip",
+  "latest_checkpoint_sha256": "3321a6a96e462aee67f9a554925e52fdb571c7bc5ec900b5128e2ed492326de4",
   "preferred_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "updated_at": "2026-09-21T09:41:58.419954+00:00",
+  "updated_at": "2026-09-21T09:58:20.277326+00:00",
   "window_pid": 77386
 }
