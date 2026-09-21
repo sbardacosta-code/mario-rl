@@ -169,6 +169,8 @@ Stage `02_stage` · 30.0 additional minutes · 2,004,968 cumulative decisions.
 
 Stage `03_stage` · 45.0 additional minutes · 2,119,660 cumulative decisions.
 
+**Selected for demonstration.** This stage was chosen from the observed stages; it is not an independent evaluation.
+
 [Full evaluation JSON](stages/03_stage/evaluation.json) · [Training summary](training/03_stage/training_summary.json)
 
 | Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |

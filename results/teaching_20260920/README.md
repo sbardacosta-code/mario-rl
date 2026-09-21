@@ -30,7 +30,9 @@ Small differences on reused validation seeds can be noisy or specific to those s
 
 The candidate is chosen from the four new stages by validation completion count, then mean furthest x, then mean native reward. Exact ties prefer the earlier stage. The original baseline is always retained. The selection and checkpoint hash are saved before either final test is run.
 
-Candidate selection is pending; final test results have not been used to choose a model.
+[Recorded candidate selection](selection.json)
+
+Selected checkpoint: `results/teaching_20260920/training/03_stage/checkpoints/final.zip`.
 
 ## Final comparison
 

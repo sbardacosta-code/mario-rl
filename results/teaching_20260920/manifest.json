@@ -126,7 +126,8 @@
       "evaluation_path": "results/teaching_20260920/stages/03_stage/evaluation.json",
       "checkpoint_path": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
       "checkpoint_sha256": "c0dd76eab5e3339eaf78b56d77991780ac655df9e5a7e7b45599ce6f3894fcb7",
-      "training_summary_path": "results/teaching_20260920/training/03_stage/training_summary.json"
+      "training_summary_path": "results/teaching_20260920/training/03_stage/training_summary.json",
+      "selected_for_demo": true
     },
     {
       "id": "04_stage",
@@ -277,5 +278,11 @@
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "updated_at": "2026-09-21T05:27:28.769741+00:00"
+  "updated_at": "2026-09-21T05:27:34.380300+00:00",
+  "selected_stage_id": "03_stage",
+  "selected_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
+  "selected_checkpoint_sha256": "c0dd76eab5e3339eaf78b56d77991780ac655df9e5a7e7b45599ce6f3894fcb7",
+  "selection_path": "results/teaching_20260920/selection.json",
+  "selection_sha256": "c37f5e5d126219458837497bd6e27d601410fc91e3cfb1cd9a235f0a5a692059",
+  "selection_completed_at": "2026-09-21T05:27:34.379432+00:00"
 }
