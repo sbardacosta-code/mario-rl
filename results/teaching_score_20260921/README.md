@@ -63,3 +63,5 @@ Pending. Both models must complete all 100 reserved attempts before any final co
 - Did each additional 15 minutes improve the same metric?
 - Why keep failed attempts in the denominator and reserve a final test?
 - How would backtracking, later time bonuses, or another level change the experiment?
+
+[Download every saved model](https://github.com/sbardacosta-code/mario-rl/releases/tag/teaching_score_20260921)
