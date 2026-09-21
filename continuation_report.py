@@ -170,8 +170,10 @@ def main():
             interpretation = 'The selected continuation completed more attempts in this sample, but this test does not give strong evidence of a difference. Retain the original baseline and describe the observed gain cautiously.'
         elif difference == 0:
             interpretation = 'The two models completed the same number of attempts. This experiment does not show a completion-rate gain from the additional training. The failure patterns may still differ.'
+        elif pvalue < .05:
+            interpretation = 'The selected continuation completed fewer attempts, with evidence of a decline in this paired within-level test. Preserve the original baseline as the preferred classroom model; more training did not guarantee a better result.'
         else:
-            interpretation = 'The selected continuation completed fewer attempts. Preserve the original baseline as the preferred classroom model and show this as a regression; more training did not guarantee a better result.'
+            interpretation = 'The selected continuation completed fewer attempts in this sample, but the paired test does not give strong evidence of an underlying decline. Retain the original baseline and describe this as an observed lower score, not a proven regression.'
         content += [interpretation, '', '[Verification and paired statistics](verification.json)', '',
             '## Matched gameplay samples', '',
             'These four seeds were chosen before the final test. Each link opens a full recorded episode; the same seeds are shown for both models.', '',
