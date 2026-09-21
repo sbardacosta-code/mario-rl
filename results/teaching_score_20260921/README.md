@@ -25,6 +25,7 @@ Twenty fixed validation action seeds are reused at every stage. They measure the
 | Stage | Training | Clears | Mean HUD points | Mean earned on clears | Mean completed score | Median / maximum HUD | Change from previous |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
 | 00_baseline | 0.0 min | 20/20 | 770.0 | 770.0 | 770.0 | 800.0 / 800.0 | Preserved baseline |
+| 01_stage | 15.0 min | 0/20 | 175.0 | — | 0.0 | 200.0 / 700.0 | -20 clears; -770.0 completed points |
 
 Lower completion or completed points is a regression in this validation sample. Higher ordinary points with fewer finishes can indicate a tradeoff. Videos show behavior; numerical changes alone do not identify a particular trick or failure cause.
 
@@ -37,6 +38,12 @@ Three full clips were preselected before training. Review the same seeds across 
 | 00_baseline | 7101 | Yes | 800 | [Full clip](stages/00_baseline/seed-7101/beginning.gif) · [Decision trace](stages/00_baseline/seed-7101/trace.csv) |
 | 00_baseline | 7110 | Yes | 700 | [Full clip](stages/00_baseline/seed-7110/beginning.gif) · [Decision trace](stages/00_baseline/seed-7110/trace.csv) |
 | 00_baseline | 7120 | Yes | 700 | [Full clip](stages/00_baseline/seed-7120/beginning.gif) · [Decision trace](stages/00_baseline/seed-7120/trace.csv) |
+| 01_stage | 7101 | No | 200 | [Full clip](stages/01_stage/seed-7101/beginning.gif) · [Decision trace](stages/01_stage/seed-7101/trace.csv) |
+| 01_stage | 7110 | No | 200 | [Full clip](stages/01_stage/seed-7110/beginning.gif) · [Decision trace](stages/01_stage/seed-7110/trace.csv) |
+| 01_stage | 7120 | No | 100 | [Full clip](stages/01_stage/seed-7120/beginning.gif) · [Decision trace](stages/01_stage/seed-7120/trace.csv) |
+
+
+[01_stage verified learning updates](training/01_stage/training_summary.json) · [Learning metrics](training/01_stage/learning_metrics.csv)
 
 
 ## Selecting the candidate before the final test

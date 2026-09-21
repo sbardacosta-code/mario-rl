@@ -115,9 +115,19 @@
       "checkpoint_path": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
       "checkpoint_sha256": "c0dd76eab5e3339eaf78b56d77991780ac655df9e5a7e7b45599ce6f3894fcb7",
       "training_summary_path": null
+    },
+    {
+      "id": "01_stage",
+      "label": "Stage 1: 15 additional min",
+      "elapsed_training_seconds": 900.747,
+      "training_timesteps": 2253808,
+      "evaluation_path": "results/teaching_score_20260921/stages/01_stage/evaluation.json",
+      "checkpoint_path": "results/teaching_score_20260921/training/01_stage/checkpoints/final.zip",
+      "checkpoint_sha256": "1e04a79ae332f10cad80718b265a7a842af1d3b99c77c8a40f582ffc68fb6635",
+      "training_summary_path": "results/teaching_score_20260921/training/01_stage/training_summary.json"
     }
   ],
-  "elapsed_training_seconds": 0.0,
+  "elapsed_training_seconds": 900.747,
   "planned_training_seconds": 900,
   "budget_note": "Learning is timed in 15-minute stages; loading, evaluation, recordings and publication add wall time. Callback timing may overrun slightly.",
   "interpretation": "A score-focused objective continues the preserved policy and optimizer with the same hyperparameters. Stage validation is reused; final action seeds are reserved until selection. One run does not establish a general causal effect.",
@@ -248,8 +258,8 @@
     7300
   ],
   "comparison_report_path": "results/teaching_score_20260921/README.md",
-  "latest_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "c0dd76eab5e3339eaf78b56d77991780ac655df9e5a7e7b45599ce6f3894fcb7",
+  "latest_checkpoint": "results/teaching_score_20260921/training/01_stage/checkpoints/final.zip",
+  "latest_checkpoint_sha256": "1e04a79ae332f10cad80718b265a7a842af1d3b99c77c8a40f582ffc68fb6635",
   "preferred_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
   "active_stage": null,
   "active_training_dir": null,
@@ -261,5 +271,5 @@
     "closing_stops_training": false,
     "pid": 57335
   },
-  "updated_at": "2026-09-21T07:57:32.170991+00:00"
+  "updated_at": "2026-09-21T08:15:01.458774+00:00"
 }
