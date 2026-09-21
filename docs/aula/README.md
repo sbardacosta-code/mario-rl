@@ -2,7 +2,7 @@
 
 Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Session:** `teaching_overnight_20260921` · **Status:** in progress · **Updated:** 2026-09-21 09:25 UTC.
+**Session:** `teaching_overnight_20260921` · **Status:** in progress · **Updated:** 2026-09-21 09:41 UTC.
 
 [Teacher guide: a 35–45 minute lesson](GUIA_DOCENTE.md) · [Session data and configuration](../../results/teaching_overnight_20260921/manifest.json) · [Project and previous experiments](../../README.md) · [Baseline and trained-model comparison](../../results/teaching_overnight_20260921/README.md)
 
@@ -30,6 +30,7 @@ This session measures actual game points through the real flagpole award. Later 
 | Stage 2: 20.0 min learned | 5,275.0 | 5,275.0 | 5,275.0 | 20/20 |
 | Stage 3: 35.0 min learned | 5,580.0 | 5,580.0 | 5,580.0 | 20/20 |
 | Stage 4: 50.0 min learned | 4,840.0 | 4,830.0 | 4,830.0 | 19/20 |
+| Stage 5: 65.0 min learned | 5,280.0 | 5,270.0 | 5,270.0 | 19/20 |
 
 [Score experiment, selection rule, and final comparison](../../results/teaching_overnight_20260921/README.md)
 
@@ -44,6 +45,7 @@ The horizontal axis measures **additional training during this session**. The de
 | Stage 2: 20.0 min learned | 20.0 | 2,269,168 | 3,175.0 | 3,175.0 | 3,175–3,175 | 20/20 |
 | Stage 3: 35.0 min learned | 35.0 | 2,420,724 | 3,175.0 | 3,175.0 | 3,175–3,175 | 20/20 |
 | Stage 4: 50.0 min learned | 50.0 | 2,571,332 | 3,087.9 | 3,175.0 | 1,434–3,175 | 19/20 |
+| Stage 5: 65.0 min learned | 65.0 | 2,571,256 | 3,087.9 | 3,175.0 | 1,434–3,175 | 19/20 |
 
 | Stage | Mean native reward | Runs without progress | Trials with a run |
 | --- | ---: | ---: | ---: |
@@ -52,6 +54,7 @@ The horizontal axis measures **additional training during this session**. The de
 | Stage 2: 20.0 min learned | 3,094.9 | 0 | 0/20 |
 | Stage 3: 35.0 min learned | 3,095.2 | 0 | 0/20 |
 | Stage 4: 50.0 min learned | 3,007.9 | 0 | 0/20 |
+| Stage 5: 65.0 min learned | 3,008.6 | 0 | 0/20 |
 
 ## How performance was measured
 
@@ -249,13 +252,48 @@ Stage `04_stage` · 50.0 additional minutes · 2,571,332 decisions represented b
 
 **Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
+### Stage 5: 65.0 min learned
+
+Stage `05_stage` · 65.0 additional minutes · 2,571,256 decisions represented by this checkpoint (a rollback can restore an earlier counter).
+
+[Full evaluation JSON](../../results/teaching_overnight_20260921/stages/05_stage/evaluation.json) · [Training summary](../../results/teaching_overnight_20260921/training/05_stage/training_summary.json)
+
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
+| ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| 20101 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [beginning](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/beginning.gif) · [ending](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/ending.gif) · [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/trace.csv) · [last frame](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/last-frame.png) |
+| 20102 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20102/trace.csv) |
+| 20103 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20103/trace.csv) |
+| 20104 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20104/trace.csv) |
+| 20105 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20105/trace.csv) |
+| 20106 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20106/trace.csv) |
+| 20107 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20107/trace.csv) |
+| 20108 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20108/trace.csv) |
+| 20109 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20109/trace.csv) |
+| 20110 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [beginning](../../results/teaching_overnight_20260921/stages/05_stage/seed-20110/beginning.gif) · [ending](../../results/teaching_overnight_20260921/stages/05_stage/seed-20110/ending.gif) · [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20110/trace.csv) · [last frame](../../results/teaching_overnight_20260921/stages/05_stage/seed-20110/last-frame.png) |
+| 20111 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20111/trace.csv) |
+| 20112 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20112/trace.csv) |
+| 20113 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20113/trace.csv) |
+| 20114 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20114/trace.csv) |
+| 20115 | 3,175 | 3,175 | 3,088.0 | flag reached | 0 | 9 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20115/trace.csv) |
+| 20116 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20116/trace.csv) |
+| 20117 | 1,434 | 1,434 | 1,355.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20117/trace.csv) |
+| 20118 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20118/trace.csv) |
+| 20119 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20119/trace.csv) |
+| 20120 | 3,175 | 3,175 | 3,096.0 | flag reached | 0 | 1 | [beginning](../../results/teaching_overnight_20260921/stages/05_stage/seed-20120/beginning.gif) · [ending](../../results/teaching_overnight_20260921/stages/05_stage/seed-20120/ending.gif) · [CSV trace](../../results/teaching_overnight_20260921/stages/05_stage/seed-20120/trace.csv) · [last frame](../../results/teaching_overnight_20260921/stages/05_stage/seed-20120/last-frame.png) |
+
+| Beginning, seed 20101, decisions 1–268 | Ending, seed 20101, decisions 210–268 |
+| --- | --- |
+| ![Beginning, seed 20101, decisions 1–268](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/beginning.gif) | ![Ending, seed 20101, decisions 210–268](../../results/teaching_overnight_20260921/stages/05_stage/seed-20101/ending.gif) |
+
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
+
 ## Saved materials and future sessions
 
 Checkpoint `.zip` files are stored locally; this manifest does not yet confirm a published release of model weights. Downloading the code from GitHub does not include those models. The manifest records their paths for anyone with that local copy.
 
 The repository retains the reports, metrics, and published samples. Detailed logs remain local.
 
-Latest recorded local checkpoint: `results/teaching_overnight_20260921/training/04_stage/checkpoints/final.zip`.
+Latest recorded local checkpoint: `results/teaching_overnight_20260921/training/05_stage/checkpoints/final.zip`.
 
 [Session report](../../results/teaching_overnight_20260921/INFORME.md) · [Teacher guide](GUIA_DOCENTE.md)
 

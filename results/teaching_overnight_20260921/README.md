@@ -27,6 +27,7 @@ The same 20 validation action seeds are reused for model selection. A new stage 
 | 02_stage | 20.0 | score_bridge / 0.25 / 2.5e-05 | 20/20 | 5,275.0 | 5,275.0 | 0.0 | 5,275.0 | Qualified improvement |
 | 03_stage | 35.0 | score_bridge / 0.25 / 2.5e-05 | 20/20 | 5,580.0 | 5,580.0 | 0.0 | 5,580.0 | Qualified improvement |
 | 04_stage | 50.0 | score_bridge / 0.5 / 2.5e-05 | 19/20 | 4,840.0 | 4,830.0 | 0.0 | 4,830.0 | Confirmed regression; resume best checkpoint |
+| 05_stage | 65.0 | score_bridge / 0.5 / 1e-05 | 19/20 | 5,280.0 | 5,270.0 | 0.0 | 5,270.0 | Confirmed regression; resume best checkpoint |
 
 ### Preselected full gameplay
 
@@ -47,11 +48,15 @@ The same 20 validation action seeds are reused for model selection. A new stage 
 | 04_stage | 20101 | 5,800 | 0.0 | 5,000 | 0 | [Watch full attempt](stages/04_stage/seed-20101/beginning.gif) |
 | 04_stage | 20110 | 1,200 | 0.0 | 400 | 0 | [Watch full attempt](stages/04_stage/seed-20110/beginning.gif) |
 | 04_stage | 20120 | 5,800 | 0.0 | 5,000 | 0 | [Watch full attempt](stages/04_stage/seed-20120/beginning.gif) |
+| 05_stage | 20101 | 5,800 | 0.0 | 5,000 | 0 | [Watch full attempt](stages/05_stage/seed-20101/beginning.gif) |
+| 05_stage | 20110 | 5,800 | 0.0 | 5,000 | 0 | [Watch full attempt](stages/05_stage/seed-20110/beginning.gif) |
+| 05_stage | 20120 | 5,800 | 0.0 | 5,000 | 0 | [Watch full attempt](stages/05_stage/seed-20120/beginning.gif) |
 
 ### Confirmation checks and rollbacks
 
 - 01_stage: Confirmed regression; roll back to best. Candidate 0/20 and 0.0 completed augmented points; reference 20/20 and 1,090.0. [Recorded check](confirmations/01_stage/comparison.json)
 - 04_stage: Confirmed regression; roll back to best. Candidate 19/20 and 5,105.0 completed augmented points; reference 20/20 and 5,795.0. [Recorded check](confirmations/04_stage/comparison.json)
+- 05_stage: Confirmed regression; roll back to best. Candidate 18/20 and 4,525.0 completed augmented points; reference 17/20 and 4,930.0. [Recorded check](confirmations/05_stage/comparison.json)
 
 Confirmation pairs use additional validation seeds declared before launch. They diagnose an apparent regression; they do not replace the original selection set or count as the final test.
 
