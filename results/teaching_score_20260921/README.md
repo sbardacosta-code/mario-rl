@@ -50,7 +50,7 @@ Three full clips were preselected before training. Review the same seeds across 
 
 Among new stages with at least 19/20 validation clears, choose greatest mean completed score (failed attempts count zero), then clear count, then mean score gain, then earliest stage. If none qualifies, choose most clears, then mean completed score, then mean score gain, then earliest stage as a diagnostic candidate only. Save this choice before either final test; preserve the baseline.
 
-Pending. No final test has been used to choose a checkpoint.
+Selected **01_stage**: diagnostic only; no new stage met 19/20 clears. [Frozen choice and ranking](selection.json).
 
 ## Paired final test
 
