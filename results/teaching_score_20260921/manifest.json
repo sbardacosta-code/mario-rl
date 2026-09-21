@@ -1,7 +1,7 @@
 {
   "session_id": "teaching_score_20260921",
   "session_dir": "results/teaching_score_20260921",
-  "status": "running",
+  "status": "interrupted",
   "objective": "score",
   "created_at": "2026-09-21T07:56:49.732964+00:00",
   "started_at": "2026-09-21T07:56:49.732975+00:00",
@@ -264,19 +264,22 @@
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "completion_reason": null,
+  "completion_reason": "The experiment STOP file was created",
   "live_view": {
     "requested": true,
     "training_frames": "active_training_dir/live_frame.json",
     "closing_stops_training": false,
     "pid": 57335
   },
-  "updated_at": "2026-09-21T08:15:08.674399+00:00",
+  "updated_at": "2026-09-21T08:25:33.458063+00:00",
   "selected_stage_id": "01_stage",
   "selected_checkpoint": "results/teaching_score_20260921/training/01_stage/checkpoints/final.zip",
   "selected_checkpoint_sha256": "1e04a79ae332f10cad80718b265a7a842af1d3b99c77c8a40f582ffc68fb6635",
   "selected_qualified": false,
   "selection_path": "results/teaching_score_20260921/selection.json",
   "selection_sha256": "3b07aac396b1c4dec094a7067e725e6e9636998964b5a38f5af0b7d46ee7d664",
-  "selection_completed_at": "2026-09-21T08:15:08.673390+00:00"
+  "selection_completed_at": "2026-09-21T08:15:08.673390+00:00",
+  "baseline_audit_path": "results/teaching_score_20260921/baseline_audit/evaluation.json",
+  "finished_at": "2026-09-21T08:25:33.454020+00:00",
+  "wall_seconds_before_final_publication": 1727.032
 }

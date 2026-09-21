@@ -1,6 +1,6 @@
 # Can Mario finish with more points?
 
-**Status: running.** Training budget: 15 minutes, saved every 15 minutes.
+**Status: interrupted.** Training budget: 15 minutes, saved every 15 minutes.
 
 [Permanent classroom gallery](../../docs/aula/README.md) · [Predeclared plan](experiment_plan.json) · [Stage clips and native-reward diagnostics](INFORME.md)
 
@@ -14,7 +14,7 @@ The preserved starting model learned to finish World 1-1. This experiment change
 
 ## Live training window
 
-Current phase: **running**. The window shows frames from one of four actual training environments. It is an observer: closing it leaves training running. During evaluation it shows the last training frame with the phase; after completion it becomes an archived view.
+Current phase: **interrupted**. The window shows frames from one of four actual training environments. It is an observer: closing it leaves training running. During evaluation it shows the last training frame with the phase; after completion it becomes an archived view.
 
 Open it locally with `.venv/bin/python watch_training.py results/teaching_score_20260921`. A GitHub page contains recordings, not the live desktop window.
 

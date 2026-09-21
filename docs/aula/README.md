@@ -2,7 +2,7 @@
 
 Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Session:** `teaching_score_20260921` · **Status:** in progress · **Updated:** 2026-09-21 08:15 UTC.
+**Session:** `teaching_score_20260921` · **Status:** interrupted · **Updated:** 2026-09-21 08:25 UTC.
 
 [Teacher guide: a 35–45 minute lesson](GUIA_DOCENTE.md) · [Session data and configuration](../../results/teaching_score_20260921/manifest.json) · [Project and previous experiments](../../README.md) · [Baseline and trained-model comparison](../../results/teaching_score_20260921/README.md)
 
@@ -150,6 +150,8 @@ Archived sessions:
 - [teaching_20260916](../../results/teaching_20260916/INFORME.md)
 - [teaching_20260920](../../results/teaching_20260920/INFORME.md)
 - [teaching_score_20260921](../../results/teaching_score_20260921/INFORME.md)
+
+Recorded reason for ending the session: `The experiment STOP file was created`.
 
 To update this dashboard after generating new evaluations:
 
