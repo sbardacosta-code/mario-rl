@@ -17,3 +17,6 @@ recordings/
 live_frame.json
 
 .live_frame.json.*.tmp
+
+# Local process identities used only by the bounded overnight watchdog.
+deadline_registry.json

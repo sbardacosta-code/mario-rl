@@ -1,5 +1,22 @@
 # Mario RL
 
+## Overnight learning: flagpole points and extra lives
+
+The new event-aware experiment counts the **real flagpole award after the slide** (up to 5,000 game points), plus a separately labeled **1,000 teaching-point bonus per extra life**. Game score, custom credit, and completion rate remain separate. Later timer/fireworks points are excluded. Detecting a life increase does not prove a hidden-block source; the recorded clips provide behavioral evidence.
+
+[Teaching guide](docs/aula/OVERNIGHT_GUIDE.md) · [Current overnight experiment](results/teaching_overnight_20260921/README.md) · [Permanent classroom gallery](docs/aula/README.md)
+
+A new overnight session has a maximum six-hour wall budget, including evaluation and publication. It starts from the preserved completion model, tests conservative score and transition objectives, saves stages every 15 minutes of learning, checks regressions before rollback, and reserves a final paired comparison. Repeated unsuccessful approaches can stop early. The original model is retained.
+
+```sh
+.venv/bin/python overnight_session.py --run-dir results/teaching_overnight_NEW_DATE --show-window --publish
+```
+
+Use a **new** directory for each experiment. Add `--deadline-utc` with an ISO timestamp to end sooner. The September 21 run's absolute deadline includes its setup time. An existing experiment is never restarted in place. Publication-only retry (`--finish-only --publish` with its existing directory) does not run more training or evaluation.
+
+Reopen the popup by double-clicking **watch-overnight.command**, or run `.venv/bin/python overnight_watch.py results/teaching_overnight_20260921`. The viewer shows actual sampled training frames and saved checkpoint clips. Closing it does not stop training. To stop a session gracefully, create a file named `STOP` inside that session's directory.
+
+
 Train a Super Mario Bros. World 1-1 agent with [gym-super-mario-bros](https://github.com/Kautenja/gym-super-mario-bros), Gymnasium, and Stable Baselines3.
 
 ## Score-focused training and the live window
