@@ -4,7 +4,7 @@ Compare how a reinforcement learning policy changes across saved stages. This da
 
 **Session:** `teaching_score_20260921` · **Status:** in progress · **Updated:** 2026-09-21 07:57 UTC.
 
-[Teacher guide: a 35–45 minute lesson](GUIA_DOCENTE.md) · [Session data and configuration](../../results/teaching_score_20260921/manifest.json) · [Project and previous experiments](../../README.md) · [Baseline and trained-model comparison](../../results/teaching_score_20260921/README.md)
+[Teacher guide: a 35–45 minute lesson](../../docs/aula/GUIA_DOCENTE.md) · [Session data and configuration](manifest.json) · [Project and previous experiments](../../README.md) · [Baseline and trained-model comparison](README.md)
 
 This dashboard keeps the same path, `docs/aula/README.md`, when new sessions are published. Previous reports remain in their results folders. GitHub shows the most recently uploaded version; it does not stream local training live. Access depends on repository permissions.
 
@@ -27,9 +27,9 @@ This session rewards actual score increases, with a separate bonus for finishing
 | --- | ---: | ---: | ---: |
 | Preserved completion baseline | 770.0 | 770.0 | 20/20 |
 
-[Score experiment, selection rule, and final comparison](../../results/teaching_score_20260921/README.md)
+[Score experiment, selection rule, and final comparison](README.md)
 
-![Progress chart for all comparable stages](../../results/teaching_score_20260921/progress.png)
+![Progress chart for all comparable stages](progress.png)
 
 The horizontal axis measures **additional training during this session**. The decisions in the table are cumulative and may include earlier training. The band shows the minimum and maximum across trials; it is not a confidence interval. The x position is a coordinate within the level, not a completion percentage.
 
@@ -66,34 +66,34 @@ Clips can cover an entire trial or an excerpt from its beginning or ending. The 
 
 Stage `00_baseline` · 0.0 additional minutes · 2,119,660 cumulative decisions.
 
-[Full evaluation JSON](../../results/teaching_score_20260921/stages/00_baseline/evaluation.json)
+[Full evaluation JSON](stages/00_baseline/evaluation.json)
 
 | Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
 | ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
-| 7101 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [beginning](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/beginning.gif) · [ending](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/ending.gif) · [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/trace.csv) · [last frame](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/last-frame.png) |
-| 7102 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 18 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7102/trace.csv) |
-| 7103 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7103/trace.csv) |
-| 7104 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7104/trace.csv) |
-| 7105 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7105/trace.csv) |
-| 7106 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7106/trace.csv) |
-| 7107 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 2 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7107/trace.csv) |
-| 7108 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 6 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7108/trace.csv) |
-| 7109 | 3,161 | 3,161 | 3,088.0 | flag reached | 0 | 3 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7109/trace.csv) |
-| 7110 | 3,161 | 3,161 | 3,088.0 | flag reached | 0 | 9 | [beginning](../../results/teaching_score_20260921/stages/00_baseline/seed-7110/beginning.gif) · [ending](../../results/teaching_score_20260921/stages/00_baseline/seed-7110/ending.gif) · [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7110/trace.csv) · [last frame](../../results/teaching_score_20260921/stages/00_baseline/seed-7110/last-frame.png) |
-| 7111 | 3,161 | 3,161 | 3,087.0 | flag reached | 0 | 8 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7111/trace.csv) |
-| 7112 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 7 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7112/trace.csv) |
-| 7113 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 18 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7113/trace.csv) |
-| 7114 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7114/trace.csv) |
-| 7115 | 3,161 | 3,161 | 3,090.0 | flag reached | 0 | 9 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7115/trace.csv) |
-| 7116 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7116/trace.csv) |
-| 7117 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7117/trace.csv) |
-| 7118 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7118/trace.csv) |
-| 7119 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7119/trace.csv) |
-| 7120 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [beginning](../../results/teaching_score_20260921/stages/00_baseline/seed-7120/beginning.gif) · [ending](../../results/teaching_score_20260921/stages/00_baseline/seed-7120/ending.gif) · [CSV trace](../../results/teaching_score_20260921/stages/00_baseline/seed-7120/trace.csv) · [last frame](../../results/teaching_score_20260921/stages/00_baseline/seed-7120/last-frame.png) |
+| 7101 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [beginning](stages/00_baseline/seed-7101/beginning.gif) · [ending](stages/00_baseline/seed-7101/ending.gif) · [CSV trace](stages/00_baseline/seed-7101/trace.csv) · [last frame](stages/00_baseline/seed-7101/last-frame.png) |
+| 7102 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 18 | [CSV trace](stages/00_baseline/seed-7102/trace.csv) |
+| 7103 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7103/trace.csv) |
+| 7104 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7104/trace.csv) |
+| 7105 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7105/trace.csv) |
+| 7106 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7106/trace.csv) |
+| 7107 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 2 | [CSV trace](stages/00_baseline/seed-7107/trace.csv) |
+| 7108 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 6 | [CSV trace](stages/00_baseline/seed-7108/trace.csv) |
+| 7109 | 3,161 | 3,161 | 3,088.0 | flag reached | 0 | 3 | [CSV trace](stages/00_baseline/seed-7109/trace.csv) |
+| 7110 | 3,161 | 3,161 | 3,088.0 | flag reached | 0 | 9 | [beginning](stages/00_baseline/seed-7110/beginning.gif) · [ending](stages/00_baseline/seed-7110/ending.gif) · [CSV trace](stages/00_baseline/seed-7110/trace.csv) · [last frame](stages/00_baseline/seed-7110/last-frame.png) |
+| 7111 | 3,161 | 3,161 | 3,087.0 | flag reached | 0 | 8 | [CSV trace](stages/00_baseline/seed-7111/trace.csv) |
+| 7112 | 3,161 | 3,161 | 3,089.0 | flag reached | 0 | 7 | [CSV trace](stages/00_baseline/seed-7112/trace.csv) |
+| 7113 | 3,161 | 3,161 | 3,093.0 | flag reached | 0 | 18 | [CSV trace](stages/00_baseline/seed-7113/trace.csv) |
+| 7114 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7114/trace.csv) |
+| 7115 | 3,161 | 3,161 | 3,090.0 | flag reached | 0 | 9 | [CSV trace](stages/00_baseline/seed-7115/trace.csv) |
+| 7116 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7116/trace.csv) |
+| 7117 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7117/trace.csv) |
+| 7118 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7118/trace.csv) |
+| 7119 | 3,161 | 3,161 | 3,096.0 | flag reached | 0 | 1 | [CSV trace](stages/00_baseline/seed-7119/trace.csv) |
+| 7120 | 3,161 | 3,161 | 3,095.0 | flag reached | 0 | 1 | [beginning](stages/00_baseline/seed-7120/beginning.gif) · [ending](stages/00_baseline/seed-7120/ending.gif) · [CSV trace](stages/00_baseline/seed-7120/trace.csv) · [last frame](stages/00_baseline/seed-7120/last-frame.png) |
 
 | Beginning, seed 7101, decisions 1–268 | Ending, seed 7101, decisions 194–268 |
 | --- | --- |
-| ![Beginning, seed 7101, decisions 1–268](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/beginning.gif) | ![Ending, seed 7101, decisions 194–268](../../results/teaching_score_20260921/stages/00_baseline/seed-7101/ending.gif) |
+| ![Beginning, seed 7101, decisions 1–268](stages/00_baseline/seed-7101/beginning.gif) | ![Ending, seed 7101, decisions 194–268](stages/00_baseline/seed-7101/ending.gif) |
 
 **Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
@@ -105,13 +105,13 @@ The repository retains the reports, metrics, and published samples. Detailed log
 
 Latest recorded local checkpoint: `results/teaching_20260920/training/03_stage/checkpoints/final.zip`.
 
-[Session report](../../results/teaching_score_20260921/INFORME.md) · [Teacher guide](GUIA_DOCENTE.md)
+[Session report](INFORME.md) · [Teacher guide](../../docs/aula/GUIA_DOCENTE.md)
 
 Archived sessions:
 
-- [teaching_20260916](../../results/teaching_20260916/INFORME.md)
-- [teaching_20260920](../../results/teaching_20260920/INFORME.md)
-- [teaching_score_20260921](../../results/teaching_score_20260921/INFORME.md)
+- [teaching_20260916](../teaching_20260916/INFORME.md)
+- [teaching_20260920](../teaching_20260920/INFORME.md)
+- [teaching_score_20260921](INFORME.md)
 
 To update this dashboard after generating new evaluations:
 
