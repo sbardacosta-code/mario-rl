@@ -2,7 +2,7 @@
 
 Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Session:** `teaching_20260920` · **Status:** in progress · **Updated:** 2026-09-21 05:27 UTC.
+**Session:** `teaching_20260920` · **Status:** completed · **Updated:** 2026-09-21 05:33 UTC.
 
 [Teacher guide: a 35–45 minute lesson](GUIA_DOCENTE.md) · [Session data and configuration](../../results/teaching_20260920/manifest.json) · [Project and previous experiments](../../README.md) · [Failure diagnosis and playback comparison](../../results/teaching_20260920/diagnostics/README.md) · [Baseline and trained-model comparison](../../results/teaching_20260920/README.md)
 
@@ -251,6 +251,8 @@ Archived sessions:
 
 - [teaching_20260916](../../results/teaching_20260916/INFORME.md)
 - [teaching_20260920](../../results/teaching_20260920/INFORME.md)
+
+Recorded reason for ending the session: `four_training_stages_and_paired_final_test_completed`.
 
 To update this dashboard after generating new evaluations:
 

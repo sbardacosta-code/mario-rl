@@ -1,7 +1,7 @@
 {
   "session_id": "teaching_20260920",
   "session_dir": "results/teaching_20260920",
-  "status": "running",
+  "status": "completed",
   "created_at": "2026-09-21T04:21:46.629549+00:00",
   "started_at": "2026-09-21T04:21:46.629871+00:00",
   "pid": 30486,
@@ -274,15 +274,19 @@
   "comparison_report_path": "results/teaching_20260920/README.md",
   "latest_checkpoint": "results/teaching_20260920/training/04_stage/checkpoints/final.zip",
   "latest_checkpoint_sha256": "d6e2a499b6d222c67cff8ab5da2a1ced19607438b3892931b84e96ad24da8b6c",
-  "completion_reason": null,
+  "completion_reason": "four_training_stages_and_paired_final_test_completed",
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "updated_at": "2026-09-21T05:27:34.380300+00:00",
+  "updated_at": "2026-09-21T05:33:10.664481+00:00",
   "selected_stage_id": "03_stage",
   "selected_checkpoint": "results/teaching_20260920/training/03_stage/checkpoints/final.zip",
   "selected_checkpoint_sha256": "c0dd76eab5e3339eaf78b56d77991780ac655df9e5a7e7b45599ce6f3894fcb7",
   "selection_path": "results/teaching_20260920/selection.json",
   "selection_sha256": "c37f5e5d126219458837497bd6e27d601410fc91e3cfb1cd9a235f0a5a692059",
-  "selection_completed_at": "2026-09-21T05:27:34.379432+00:00"
+  "selection_completed_at": "2026-09-21T05:27:34.379432+00:00",
+  "baseline_audit_path": "results/teaching_20260920/baseline_audit/evaluation.json",
+  "candidate_audit_path": "results/teaching_20260920/candidate_audit/evaluation.json",
+  "finished_at": "2026-09-21T05:33:10.661514+00:00",
+  "wall_seconds_before_final_publication": 4288.226
 }
