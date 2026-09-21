@@ -97,9 +97,19 @@
       "checkpoint_path": "results/teaching_20260916/training/11_stage/checkpoints/final.zip",
       "checkpoint_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
       "training_summary_path": null
+    },
+    {
+      "id": "01_stage",
+      "label": "Stage 1: 15 additional min",
+      "elapsed_training_seconds": 900.065,
+      "training_timesteps": 1945236,
+      "evaluation_path": "results/teaching_20260920/stages/01_stage/evaluation.json",
+      "checkpoint_path": "results/teaching_20260920/training/01_stage/checkpoints/final.zip",
+      "checkpoint_sha256": "a31ea88a1eeca815d97730eb326e1b05cae8177d65fcdeae2ea71d6f672f26a7",
+      "training_summary_path": "results/teaching_20260920/training/01_stage/training_summary.json"
     }
   ],
-  "elapsed_training_seconds": 0.0,
+  "elapsed_training_seconds": 900.065,
   "planned_training_seconds": 3600,
   "budget_note": "The four learning callback timers each allow 900 seconds. Evaluation, loading, checkpoint saving, reporting, and publication add wall time. Timer checks and final saving may cause a small measured overrun.",
   "interpretation": "Continue the existing policy and optimizer with the same reward and hyperparameters. Twenty repeated validation action seeds describe each stage and select one candidate. The baseline and selected candidate then receive the same 100 fresh stochastic action seeds on World 1-1. These seeds change sampled moves, not level layouts.",
@@ -231,11 +241,11 @@
   ],
   "diagnostic_report_path": "results/teaching_20260920/diagnostics/README.md",
   "comparison_report_path": "results/teaching_20260920/README.md",
-  "latest_checkpoint": "results/teaching_20260916/training/11_stage/checkpoints/final.zip",
-  "latest_checkpoint_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "latest_checkpoint": "results/teaching_20260920/training/01_stage/checkpoints/final.zip",
+  "latest_checkpoint_sha256": "a31ea88a1eeca815d97730eb326e1b05cae8177d65fcdeae2ea71d6f672f26a7",
   "completion_reason": null,
   "active_stage": null,
   "active_training_dir": null,
   "active_evaluation": null,
-  "updated_at": "2026-09-21T04:22:31.203641+00:00"
+  "updated_at": "2026-09-21T04:38:37.093328+00:00"
 }
