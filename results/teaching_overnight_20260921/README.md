@@ -23,6 +23,7 @@ The same 20 validation action seeds are reused for model selection. A new stage 
 | Stage | Minutes learned | Objective / weight / LR | Clears | Mean HUD gain | Completed HUD | Custom 1UP mean | Completed augmented points | Decision |
 | --- | ---: | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | 00_baseline | 0.0 | Preserved baseline | 20/20 | 1,125.0 | 1,125.0 | 0.0 | 1,125.0 | Baseline |
+| 01_stage | 5.0 | score_events / 1.0 / 2.5e-05 | 0/20 | 130.0 | 0.0 | 0.0 | 0.0 | Confirmed regression; resume best checkpoint |
 
 ### Preselected full gameplay
 
@@ -31,11 +32,13 @@ The same 20 validation action seeds are reused for model selection. A new stage 
 | 00_baseline | 20101 | 900 | 0.0 | 100 | 0 | [Watch full attempt](stages/00_baseline/seed-20101/beginning.gif) |
 | 00_baseline | 20110 | 900 | 0.0 | 100 | 0 | [Watch full attempt](stages/00_baseline/seed-20110/beginning.gif) |
 | 00_baseline | 20120 | 1,200 | 0.0 | 400 | 0 | [Watch full attempt](stages/00_baseline/seed-20120/beginning.gif) |
+| 01_stage | 20101 | 200 | 0.0 | 0 | 0 | [Watch full attempt](stages/01_stage/seed-20101/beginning.gif) |
+| 01_stage | 20110 | 200 | 0.0 | 0 | 0 | [Watch full attempt](stages/01_stage/seed-20110/beginning.gif) |
+| 01_stage | 20120 | 0 | 0.0 | 0 | 0 | [Watch full attempt](stages/01_stage/seed-20120/beginning.gif) |
 
 ### Confirmation checks and rollbacks
 
-No completed confirmation checks yet.
-
+- 01_stage: Confirmed regression; roll back to best. Candidate 0/20 and 0.0 completed augmented points; reference 20/20 and 1,090.0. [Recorded check](confirmations/01_stage/comparison.json)
 
 Confirmation pairs use additional validation seeds declared before launch. They diagnose an apparent regression; they do not replace the original selection set or count as the final test.
 

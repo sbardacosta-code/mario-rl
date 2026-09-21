@@ -2,7 +2,7 @@
 
 Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.
 
-**Session:** `teaching_overnight_20260921` · **Status:** in progress · **Updated:** 2026-09-21 08:31 UTC.
+**Session:** `teaching_overnight_20260921` · **Status:** in progress · **Updated:** 2026-09-21 08:38 UTC.
 
 [Teacher guide: a 35–45 minute lesson](../../docs/aula/GUIA_DOCENTE.md) · [Session data and configuration](manifest.json) · [Project and previous experiments](../../README.md) · [Baseline and trained-model comparison](README.md)
 
@@ -17,7 +17,7 @@ This dashboard keeps the same path, `docs/aula/README.md`, when new sessions are
 
 ## What has happened so far
 
-The starting point has been evaluated. Another comparable stage is needed to measure change during this session.
+Between the first and last comparable stages, the mean maximum position **decreased: 3,175.0 → 680.9 pixels**. The last stage reached the flag in **0 of 20 trials**. This describes these trials on the same level; it does not establish general performance or consistent improvement.
 
 ## Current objective: more game points while still finishing
 
@@ -26,6 +26,7 @@ This session measures actual game points through the real flagpole award. Later 
 | Stage | Actual points, all attempts | Actual points, failures = 0 | Game + teaching points, failures = 0 | Flag reached |
 | --- | ---: | ---: | ---: | ---: |
 | Preserved completion baseline | 1,125.0 | 1,125.0 | 1,125.0 | 20/20 |
+| Stage 1: 5.0 min learned | 130.0 | 0.0 | 0.0 | 0/20 |
 
 [Score experiment, selection rule, and final comparison](README.md)
 
@@ -36,10 +37,12 @@ The horizontal axis measures **additional training during this session**. The de
 | Stage | Additional minutes | Cumulative decisions | Mean x | Median x | Min.–max. x | Flag |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | Preserved completion baseline | 0.0 | 2,119,660 | 3,175.0 | 3,175.0 | 3,175–3,175 | 20/20 |
+| Stage 1: 5.0 min learned | 5.0 | 2,172,664 | 680.9 | 711.0 | 293–1,665 | 0/20 |
 
 | Stage | Mean native reward | Runs without progress | Trials with a run |
 | --- | ---: | ---: | ---: |
 | Preserved completion baseline | 3,092.7 | 0 | 0/20 |
+| Stage 1: 5.0 min learned | 592.3 | 3 | 3/20 |
 
 ## How performance was measured
 
@@ -97,13 +100,48 @@ Stage `00_baseline` · 0.0 additional minutes · 2,119,660 decisions represented
 
 **Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
 
+### Stage 1: 5.0 min learned
+
+Stage `01_stage` · 5.0 additional minutes · 2,172,664 decisions represented by this checkpoint (a rollback can restore an earlier counter).
+
+[Full evaluation JSON](stages/01_stage/evaluation.json) · [Training summary](training/01_stage/training_summary.json)
+
+| Seed | Max. x | Last x | Native reward | How the attempt ended | Runs without progress | Longest run (decisions) | Evidence |
+| ---: | ---: | ---: | ---: | --- | ---: | ---: | --- |
+| 20101 | 293 | 293 | 235.0 | ended without reaching the flag; cause unknown | 0 | 1 | [beginning](stages/01_stage/seed-20101/beginning.gif) · [ending](stages/01_stage/seed-20101/ending.gif) · [CSV trace](stages/01_stage/seed-20101/trace.csv) · [last frame](stages/01_stage/seed-20101/last-frame.png) |
+| 20102 | 1,516 | 1,516 | 1,398.0 | ended without reaching the flag; cause unknown | 0 | 107 | [CSV trace](stages/01_stage/seed-20102/trace.csv) |
+| 20103 | 303 | 303 | 239.0 | ended without reaching the flag; cause unknown | 0 | 2 | [CSV trace](stages/01_stage/seed-20103/trace.csv) |
+| 20104 | 723 | 722 | 633.0 | ended without reaching the flag; cause unknown | 0 | 75 | [CSV trace](stages/01_stage/seed-20104/trace.csv) |
+| 20105 | 800 | 800 | 714.0 | ended without reaching the flag; cause unknown | 0 | 25 | [CSV trace](stages/01_stage/seed-20105/trace.csv) |
+| 20106 | 722 | 722 | 646.0 | ended without reaching the flag; cause unknown | 0 | 59 | [CSV trace](stages/01_stage/seed-20106/trace.csv) |
+| 20107 | 307 | 307 | 251.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/01_stage/seed-20107/trace.csv) |
+| 20108 | 304 | 304 | 241.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/01_stage/seed-20108/trace.csv) |
+| 20109 | 700 | 700 | 633.0 | ended without reaching the flag; cause unknown | 0 | 13 | [CSV trace](stages/01_stage/seed-20109/trace.csv) |
+| 20110 | 863 | 863 | 715.0 | ended without reaching the flag; cause unknown | 1 | 338 | [beginning](stages/01_stage/seed-20110/beginning.gif) · [ending](stages/01_stage/seed-20110/ending.gif) · [CSV trace](stages/01_stage/seed-20110/trace.csv) · [last frame](stages/01_stage/seed-20110/last-frame.png) |
+| 20111 | 1,665 | 1,665 | 1,502.0 | ended without reaching the flag; cause unknown | 1 | 247 | [CSV trace](stages/01_stage/seed-20111/trace.csv) |
+| 20112 | 899 | 898 | 713.0 | ended without reaching the flag; cause unknown | 1 | 321 | [CSV trace](stages/01_stage/seed-20112/trace.csv) |
+| 20113 | 722 | 722 | 640.0 | ended without reaching the flag; cause unknown | 0 | 49 | [CSV trace](stages/01_stage/seed-20113/trace.csv) |
+| 20114 | 293 | 293 | 229.0 | ended without reaching the flag; cause unknown | 0 | 3 | [CSV trace](stages/01_stage/seed-20114/trace.csv) |
+| 20115 | 696 | 696 | 619.0 | ended without reaching the flag; cause unknown | 0 | 8 | [CSV trace](stages/01_stage/seed-20115/trace.csv) |
+| 20116 | 722 | 722 | 637.0 | ended without reaching the flag; cause unknown | 0 | 42 | [CSV trace](stages/01_stage/seed-20116/trace.csv) |
+| 20117 | 306 | 306 | 248.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/01_stage/seed-20117/trace.csv) |
+| 20118 | 807 | 807 | 711.0 | ended without reaching the flag; cause unknown | 0 | 77 | [CSV trace](stages/01_stage/seed-20118/trace.csv) |
+| 20119 | 300 | 300 | 237.0 | ended without reaching the flag; cause unknown | 0 | 1 | [CSV trace](stages/01_stage/seed-20119/trace.csv) |
+| 20120 | 676 | 676 | 605.0 | ended without reaching the flag; cause unknown | 0 | 3 | [beginning](stages/01_stage/seed-20120/beginning.gif) · [ending](stages/01_stage/seed-20120/ending.gif) · [CSV trace](stages/01_stage/seed-20120/trace.csv) · [last frame](stages/01_stage/seed-20120/last-frame.png) |
+
+| Beginning, seed 20101, decisions 1–40 | Ending, seed 20101, decisions 1–40 |
+| --- | --- |
+| ![Beginning, seed 20101, decisions 1–40](stages/01_stage/seed-20101/beginning.gif) | ![Ending, seed 20101, decisions 1–40](stages/01_stage/seed-20101/ending.gif) |
+
+**Discuss:** What can you observe at the end of this attempt? What evidence distinguishes a late jump, repeated actions, or a decision limit? Identifying the specific cause requires reviewing the clips; position alone does not reveal it.
+
 ## Saved materials and future sessions
 
 Checkpoint `.zip` files are stored locally; this manifest does not yet confirm a published release of model weights. Downloading the code from GitHub does not include those models. The manifest records their paths for anyone with that local copy.
 
 The repository retains the reports, metrics, and published samples. Detailed logs remain local.
 
-Latest recorded local checkpoint: `results/teaching_20260920/training/03_stage/checkpoints/final.zip`.
+Latest recorded local checkpoint: `results/teaching_overnight_20260921/training/01_stage/checkpoints/final.zip`.
 
 [Session report](INFORME.md) · [Teacher guide](../../docs/aula/GUIA_DOCENTE.md)
 
