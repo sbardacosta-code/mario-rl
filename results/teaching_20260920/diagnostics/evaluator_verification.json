@@ -1,0 +1,24 @@
+{
+  "syntax": "passed",
+  "cli_help": "passed",
+  "default_report_identical_excluding_timing": true,
+  "default_trace_byte_identical": true,
+  "deterministic_actions_argmax": true,
+  "deterministic_rows_verified": [
+    2005,
+    2005
+  ],
+  "deterministic_seed_traces_byte_identical": true,
+  "deterministic_outcome": {
+    "completed": 0,
+    "attempts": 2,
+    "max_x": 2915.0,
+    "decisions": [
+      2005,
+      2005
+    ]
+  },
+  "baseline_checkpoint_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "checkpoint_unchanged": true,
+  "learning_updates": 0
+}

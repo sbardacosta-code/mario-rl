@@ -1,0 +1,26 @@
+{
+  "verified_at": "2026-09-21T03:46:12.004731+00:00",
+  "replayed_seeds": [
+    2005,
+    2009,
+    2011,
+    2014,
+    2018,
+    2028,
+    2033,
+    2038
+  ],
+  "all_replay_traces_byte_identical_to_original": true,
+  "full_failure_clips": 8,
+  "deterministic_seeds": [
+    5001,
+    5002,
+    5003
+  ],
+  "deterministic_traces_byte_identical": true,
+  "unique_deterministic_trajectories": 1,
+  "deterministic_actions_are_argmax": true,
+  "model_sha256": "c2be01926a484cf3464a2bb7564a087ac535440361afa0a35bc8e5d07e7621c5",
+  "learning_updates": 0,
+  "final_test_seeds_used": false
+}
