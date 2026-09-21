@@ -62,6 +62,7 @@ def main() -> int:
     parser.add_argument("--max-decisions", type=positive_int, default=3000)
     parser.add_argument("--max-seconds", type=positive_float, default=180.0)
     parser.add_argument("--device", default="cpu")
+    parser.add_argument("--deterministic", action="store_true", help="choose the most probable action instead of sampling")
     parser.add_argument("--beginning-decisions", type=positive_int, default=150)
     parser.add_argument("--ending-decisions", type=positive_int, default=75)
     parser.add_argument("--stall-decisions", type=positive_int, default=120)
@@ -96,7 +97,7 @@ def main() -> int:
             "environment": "SuperMarioBros-1-1-v0",
             "seeds": args.seeds,
             "max_decisions": args.max_decisions,
-            "deterministic": False,
+            "deterministic": args.deterministic,
             "seed_method": "SB3 set_random_seed plus environment reset(seed)",
             "action_space": "RIGHT_ONLY",
             "action_repeat": 4,
@@ -123,7 +124,8 @@ def main() -> int:
         "completion_rate": None,
         "limitations": [
             "Small fixed-seed evaluation is descriptive, not proof of general skill.",
-            "Seeds vary sampled policy actions on the same level and initial state.",
+            "Deterministic actions on the same level and initial state can repeat the same trajectory across seeds."
+            if args.deterministic else "Seeds vary sampled policy actions on the same level and initial state.",
             "GIFs show excerpts; the CSV contains every decision in the trial.",
             "A stalled maximum does not establish that Mario cannot move or identify a collision.",
             "A non-clearing termination does not identify a death cause; inspect the clip.",
@@ -223,7 +225,7 @@ def main() -> int:
                             tensor, _ = model.policy.obs_to_tensor(observation)
                             distribution = model.policy.get_distribution(tensor)
                             probabilities = distribution.distribution.probs[0].cpu().numpy()
-                            action = int(distribution.get_actions(deterministic=False).cpu().item())
+                            action = int(distribution.get_actions(deterministic=args.deterministic).cpu().item())
                             entropy = float(distribution.entropy().cpu().item())
                         observation, reward, terminated, truncated, info = env.step(action)
                         decisions = decision

@@ -200,17 +200,33 @@ def make_report(repo: Path, manifest_path: Path, manifest: dict, stages: list[di
     guide = repo / "docs" / "aula" / "GUIA_DOCENTE.md"
     session = within(repo, manifest["session_dir"])
     config = manifest.get("configuration", {})
+    trial_count = len(config.get("eval_seeds", []))
+    planned_trials = f"{trial_count} trials" if trial_count else "planned trials"
+    repeated_trials = f"{trial_count} repeated trials" if trial_count else "repeated trials"
+    navigation = [
+        existing_link("Teacher guide: a 35–45 minute lesson", guide, document),
+        link("Session data and configuration", manifest_path, document),
+        existing_link("Project and previous experiments", repo / "README.md", document),
+    ]
+    for key, label in (
+        ("diagnostic_report_path", "Failure diagnosis and playback comparison"),
+        ("comparison_report_path", "Baseline and trained-model comparison"),
+    ):
+        if manifest.get(key):
+            report_file = within(repo, manifest[key])
+            if report_file.is_file():
+                navigation.append(existing_link(label, report_file, document))
     complete = [stage for stage in stages if stage["comparable"]]
     content = [
         "# Mario Learns: A Classroom Lab", "",
         "Compare how a reinforcement learning policy changes across saved stages. This dashboard brings together measurements, observable errors, and clips from the same level; results may improve or worsen.", "",
         f"**Session:** `{cell(manifest['session_id'])}` · **Status:** {STATUS.get(manifest.get('status'), cell(manifest.get('status', 'not specified')))} · **Updated:** {generated_at}.", "",
-        f"{existing_link('Teacher guide: a 35–45 minute lesson', guide, document)} · {link('Session data and configuration', manifest_path, document)} · {existing_link('Project and previous experiments', repo / 'README.md', document)}", "",
+        " · ".join(navigation), "",
         "This dashboard keeps the same path, `docs/aula/README.md`, when new sessions are published. Previous reports remain in their results folders. GitHub shows the most recently uploaded version; it does not stream local training live. Access depends on repository permissions.", "",
         "## Using this in class", "",
         "1. Watch the first stage and write down a prediction.",
         "2. Compare the same seed at another stage: first the beginning, then the ending.",
-        "3. Check your visual impression against all five trials, the maximum position, and whether the flag was reached.",
+        f"3. Check your visual impression against all {planned_trials}, the maximum position, and whether the flag was reached.",
         "4. Describe an observable error and a hypothesis; look for evidence that distinguishes observation from explanation.", "",
         "## What has happened so far", "",
     ]
@@ -326,7 +342,7 @@ def make_report(repo: Path, manifest_path: Path, manifest: dict, stages: list[di
             audit = read_json(audit_file)
             audit_stage = {"evaluation_file": audit_file}
             audit_episodes = audit.get("episodes", [])
-            content += ["## Final test with new seeds", "", "These seeds were reserved for the final model; they are not included in the curve of five repeated trials or used to select a stage. They are still attempts on the same World 1-1 level.", "", link("Final test data", audit_file, document), ""]
+            content += ["## Final test with new seeds", "", f"These seeds were reserved for the final model; they are not included in the curve of {repeated_trials} or used to select a stage. They are still attempts on the same World 1-1 level.", "", link("Final test data", audit_file, document), ""]
             planned = audit.get("protocol", {}).get("seeds", [])
             if audit.get("status") == "complete" and planned and [ep["seed"] for ep in audit_episodes] == planned:
                 values = [float(ep["max_x"]) for ep in audit_episodes]
